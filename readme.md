@@ -5,11 +5,13 @@ Proper instructions coming soon.
 1. Set up config.php as per config.example.php
 2. Set up htaccess. Example format:
 
-	RewriteEngine on
-	RewriteBase /admin
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
+```
+RewriteEngine on
+RewriteBase /admin
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
+```
 
 ## Writing page files
 
@@ -36,10 +38,12 @@ The Sir Trevor editor used is 0.4.3 with *some modifications* to patch bugs and 
 * A patch has been applied to the CSS to set the z-index for the formatting toolbar on .st-format-bar to 10000. This makes sure it appears in Bootstrap modals (included in 0.5)
 * A patch has been applied to make editor reinitialisation work. The following code was inserted into the destroy method replacing the similar existing code (included in 0.5)
 
-    // Destroy all blocks
-    this.block_manager.blocks.forEach(function(block) {
-      this.mediator.trigger('block:remove', block.blockID);
-    }, this);
+```
+// Destroy all blocks
+this.block_manager.blocks.forEach(function(block) {
+  this.mediator.trigger('block:remove', block.blockID);
+}, this);
+```
 
 * Additionally the Cite module has been overridden to stop making the reference source compulsory.
 
