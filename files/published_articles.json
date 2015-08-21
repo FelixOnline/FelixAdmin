@@ -1,0 +1,137 @@
+{
+	"name": "Published Articles",
+	"model": "FelixOnline\\Core\\Article",
+	"table": "article",
+	"baseRole": ["superUser"],
+	"constraints": [
+		{
+			"field": "published",
+			"operator": ">",
+			"test": 0,
+			"roles": []
+		},
+		{
+			"specialConstraint": "isEditor",
+			"reverse": false,
+			"roles": []
+		},
+		{
+			"specialConstraint": "isAuthor",
+			"reverse": false,
+			"roles": []
+		}
+	],
+	"hasId": true,
+	"fields": {
+		"id": {
+			"label": "Article",
+			"readOnly": true,
+			"required": true
+		},
+		"title": {
+			"label": "Title",
+			"readOnly": false,
+			"required": true
+		},
+		"short_title": {
+			"label": "Short title",
+			"readOnly": false
+		},
+		"img1": {
+			"label": "Picture",
+			"readOnly": false,
+			"imageDetailsEditor": true,
+			"canUpload": true,
+			"canPick": true,
+			"defaultImage": 4819
+		},
+		"short_desc": {
+			"label": "Short description",
+			"readOnly": false
+		},
+		"teaser": {
+			"label": "Teaser",
+			"readOnly": false,
+			"required": true
+		},
+		"category": {
+			"label": "Category",
+			"readOnly": false,
+			"required": true,
+			"foreignKeyField": "label"
+		},
+		"date": {
+			"label": "Date",
+			"readOnly": false,
+			"required": true
+		},
+		"text1": {
+			"label": "Article text",
+			"foreignKeyField": "content",
+			"required": true
+		},
+		"published": {
+			"label": "Publish date",
+			"readOnly": true,
+			"help": "This will be set when the article is published"
+		},
+		"approvedby": {
+			"label": "Reviewed by",
+			"readOnly": false,
+			"help": "This will be set when the article is published",
+			"foreignKeyField": "name"
+		},
+		"hidden": {
+			"label": "Hidden",
+			"readOnly": false
+		},
+		"searchable": {
+			"label": "Shown to search engines",
+			"readOnly": false
+		},
+		"hits": {
+			"label": "Views",
+			"readOnly": true
+		},
+		"comment_status": {
+			"label": "Commenting status",
+			"readOnly": true,
+			"autoField": true
+		}
+	},
+	"order": [
+		{
+			"column": "published",
+			"direction": "DESC"
+		},
+		{
+			"column": "id",
+			"direction": "ASC"
+		}
+	],
+	"modes": {
+		"new": {
+			"enabled": true
+		},
+		"list": {
+			"enabled": true,
+			"columns": [
+				"id",
+				"title",
+				"category",
+				"published",
+				"text1"
+			],
+			"canDelete": true
+		},
+		"search": {
+			"enabled": true,
+			"fields": ["title", "published", "category", "img1", "text1"]
+		},
+		"details": {
+			"enabled": true,
+			"headerHint": "title"
+		}
+	},
+	"auxHtml": ""
+}

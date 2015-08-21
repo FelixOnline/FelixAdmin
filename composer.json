@@ -1,0 +1,27 @@
+{
+    "name": "felixonline/online",
+    "description": "Felix Online",
+    "license": "MIT",
+    "authors": [
+		{
+			"name": "Philip Kent",
+			"email": "kentphilip@gmail.com"
+		}
+    ],
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "https://github.com/dominicsayers/isemail.git"
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/Xymanek/ezSQL.git"
+		}
+	],
+    "require": {
+		"felixonline/core": "dev-master",
+		"dominicsayers/isemail": "dev-master",
+		"raven/raven": "0.8.0"
+    },
+	"minimum-stability": "dev"
+}

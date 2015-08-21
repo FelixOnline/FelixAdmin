@@ -1,0 +1,60 @@
+{
+	"name": "Text Browser",
+	"model": "FelixOnline\\Core\\Text",
+	"table": "text_story",
+	"baseRole": ["superUser"],
+	"constraints": { },
+	"hasId": true,
+	"fields": {
+		"id": {
+			"label": "Text ID",
+			"readOnly": true,
+			"required": true
+		},
+		"user": {
+			"label": "User",
+			"readOnly": true,
+			"required": true,
+			"autoField": true,
+			"foreignKeyField": "name"
+		},
+		"content": {
+			"label": "Content",
+			"readOnly": false,
+			"required": true
+		},
+		"timestamp": {
+			"label": "Timestamp",
+			"readOnly": true,
+			"required": true,
+			"autoField": true
+		}
+	},
+	"order": [
+		{
+			"column": "id",
+			"direction": "DESC"
+		}
+	],
+	"modes": {
+		"new": {
+			"enabled": true
+		},
+		"list": {
+			"enabled": true,
+			"columns": [
+				"id",
+				"user",
+				"timestamp"
+			]
+		},
+		"details": {
+			"enabled": true,
+			"headerHint": "id"
+		},
+		"search": {
+			"enabled": true
+		}
+	},
+	"auxHtml": ""
+}

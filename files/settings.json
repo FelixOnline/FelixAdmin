@@ -1,0 +1,52 @@
+{
+	"name": "System Settings",
+	"model": "FelixOnline\\Core\\Settings",
+	"table": "settings",
+	"baseRole": ["superUser"],
+	"constraints": { },
+	"fields": {
+		"setting": {
+			"label": "Setting",
+			"readOnly": true,
+			"required": true
+		},
+		"description": {
+			"label": "Description",
+			"readOnly": true,
+			"required": true
+		},
+		"value": {
+			"label": "Value",
+			"readOnly": false,
+			"required": true
+		}
+	},
+	"order": [
+		{
+			"column": "setting",
+			"direction": "DESC"
+		}
+	],
+	"modes": {
+		"new": {
+			"enabled": false
+		},
+		"list": {
+			"enabled": true,
+			"columns": [
+				"setting",
+				"description",
+				"value"
+			],
+			"canDelete": false
+		},
+		"details": {
+			"enabled": true,
+			"headerHint": "setting"
+		},
+		"search": {
+			"enabled": true
+		}
+	},
+	"auxHtml": "<p><center>Settings here generally only apply to the main website, not this admin website</center></p>"
+}

@@ -1,0 +1,101 @@
+{
+	"name": "Categories",
+	"model": "FelixOnline\\Core\\Category",
+	"table": "category",
+	"baseRole": ["superUser"],
+	"constraints": [
+		{
+			"specialConstraint": "isEditor",
+			"reverse": false,
+			"roles": []
+		}
+	],
+	"hasId": true,
+	"actions": {
+		"doThis": {
+			"label": "Do something",
+			"icon": "road"
+		},
+		"doThat": {
+			"label": "Do something else",
+			"icon": "road"
+		}
+	},
+	"fields": {
+		"id": {
+			"label": "Category",
+			"readOnly": true,
+			"required": true
+		},
+		"label": {
+			"label": "Name",
+			"readOnly": false,
+			"required": true
+		},
+		"cat": {
+			"label": "URL slug",
+			"readOnly": false,
+			"required": true
+		},
+		"active": {
+			"label": "Enabled",
+			"readOnly": false
+		},
+		"hidden": {
+			"label": "Hidden",
+			"readOnly": false,
+			"help": "Categories can be active (articles in them can be viewed) but hidden from the navigation."
+		},
+		"email": {
+			"label": "Email address",
+			"readOnly": false,
+			"validation": "email"
+		},
+		"twitter": {
+			"label": "Twitter",
+			"readOnly": false
+		},
+		"editors": {
+			"label": "Section editors",
+			"multiMap": {
+				"model": "FelixOnline\\Core\\CategoryAuthor",
+				"this": "category",
+				"foreignKey": "user",
+				"foreignKeyField": "name"
+			}
+		}
+	},
+	"order": [
+		{
+			"column": "id",
+			"direction": "ASC"
+		}
+	],
+	"modes": {
+		"new": {
+			"enabled": true,
+			"roles": ["abc"]
+		},
+		"search": {
+			"enabled": true,
+			"fields": ["active", "label", "email", "editors"]
+		},
+		"list": {
+			"enabled": true,
+			"columns": [
+				"id",
+				"label",
+				"cat",
+				"email",
+				"editors",
+				"active"
+			],
+			"canDelete": true
+		},
+		"details": {
+			"enabled": true,
+			"headerHint": "label"
+		}
+	},
+	"auxHtml": ""
+}
