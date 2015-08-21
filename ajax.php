@@ -28,7 +28,7 @@
 	global $currentuser;
 	$currentuser = new \FelixOnline\Core\CurrentUser();
 
-	if(!$currentuser->isLoggedIn() && $_POST['q'] != 'login') {
+	if(!$currentuser->isLoggedIn() && $_POST['q'] != 'login' && $_POST['q'] != 'logout') {
 		header('HTTP/1.1 403 Forbidden');
 		header("Cache-Control: no-cache, must-revalidate", false);
 		header("Expires: Sat, 26 Jul 1997 05:00:00 GMT", false);
