@@ -136,7 +136,7 @@ function create(page_name) {
 	}
 }
 
-function search(page_name) {
+function runSearch(page_name, paginator_page) {
 	var formData = $('#search-form').serializeArray();
 	formData.push({
 		name: "q",
@@ -145,6 +145,10 @@ function search(page_name) {
 	formData.push({
 		name: "00page",
 		value: page_name
+	});
+	formData.push({
+		name: "00page2",
+		value: paginator_page
 	});
 
 	$.ajax(getAjaxEndpoint(), {
@@ -166,6 +170,15 @@ function search(page_name) {
 		},
 		success: function(data) {
 			$('#search-results').html(data.form);
+
+			$(".sortable").tablesorter({
+				theme: "bootstrap",
+				widgets: [ "uitheme", "zebra", "stickyHeaders" ],
+				headerTemplate: "{content} {icon}",
+				widgetOptions: {
+					zebra: ["even", "odd"]
+	    		}
+			});
 		},
 		cache: false
 	});

@@ -8,7 +8,12 @@ class searchAjaxHelper extends Core {
 			$this->error("Page not specified.", 400);
 		}
 
+		if(!array_key_exists('00page2', $_POST) || $_POST['00page2'] == '' || preg_match('/[^0-9]/', $_POST['00page2'])) {
+			$this->error("Paginator page not specified.", 400);
+		}
+
 		$page = $_POST['00page'];
+		$page2 = $_POST['00page2'];
 
 		try {
 			$page = new \FelixOnline\Admin\Page($page);
@@ -43,69 +48,66 @@ class searchAjaxHelper extends Core {
 
 		$filteredSomething = false;
 
-		try {
-			foreach($pageData['fields'] as $fieldName => $fieldInfo) {
-				if(isset($pageData['modes']['search']['fields']) && array_search($fieldName, $pageData['modes']['search']['fields']) === FALSE) {
+		foreach($pageData['fields'] as $fieldName => $fieldInfo) {
+			if(isset($pageData['modes']['search']['fields']) && array_search($fieldName, $pageData['modes']['search']['fields']) === FALSE) {
+				continue;
+			}
+
+			if($_POST[$fieldName] == '') {
+				continue; // Don't filter on empty values
+			}
+
+			if(array_key_exists('multiMap', $fieldInfo)) {
+				continue; // FIXME: These fields are not supported at present.
+			}
+
+			$filteredSomething = true;
+
+			$fieldType = get_class($model->fields[$fieldName]);
+
+			if($fieldType == 'FelixOnline\Core\Type\ForeignKey') {
+				try {
+					$fkType = $model->fields[$fieldName]->class;
+
+					if($fkType == '') {
+						$manager2 = \FelixOnline\Core\BaseManager::build('FelixOnline\Core\Text', 'text_story', 'id');
+						$manager2->filter('content LIKE "%%s%"', array($_POST[$fieldName]));
+
+						$manager->join($manager2, "LEFT", 'text1');
+					} else {
+						$fk = new $fkType($_POST[$fieldName]);
+						$manager->filter($fieldName.' = "%s"', array($_POST[$fieldName]));
+					}
+				} catch(\Exception $e) {
 					continue;
 				}
-
-				if($_POST[$fieldName] == '') {
-					continue; // Don't filter on empty values
-				}
-
-				if(array_key_exists('multiMap', $fieldInfo)) {
-					continue; // FIXME: These fields are not supported at present.
-				}
-
-				$filteredSomething = true;
-
-				$fieldType = get_class($model->fields[$fieldName]);
-
-				if($fieldType == 'FelixOnline\Core\Type\ForeignKey') {
-					try {
-						$fkType = $model->fields[$fieldName]->class;
-
-						if($fkType = 'FelixOnline\Core\Text') {
-							$manager2 = \FelixOnline\Core\BaseManager::build('FelixOnline\Core\Text', 'text_story', 'id');
-							$manager2->filter('content LIKE "%%s%"', array($_POST[$fieldName]));
-
-							$manager->join($manager2, "LEFT", 'text1');
-						} else {
-							$fk = new $fkType($_POST[$fieldName]);
-							$manager->filter($fieldName.' = "%s"', array($_POST[$fieldName]));
-						}
-					} catch(\Exception $e) {
+			} elseif($fieldType == 'FelixOnline\Core\Type\DateTimeField') {
+				// Filter time out from datetimefields to increase chance of match
+				$manager->filter($fieldName.' LIKE "%%s%"', array(date('Y-m-d', strtotime($_POST[$fieldName]))));
+			} elseif($fieldType == 'FelixOnline\Core\Type\BooleanField') {
+				switch($_POST[$fieldName]) {
+					case 'null':
 						continue;
-					}
-				} elseif($fieldType == 'FelixOnline\Core\Type\DateTimeField') {
-					// Filter time out from datetimefields to increase chance of match
-					$manager->filter($fieldName.' LIKE "%%s%"', array(date('Y-m-d', strtotime($_POST[$fieldName]))));
-				} elseif($fieldType == 'FelixOnline\Core\Type\BooleanField') {
-					switch($_POST[$fieldName]) {
-						case 'null':
-							continue;
-							break;
-						case 'true':
-							$manager->filter($fieldName.' = %i', array(1));
-							break;
-						case 'false':
-							$manager->filter($fieldName.' = %i', array(0));
-							break;
-					}
-				} else {
-					$manager->filter($fieldName.' LIKE "%%s%"', array($_POST[$fieldName]));
+						break;
+					case 'true':
+						$manager->filter($fieldName.' = %i', array(1));
+						break;
+					case 'false':
+						$manager->filter($fieldName.' = %i', array(0));
+						break;
 				}
+			} else {
+				$manager->filter($fieldName.' LIKE "%%s%"', array($_POST[$fieldName]));
 			}
 
 			if(!$filteredSomething) {
 				$this->error("You haven't specified anything to filter by.", 400);
 			}
 
-			$manager->limit(0, LISTVIEW_PAGINATION_LIMIT);
+			$numRecords = $manager->count();
+			$manager->limit((-LISTVIEW_PAGINATION_LIMIT + $page2*LISTVIEW_PAGINATION_LIMIT), LISTVIEW_PAGINATION_LIMIT);
 
 			$models = $manager->values();
-		} catch(\Exception $e) {
-			$this->error("An error occured whilst searching for the data you have requested.", 500);
 		}
 
 		if(!array_key_exists('actions', $pageData)) {
@@ -119,11 +121,12 @@ class searchAjaxHelper extends Core {
 			$pageData,
 			$models,
 			$actions,
-			count($models),
+			$numRecords,
 			$pk,
-			1,
+			$page2,
 			$page->canDo('details'),
 			($page->canDo('list') && $pageData['modes']['list']['canDelete']),
+			false,
 			true);
 
 		$this->success(array('form' => $rendered_form));

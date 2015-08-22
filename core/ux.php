@@ -449,7 +449,8 @@ class UXHelper {
 		$currentPage,
 		$canDetails,
 		$canDelete,
-		$surpressPaginator) {
+		$surpressPaginator,
+		$searchView = false) {
 
 		if(count($records) == 0) {
 			return '<h3>No data found</h3>';
@@ -470,9 +471,9 @@ class UXHelper {
 		if(!$surpressPaginator) {
 			$string .= UXHelper::recordPaginator(
 				$pageSlug,
-				'list',
 				$numRecords,
-				$currentPage);
+				$currentPage,
+				$searchView);
 		}
 
 		if(count($actions) > 0) {
@@ -632,25 +633,41 @@ class UXHelper {
 
 	public static function recordPaginator(
 		$pageSlug,
-		$pageType,
 		$numRecords,
-		$currentPage) {
+		$currentPage,
+		$searchMode = false) {
 
 		// Paginator
 		$finalPage = ceil($numRecords / LISTVIEW_PAGINATION_LIMIT);
 		$firstPage = ((($currentPage - 5) > 0) ? ($currentPage - 5) : 1);
 		$lastPage = ((($currentPage + 5) <= $finalPage) ? ($currentPage + 5) : $finalPage);
 
+		if($searchMode) {
+			$pageType = 'search';
+			$previousPageLink = '#';
+			$nextPageLink = '#';
+			$firstPageLink = '#';
+			$lastPageLink = '#';
+			$function = 'runSearch';
+		} else {
+			$pageType = 'list';
+			$previousPageLink = STANDARD_URL.$pageSlug.':'.$pageType.'/'.($currentPage - 1);
+			$nextPageLink = STANDARD_URL.$pageSlug.':'.$pageType.'/'.($currentPage + 1);
+			$firstPageLink = STANDARD_URL.$pageSlug.':'.$pageType.'/1';
+			$lastPageLink = STANDARD_URL.$pageSlug.':'.$pageType.'/'.$finalPage;
+			$function = 'refreshList';
+		}
+
 		$string = '<nav><ul class="pagination">';
 
 		if($currentPage != 1) {
-			$string .= '<li><a href="'.STANDARD_URL.$pageSlug.':'.$pageType.'/'.($currentPage - 1).'" onClick="refreshList(\''.$pageSlug.'\', \''.($currentPage - 1).'\'); return false;"><span class="glyphicon glyphicon-chevron-left" aria-label="Next"></span></a></li>';
+			$string .= '<li><a href="'.$previousPageLink.'" onClick="'.$function.'(\''.$pageSlug.'\', \''.($currentPage - 1).'\'); return false;"><span class="glyphicon glyphicon-chevron-left" aria-label="Next"></span></a></li>';
 		} else {
 			$string .= '<li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left" aria-label="Next"></span></a></li>';
 		}
 
 		if(1 < $firstPage) {
-			$string .= '<li><a href="'.STANDARD_URL.$pageSlug.':'.$pageType.'/1" onClick="refreshList(\''.$pageSlug.'\', \'1\'); return false;">1</a></li>';
+			$string .= '<li><a href="'.$firstPageLink.'" onClick="'.$function.'(\''.$pageSlug.'\', \'1\'); return false;">1</a></li>';
 			$string .= '<li class="disabled"><span>...</span></li>';
 		}
 
@@ -661,16 +678,22 @@ class UXHelper {
 				$current = '';
 			}
 
-			$string .= '<li '.$current.'><a href="'.STANDARD_URL.$pageSlug.':'.$pageType.'/'.$i.'" onClick="refreshList(\''.$pageSlug.'\', \''.$i.'\'); return false;">'.$i.'</a></li>';
+			if($searchMode) {
+				$specificPageLink = '#';
+			} else {
+				$specificPageLink = STANDARD_URL.$pageSlug.':'.$pageType.'/'.$i;
+			}
+
+			$string .= '<li '.$current.'><a href="'.$specificPageLink.'" onClick="'.$function.'(\''.$pageSlug.'\', \''.$i.'\'); return false;">'.$i.'</a></li>';
 		}
 
 		if($lastPage < $finalPage) {
 			$string .= '<li class="disabled"><span>...</span></li>';
-			$string .= '<li><a href="'.STANDARD_URL.$pageSlug.':'.$pageType.'/'.$finalPage.'" onClick="refreshList(\''.$pageSlug.'\', \''.$finalPage.'\'); return false;">'.$finalPage.'</a></li>';
+			$string .= '<li><a href="'.$finalPageLink.'" onClick="'.$function.'(\''.$pageSlug.'\', \''.$finalPage.'\'); return false;">'.$finalPage.'</a></li>';
 		}
 
 		if($currentPage != $finalPage) {
-			$string .= '<li><a href="'.STANDARD_URL.$pageSlug.':'.$pageType.'/'.($currentPage + 1).'" onClick="refreshList(\''.$pageSlug.'\', \''.($currentPage + 1).'\'); return false;"><span class="glyphicon glyphicon-chevron-right" aria-label="Next"></span></a></li>';
+			$string .= '<li><a href="'.$nextPageLink.'" onClick="'.$function.'(\''.$pageSlug.'\', \''.($currentPage + 1).'\'); return false;"><span class="glyphicon glyphicon-chevron-right" aria-label="Next"></span></a></li>';
 		} else {
 			$string .= '<li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-right" aria-label="Next"></span></a></li>';
 		}
@@ -749,10 +772,9 @@ class UXHelper {
 
 		$string = '<h3>Search for something</h3>';
 		$string .= '<form class="form-horizontal" id="search-form">';
-		$string .= '<p>The first '.LISTVIEW_PAGINATION_LIMIT.' records which match all the criteria you specify will be shown.</p>';
 		$string .= '<div class="form-group">
 <div class="col-sm-12">';
-		$string .= '<button onClick="search(\''.$pageSlug.'\'); return false;" class="btn btn-primary search-button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search</button>';
+		$string .= '<button onClick="runSearch(\''.$pageSlug.'\', 1); return false;" class="btn btn-primary search-button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search</button>';
 		$string .= '<b class="text text-success form-status" style="display: none"></b>';
 		$string .= '</div></div>';
 
