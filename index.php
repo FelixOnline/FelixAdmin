@@ -2,9 +2,11 @@
 	namespace FelixOnline\Admin;
 
 	// Felix Admin App
-	// by Philip Kent
+	// by Philip Kent and others
 
 	// Released under the MIT license
+	// (c) Felix Imperial and authors
+	// www.felixonline.co.uk
 	require('core/setup.php');
 
 	global $currentuser;
