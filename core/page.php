@@ -56,9 +56,11 @@ class Page {
 
 	// Check if we have permission to do a specific thing
 	public function canDo($action) {
-		if(array_key_exists($action, $this->pageData['modes']) &&
+		if(isset($this->pageData['modes']) && array_key_exists($action, $this->pageData['modes']) &&
 			$this->pageData['modes'][$action]['enabled'] != TRUE) {
 				return false;
+		} elseif($action == 'text') {
+			return true;
 		} else {
 			if(array_key_exists('roles', $this->pageData['modes'][$action]) && count($this->pageData['modes'][$action]['roles']) > 0) {
 				foreach($this->userRoles as $role) {
