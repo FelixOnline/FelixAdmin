@@ -1,6 +1,6 @@
 <?php
 	namespace FelixOnline\Admin;
-xdebug_start_trace('/Users/pkent/Desktop/tracer');
+
 	// Felix Admin App
 	// by Philip Kent
 
