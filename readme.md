@@ -15,11 +15,99 @@ RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
 
 ## Writing page files
 
-Coming soon
+These go in the "files" folder.
+
+The page file name gives the index used in URLs.
+
+The format of the page file is as follows:
+
+```
+{
+	"name": // Title shown in menus
+	"model": // Class name for the model which must inherit BaseDB in Core
+	"baseRole": [] // Array of role names which are required to access the page.
+	"constraints": [{ // array of objects
+		"specialConstraint": // If this is specified, a special constraint will be applied. Valid options are isAuthor (for core Article objects only) or isEditor (for core Article objects - is article in a category the user edits - or core Category objects only)
+		"reverse": // If above is present, make the test negative
+		"roles": [] // Array of roles this constraint applies to, if empty/not set applies to all roles
+		"field": // If specialConstraint NOT specified, what field to test
+		"operator": // If above is present, what SQL operator to apply
+		"test": // What value to compare to
+	}]
+	"fields": {
+		"fieldName": { // What field in the model this relates to
+			"label": // What label to show
+			"readOnly": // Field cannot be edited
+			"required": // Field must be present to create or save (if its read only, creation may be prevented unless autofield is set)
+			"autoField": // If this is set, on record creation, datetime fields will be set to the current datetime, foreign keys pointing to core User objects will be set to the current user, foreign keys pointing to core Image objects will be set to the default image if one is set, else it errors out.
+			"validation": // If this is set to "email" the value will be checked to ensure it is an email address
+			"help": // Help text shown on the interface
+			"foreignKeyField": // If this is a foreign key field, what value from the foreign key to show in the UX
+			"imageDetailsEditor": // If this is a foreign key pointing to an image object, show an editor to set the image attribution and description (this does not affect captions)
+			"canUpload": // If this is a foreign key pointing to an image object, allow people to upload new images
+			"canPick": // If this is a foreign key pointing to an image object, allow people to select previously uploaded images
+			"defaultImage": // If this is a foreign key pointing to an image object, the ID number for the default image for this field. If set, a button will be provided to set the image to this default image
+			"multiMap": { // If this is set, you can select multiple foreign keys for this field
+				"model": // Class name for the model which must inherit BaseDB in Core and must map foreign keys to the record relevant to this page. For example, one that maps multiple authors to an article
+				"this": // The column in the model relating to this page
+				"foreignKey": // The column in the model relating to the foreign key
+				"foreignKeyField": // What value from the foreign key to show in the UX
+			}
+		}
+	}
+	"order": [{ // array of objects
+		"column": // Column name to order
+		"direction": // ASC or DESC
+	}]
+	"modes": {
+		"new": {
+			"enabled": // Is this tab available
+			"roles": [] // What roles can access this table, if empty/not set applies to all roles
+		},
+		"search": {
+			"enabled": // Is this tab available
+			"roles": [] // What roles can access this table, if empty/not set applies to all roles
+			"fields": [] // What fields can be searched. Note that multiMap fields cannot be searched and will be ignored
+		},
+		"list": {
+			"enabled": // Is this tab available
+			"roles": [] // What roles can access this table, if empty/not set applies to all roles
+			"columns": [] // What columns to show in the table. This will also apply to searches. Foreign keys pointing to core Text objects cannot be shown here
+			"canDelete": // Can people delete objects, will show a bin icon if true
+		},
+		"details": {
+			"enabled": // Is this tab available
+			"roles": [] // What roles can access this table, if empty/not set applies to all roles
+		},
+	}
+	"defaultTab": // Which of the above tabs to show by default. Showing details by default may not be hugely beneficial
+	"auxHTML": // Some arbitrary HTML to show on the page
+}
+```
+
+The only required components are:
+
+* Name
+* BaseRole
 
 ## Updating the menu
 
-Coming soon
+The menu is stored in the menu.json file and takes the following format:
+
+```
+{
+	"pageName": {}, // A page with no children, pageName corresponds to the page file name minus the .json extension
+	"secondPageName": { // A second page with children
+ 		"children": { // Define the children here
+			"thirdPageName": {} // A third page, child of the second page, has no children (you can have infinite levels of children)
+		}
+	}
+}
+```
+
+While it is possible for a page to exist in multiple places, this may confuse the menuing system as the menu has no knowledge of the hierarchy used to reach the page you requested. Therefore, the page may be shown as belonging under a different parent to the one you originally clicked.
+
+The menu shown on screen is based on this file, with pages the user cannot access (and any children they have) removed. This will be refreshed on every login.
 
 ## Third-party libraries
 
