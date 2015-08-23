@@ -1,0 +1,52 @@
+{
+	"name": "External Links",
+	"model": "FelixOnline\\Core\\Link",
+	"table": "settings",
+	"baseRole": ["superUser"],
+	"constraints": { },
+	"fields": {
+		"link": {
+			"label": "Link ID",
+			"readOnly": false,
+			"required": true,
+			"help": "The link will be available at <i>your-felix-site.com</i>/go/<i>this-link-id</i>. This cannot be changed once set"
+		},
+		"url": {
+			"label": "URL",
+			"readOnly": false,
+			"required": true
+		},
+		"active": {
+			"label": "Active",
+			"readOnly": false,
+			"help": "Inactive links will not work"
+		}
+	},
+	"order": [
+		{
+			"column": "link",
+			"direction": "DESC"
+		}
+	],
+	"modes": {
+		"new": {
+			"enabled": true
+		},
+		"list": {
+			"enabled": true,
+			"columns": [
+				"link",
+				"url",
+				"active"
+			],
+			"canDelete": true
+		},
+		"details": {
+			"enabled": true,
+			"headerHint": "link"
+		},
+		"search": {
+			"enabled": true
+		}
+	}
+}
