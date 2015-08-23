@@ -22,7 +22,7 @@ class newHelper {
 		$this->widgets = array();
 
 		foreach($this->pageData['fields'] as $field => $data) {
-			if($field == $this->pk) {
+			if($field == $this->pk && $this->pk == 'id') {
 				continue;
 			}
 

@@ -57,7 +57,7 @@ class newAjaxHelper extends Core {
 		}
 
 		foreach($page->getPageData()['fields'] as $fieldName => $fieldInfo) {
-			if($fieldName == $pk) {
+			if($fieldName == $pk && $pk == 'id') {
 				continue;
 			}
 
