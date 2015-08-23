@@ -25,22 +25,21 @@ class newAjaxHelper extends Core {
 			$this->error("You do not have permission to do this", 403);
 		}
 
-		// Does the key exist?
-		$class = $page->getPageData()['model'];
-
-		try {
-			$model = new $class();
-		} catch(\Exception $e) {
-			$this->error("Could not find model.", 404);
-		}
-
-		$pk = $model->pk;
-
 		// Validate submission
 		$badFields = $this->widgetValidator($page, $model, $_POST, $pk);
 
 		if(count($badFields) > 0) {
 			$this->error("There is a problem with what you have submitted.", 400, $badFields);
+		}
+
+		// Does the key exist?
+		$class = $page->getPageData()['model'];
+
+		try {
+			$model = new $class(); // Initialise a null model
+			$pk = $model->pk;
+		} catch(\Exception $e) {
+			$this->error("Could not find model.", 404);
 		}
 
 		$now = date('Y-m-d H:i:s');
@@ -154,25 +153,25 @@ class newAjaxHelper extends Core {
 			$setter = 'set'.$this->to_camel_case($fieldName);
 
 			$model->$setter($value);
+		}
 
-			$key = $model->save();
+		$key = $model->save();
 
-			// Now process any multiMap fields now we have a primary key to insert into map tables
-			foreach($page->getPageData()['fields'] as $fieldName => $fieldInfo) {
-				if(array_key_exists('multiMap', $fieldInfo)) {
-					if(is_array($_POST[$fieldName]) && count($_POST[$fieldName]) > 0) {
-						foreach($_POST[$fieldName] as $newRecord) {
-							$record = new $fieldInfo['multiMap']['model']();
+		// Now process any multiMap fields now we have a primary key to insert into map tables
+		foreach($page->getPageData()['fields'] as $fieldName => $fieldInfo) {
+			if(array_key_exists('multiMap', $fieldInfo)) {
+				if(is_array($_POST[$fieldName]) && count($_POST[$fieldName]) > 0) {
+					foreach($_POST[$fieldName] as $newRecord) {
+						$record = new $fieldInfo['multiMap']['model']();
 
-							$setter1 = 'set'.$this->to_camel_case($fieldInfo['multiMap']['this']);
-							$setter2 = 'set'.$this->to_camel_case($fieldInfo['multiMap']['foreignKey']);
-							$setter2ObjectClass = $record->fields[$fieldInfo['multiMap']['foreignKey']]->class;
+						$setter1 = 'set'.$this->to_camel_case($fieldInfo['multiMap']['this']);
+						$setter2 = 'set'.$this->to_camel_case($fieldInfo['multiMap']['foreignKey']);
+						$setter2ObjectClass = $record->fields[$fieldInfo['multiMap']['foreignKey']]->class;
 
-							$record->$setter1($model);
-							$record->$setter2((new $setter2ObjectClass($newRecord)));
+						$record->$setter1($model);
+						$record->$setter2((new $setter2ObjectClass($newRecord)));
 
-							$record->save();
-						}
+						$record->save();
 					}
 				}
 			}
