@@ -33,10 +33,6 @@
 			"readOnly": false,
 			"required": true
 		},
-		"short_title": {
-			"label": "Short title",
-			"readOnly": false
-		},
 		"img1": {
 			"label": "Picture",
 			"readOnly": false,
@@ -44,10 +40,6 @@
 			"canUpload": true,
 			"canPick": true,
 			"defaultImage": 4819
-		},
-		"short_desc": {
-			"label": "Short description",
-			"readOnly": false
 		},
 		"teaser": {
 			"label": "Teaser",
@@ -88,10 +80,6 @@
 		"searchable": {
 			"label": "Shown to search engines",
 			"readOnly": false
-		},
-		"hits": {
-			"label": "Views",
-			"readOnly": true
 		},
 		"comment_status": {
 			"label": "Commenting status",
