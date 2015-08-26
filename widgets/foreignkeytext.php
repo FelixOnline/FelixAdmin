@@ -57,9 +57,13 @@ class ForeignKeyTextWidget implements Widget {
 				trevor = new SirTrevor.Editor({
 					el: $(\'.sir-trevor-'.$this->fieldName.'\'),
 					defaultType: "Text",
-					blockTypes: ["Text", "Heading", "Feliximage", "Quote", "Factoid", "List", "OrderedList", "Video"]
+					blockTypes: ["Text", "Heading", "Feliximage", "Quote", "Factoid", "List", "OrderedList", "Video", "Tweet"]
 				});
-				SirTrevor.config.format = "markdown";
+				SirTrevor.setBlockOptions("Tweet", {
+					fetchUrl: function(tweetID) {
+						return "'.STANDARD_URL.'ajaxTweet.php?tweet_id=" + tweetID;
+					}
+				});
 				id = trevor.ID;
 				$(\'.sir-trevor-'.$this->fieldName.'\').data(\'trevor-id\', id);
 			});
