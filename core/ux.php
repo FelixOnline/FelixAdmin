@@ -207,7 +207,7 @@ class UXHelper {
 	<script src="'.STANDARD_URL.'js/quote.sir-trevor.js?v=1.0"></script>
 	<script src="'.STANDARD_URL.'js/factoid.sir-trevor.js?v=1.0"></script>
 	<script src="'.STANDARD_URL.'js/feliximage.sir-trevor.js?v=1.0"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.full.min.js"></script>
 
 	<script>
 		function getAjaxEndpoint() {
@@ -811,6 +811,8 @@ class UXHelper {
 		$string .= '</div></div>';
 
 		$string .= self::widgetForm($widgets);
+
+		$string .= '<button onClick="runSearch(\''.$pageSlug.'\', 1); return false;" class="btn btn-primary search-button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search</button><br><br>';
 
 		$string .= '<div id="search-results"></div>';
 
