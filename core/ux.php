@@ -823,7 +823,7 @@ class UXHelper {
 		$return =  '<div class="row">
 					<div class="col-md-3">
 						<p><img src="'.$image->getUrl().'" style="width: 100%" alt="Selected image"></p>
-						<p><button class="btn btn-danger btn-xs" id="'.$fieldName.'-remove" onClick="removeImage(\''.$fieldName.'\'); return false;"><span class="glyphicon glyphicon-ban-circle"></span> Remove image</button></p>
+						<p><button class="btn btn-danger btn-xs" id="'.$fieldName.'-remove" onClick="removeImage(\''.$fieldName.'\'); return false;"><span class="glyphicon glyphicon-erase"></span> Remove image</button></p>
 					</div>';
 
 		if($hasEditor) {

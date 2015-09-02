@@ -66,7 +66,7 @@ class ForeignKeyMultiMapWidget implements Widget {
 		if(!$this->readOnly) {
 			echo '<span class="input-group-btn">
 				<button class="btn btn-default" onClick="$(\'#'.$this->fieldName.'\').val(null).trigger(\'change\'); return false;">
-					<span class="glyphicon glyphicon-ban-circle"></span>
+					<span class="glyphicon glyphicon-erase"></span>
 				</button>
 				</span></div>';
 		}
