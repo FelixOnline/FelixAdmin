@@ -78,7 +78,7 @@ class ForeignKeyMultiMapWidget implements Widget {
 
 	echo '<script>
 		$(document).ready( function() {
-			$("#'.$this->fieldName.'").select2({
+			$("#'.$this->fieldName.'.select2").select2({
 			  theme: "bootstrap",
 			  ajax: {
 			    url: getAjaxEndpoint(),
