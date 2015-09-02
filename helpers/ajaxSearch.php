@@ -53,7 +53,7 @@ class searchAjaxHelper extends Core {
 				continue;
 			}
 
-			if($_POST[$fieldName] == '') {
+			if($_POST[$fieldName] == '' || (get_class($model->fields[$fieldName]) == 'FelixOnline\Core\Type\BooleanField' && $_POST[$fieldName] == "null")) {
 				continue; // Don't filter on empty values
 			}
 
@@ -62,6 +62,17 @@ class searchAjaxHelper extends Core {
 			}
 
 			$filteredSomething = true;
+
+			if(array_key_exists('choiceMap', $fieldInfo)) {
+				$table2 = (new $fieldInfo['choiceMap']['model'])->dbtable;
+
+				$manager2 = \FelixOnline\Core\BaseManager::build($fieldInfo['choiceMap']['model'], $table2);
+
+				$manager2->filter($fieldInfo['choiceMap']['field'].' LIKE "%%s%"', array($_POST[$fieldName]));
+
+				$manager->join($manager2, null, null, $fieldInfo['choiceMap']['this']);
+				continue;
+			}
 
 			$fieldType = get_class($model->fields[$fieldName]);
 
@@ -99,16 +110,16 @@ class searchAjaxHelper extends Core {
 			} else {
 				$manager->filter($fieldName.' LIKE "%%s%"', array($_POST[$fieldName]));
 			}
-
-			if(!$filteredSomething) {
-				$this->error("You haven't specified anything to filter by.", 400);
-			}
-
-			$numRecords = $manager->count();
-			$manager->limit((-LISTVIEW_PAGINATION_LIMIT + $page2*LISTVIEW_PAGINATION_LIMIT), LISTVIEW_PAGINATION_LIMIT);
-
-			$models = $manager->values();
 		}
+
+		if(!$filteredSomething) {
+			$this->error("You haven't specified anything to filter by.", 400);
+		}
+
+		$numRecords = $manager->count();
+		$manager->limit((-LISTVIEW_PAGINATION_LIMIT + $page2*LISTVIEW_PAGINATION_LIMIT), LISTVIEW_PAGINATION_LIMIT);
+
+		$models = $manager->values(true);
 
 		if(!array_key_exists('actions', $pageData)) {
 			$actions = array();

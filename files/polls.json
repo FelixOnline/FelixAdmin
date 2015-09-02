@@ -1,0 +1,81 @@
+{
+	"name": "Polls",
+	"model": "FelixOnline\\Core\\Poll",
+	"baseRole": ["superUser"],
+	"constraints": { },
+	"hasId": true,
+	"fields": {
+		"id": {
+			"label": "Poll ID",
+			"readOnly": true,
+			"required": true
+		},
+		"author": {
+			"label": "Author",
+			"readOnly": false,
+			"required": true,
+			"autoField": true,
+			"foreignKeyField": "name"
+		},
+		"question": {
+			"label": "Question",
+			"readOnly": false,
+			"required": true
+		},
+		"ended": {
+			"label": "Closed"
+		},
+		"location": {
+			"label": "TBD"
+		},
+		"hide_results": {
+			"label": "Show results only after voting"
+		},
+		"articles": {
+			"label": "Show on articles",
+			"multiMap": {
+				"model": "FelixOnline\\Core\\ArticlePolls",
+				"this": "poll",
+				"foreignKey": "article",
+				"foreignKeyField": "title"
+			}
+		},
+		"options": {
+			"label": "Options",
+			"choiceMap": {
+				"model": "FelixOnline\\Core\\PollOption",
+				"this": "poll",
+				"field": "text"
+			}
+		}
+	},
+	"order": [
+		{
+			"column": "id",
+			"direction": "DESC"
+		}
+	],
+	"modes": {
+		"new": {
+			"enabled": true
+		},
+		"list": {
+			"enabled": true,
+			"columns": [
+				"id",
+				"author",
+				"question",
+				"ended",
+				"options"
+			]
+		},
+		"details": {
+			"enabled": true,
+			"headerHint": "question"
+		},
+		"search": {
+			"enabled": true
+		}
+	},
+	"auxHtml": ""
+}

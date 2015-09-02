@@ -87,6 +87,49 @@ class saveAjaxHelper extends Core {
 							$record->save();
 						}
 					}
+				} elseif(array_key_exists('choiceMap', $fieldInfo)) {
+					$table = (new $fieldInfo['choiceMap']['model'])->dbtable;
+
+					$oldRecords = \FelixOnline\Core\BaseManager::build($fieldInfo['choiceMap']['model'], $table)
+						->filter($fieldInfo['choiceMap']['this'].' = "%s"', array($key))
+						->values();
+
+					$getter = 'get'.$this->to_camel_case($fieldInfo['choiceMap']['field']);
+
+					// Step 1: Delete records not in the $_POST;
+					if($oldRecords) {
+
+						foreach($oldRecords as $oldRecord) {
+							if(!$_POST[$fieldName] || array_search($oldRecord->$getter(), $_POST[$fieldName], true) === FALSE) {
+								$oldRecord->delete();
+							}
+						}
+					}
+
+					// Step 2: Add new records not in $oldRecords
+					if($_POST[$fieldName]) {
+						foreach($_POST[$fieldName] as $newItem) {
+							$found = false;
+
+							if($oldRecords) {
+								foreach($oldRecords as $oldRecord) {
+									if($oldRecord->$getter() == $newItem) {
+										$found = true;
+									}
+								}
+							}
+
+							if(!$found) {
+								$tempRecord = new $fieldInfo['choiceMap']['model']();
+								$setter1 = 'set'.$this->to_camel_case($fieldInfo['choiceMap']['this']);
+								$setter2 = 'set'.$this->to_camel_case($fieldInfo['choiceMap']['field']);
+
+								$tempRecord->$setter1($model);
+								$tempRecord->$setter2($newItem);
+								$tempRecord->save();
+							}
+						}
+					}
 				} else {
 					$fieldType = get_class($model->fields[$fieldName]);
 

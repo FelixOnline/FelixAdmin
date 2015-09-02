@@ -548,6 +548,38 @@ class UXHelper {
 					continue;
 				}
 
+				if(array_key_exists('choiceMap', $pageData['fields'][$colid])) {
+					try {
+						$table = (new $pageData['fields'][$colid]['choiceMap']['model'])->dbtable;
+
+						$modelFieldValue = \FelixOnline\Core\BaseManager::build($pageData['fields'][$colid]['choiceMap']['model'], $table)
+							->filter($pageData['fields'][$colid]['choiceMap']['this'].' = "%s"', array($record->getPk()->getValue()))
+							->values();
+
+						$value = '';
+
+						if(is_array($modelFieldValue) && count($modelFieldValue) > 0) {
+							foreach($modelFieldValue as $fieldVal) {
+								if($value != '') {
+									$value .= ', ';
+								}
+								$value .= $fieldVal->fields[$pageData['fields'][$colid]['choiceMap']['field']]->getValue();
+							}
+
+							$value = "<td>$value</td>";
+						} else {
+							$value = '<td>&nbsp;</td>';
+						}
+					} catch(\Exception $e) {
+						$value = '<td><span class="text-danger">Error loading multiple field data</span></td>';
+					}
+
+					$string .= $value;
+
+					continue;
+				}
+
+
 				// Type transformations
 				$type = get_class($record->fields[$colid]);
 

@@ -1,6 +1,7 @@
 <?php
 
 namespace FelixOnline\Admin\Pages;
+use FelixOnline\Admin\Exceptions;
 
 class detailsHelper {
 	private $page;
@@ -48,7 +49,7 @@ class detailsHelper {
 
 			$modelField = current($this->record)->fields[$field];
 
-			if(!array_key_exists('multiMap', $data)) {
+			if(!array_key_exists('multiMap', $data) && !array_key_exists('choiceMap', $data)) {
 				try {
 					$modelFieldValue = $modelField->getValue();
 				} catch(\Exception $e) {
@@ -100,7 +101,29 @@ class detailsHelper {
 						$widgetClass = 'FelixOnline\Admin\Widgets\UnimplementedWidget';
 						break;
 				}
-			} else {
+			} elseif(array_key_exists('choiceMap', $data)) {
+				$widgetClass = 'FelixOnline\Admin\Widgets\ForeignKeyChoiceMapWidget';
+
+				try {
+					$table = (new $data['choiceMap']['model'])->dbtable;
+
+					$modelFieldValue = \FelixOnline\Core\BaseManager::build($data['choiceMap']['model'], $table)
+						->filter($data['choiceMap']['this'].' = "%s"', array($this->pageInfo[1]))
+						->values();
+
+					$otherData = array('field' => $data['choiceMap']['field'], 'page' => $this->pageName);
+				} catch(\Exception $e) {
+					$widgets[] = new \FelixOnline\Admin\Widgets\ErrorWidget(
+						$field,
+						$data['label'],
+						'Could not load this field as the associated foreign key map table could not be found or it is incorrectly configured.',
+						$data['readOnly'],
+						$data['required'],
+						$data['help'],
+						$otherData);
+					continue;
+				}
+			} elseif(array_key_exists('multiMap', $data)) {
 				$widgetClass = 'FelixOnline\Admin\Widgets\ForeignKeyMultiMapWidget';
 
 				try {
@@ -178,7 +201,7 @@ class detailsHelper {
 				\FelixOnline\Admin\UXHelper::text(
 					$this->pageData['auxHtml']),
 				\FelixOnline\Admin\UXHelper::text(
-					'<h2>'.$formData['heading'].'</h2>'),
+					'<h3>'.$formData['heading'].'</h3>'),
 				\FelixOnline\Admin\UXHelper::text(
 					$formData['string'])
 			),

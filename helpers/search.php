@@ -38,37 +38,57 @@ class searchHelper {
 		 		continue;
 			}
 
-			$modelField = $nullRecord->fields[$field];
+			if(array_key_exists('choiceMap', $data)) {
+				$widgetClass = 'FelixOnline\Admin\Widgets\StringWidget';
 
-			$otherData = array();
-			switch(get_class($modelField)) {
-				case "FelixOnline\Core\Type\TextField":
-					$widgetClass = 'FelixOnline\Admin\Widgets\TextWidget';
-					break;
-				case "FelixOnline\Core\Type\IntegerField":
-					$widgetClass = 'FelixOnline\Admin\Widgets\NumericWidget';
-					break;
-				case "FelixOnline\Core\Type\DateTimeField":
-					$widgetClass = 'FelixOnline\Admin\Widgets\DateTimeWidget';
-					break;
-				case "FelixOnline\Core\Type\CharField":
-					$widgetClass = 'FelixOnline\Admin\Widgets\StringWidget';
-					break;
-				case "FelixOnline\Core\Type\BooleanField":
-					$widgetClass = 'FelixOnline\Admin\Widgets\CheckboxAlternativeWidget';
-					break;
-				case "FelixOnline\Core\Type\ForeignKey":
-					$widgetClass = 'FelixOnline\Admin\Widgets\ForeignKeyWidget';
+				try {
+					$table = (new $data['choiceMap']['model'])->dbtable;
 
-					if($modelField->class == 'FelixOnline\Core\Text') {
+					$currentValue = array();
+				} catch(\Exception $e) {
+					$widgets[] = new \FelixOnline\Admin\Widgets\ErrorWidget(
+						$field,
+						$data['label'],
+						'Could not load this field as the associated foreign key map table could not be found or it is incorrectly configured.',
+						$data['readOnly'],
+						$data['required'],
+						$data['help'],
+						$otherData);
+					continue;
+				}
+			} else {
+				$modelField = $nullRecord->fields[$field];
+
+				$otherData = array();
+				switch(get_class($modelField)) {
+					case "FelixOnline\Core\Type\TextField":
+						$widgetClass = 'FelixOnline\Admin\Widgets\TextWidget';
+						break;
+					case "FelixOnline\Core\Type\IntegerField":
+						$widgetClass = 'FelixOnline\Admin\Widgets\NumericWidget';
+						break;
+					case "FelixOnline\Core\Type\DateTimeField":
+						$widgetClass = 'FelixOnline\Admin\Widgets\DateTimeWidget';
+						break;
+					case "FelixOnline\Core\Type\CharField":
 						$widgetClass = 'FelixOnline\Admin\Widgets\StringWidget';
-					} else {
-						$otherData = array('field' => $data['foreignKeyField'], 'page' => $this->pageName, 'class' => $modelField->class);
-					}
-					break;
-				default:
-					$widgetClass = 'FelixOnline\Admin\Widgets\UnimplementedWidget';
-					break;
+						break;
+					case "FelixOnline\Core\Type\BooleanField":
+						$widgetClass = 'FelixOnline\Admin\Widgets\CheckboxAlternativeWidget';
+						break;
+					case "FelixOnline\Core\Type\ForeignKey":
+						$widgetClass = 'FelixOnline\Admin\Widgets\ForeignKeyWidget';
+
+						if($modelField->class == 'FelixOnline\Core\Text') {
+							$widgetClass = 'FelixOnline\Admin\Widgets\StringWidget';
+						} else {
+							$otherData = array('field' => $data['foreignKeyField'], 'page' => $this->pageName, 'class' => $modelField->class);
+						}
+						break;
+					default:
+						$widgetClass = 'FelixOnline\Admin\Widgets\UnimplementedWidget';
+						break;
+				}
 			}
 
 			$this->widgets[] = new $widgetClass(

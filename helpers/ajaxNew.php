@@ -25,13 +25,6 @@ class newAjaxHelper extends Core {
 			$this->error("You do not have permission to do this", 403);
 		}
 
-		// Validate submission
-		$badFields = $this->widgetValidator($page, $model, $_POST, $pk);
-
-		if(count($badFields) > 0) {
-			$this->error("There is a problem with what you have submitted.", 400, $badFields);
-		}
-
 		// Does the key exist?
 		$class = $page->getPageData()['model'];
 
@@ -40,6 +33,13 @@ class newAjaxHelper extends Core {
 			$pk = $model->pk;
 		} catch(\Exception $e) {
 			$this->error("Could not find model.", 404);
+		}
+
+		// Validate submission
+		$badFields = $this->widgetValidator($page, $model, $_POST, $pk);
+
+		if(count($badFields) > 0) {
+			$this->error("There is a problem with what you have submitted.", 400, $badFields);
 		}
 
 		$now = date('Y-m-d H:i:s');
@@ -61,7 +61,7 @@ class newAjaxHelper extends Core {
 				continue;
 			}
 
-			if(array_key_exists('multiMap', $fieldInfo)) {
+			if(array_key_exists('multiMap', $fieldInfo) || array_key_exists('choiceMap', $fieldInfo)) {
 				continue; // Do later
 			}
 
@@ -157,7 +157,7 @@ class newAjaxHelper extends Core {
 
 		$key = $model->save();
 
-		// Now process any multiMap fields now we have a primary key to insert into map tables
+		// Now process any multiMap/choiceMap fields now we have a primary key to insert into map tables
 		foreach($page->getPageData()['fields'] as $fieldName => $fieldInfo) {
 			if(array_key_exists('multiMap', $fieldInfo)) {
 				if(is_array($_POST[$fieldName]) && count($_POST[$fieldName]) > 0) {
@@ -170,6 +170,22 @@ class newAjaxHelper extends Core {
 
 						$record->$setter1($model);
 						$record->$setter2((new $setter2ObjectClass($newRecord)));
+
+						$record->save();
+					}
+				}
+			}
+
+			if(array_key_exists('choiceMap', $fieldInfo)) {
+				if(is_array($_POST[$fieldName]) && count($_POST[$fieldName]) > 0) {
+					foreach($_POST[$fieldName] as $newRecord) {
+						$record = new $fieldInfo['choiceMap']['model']();
+
+						$setter1 = 'set'.$this->to_camel_case($fieldInfo['choiceMap']['this']);
+						$setter2 = 'set'.$this->to_camel_case($fieldInfo['choiceMap']['field']);
+
+						$record->$setter1($model);
+						$record->$setter2($newRecord);
 
 						$record->save();
 					}
