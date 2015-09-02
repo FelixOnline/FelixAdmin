@@ -53,6 +53,11 @@ The format of the page file is as follows:
 				"foreignKey": // The column in the model relating to the foreign key
 				"foreignKeyField": // What value from the foreign key to show in the UX
 			}
+			"choiceMap": { // If this is set, you can enter multiple new text items for this field - do not make something both a multiMap and a choiceMap
+				"model": // Class name for the model which must inherit BaseDB in Core and must map strings to the record relevant to this page. For example, a table of tag name and article ID
+				"this": // The column in the model relating to this page
+				"field": // What field from the foreign table to allow editing in
+			}
 		}
 	}
 	"order": [{ // array of objects
@@ -108,6 +113,10 @@ The menu is stored in the menu.json file and takes the following format:
 While it is possible for a page to exist in multiple places, this may confuse the menuing system as the menu has no knowledge of the hierarchy used to reach the page you requested. Therefore, the page may be shown as belonging under a different parent to the one you originally clicked.
 
 The menu shown on screen is based on this file, with pages the user cannot access (and any children they have) removed. This will be refreshed on every login.
+
+## Sir Trevor twitter
+
+The Sir Trevor editor will work automatically with Twitter if you create a Twitter app and set the application api key and secret in the Settings table.
 
 ## Third-party libraries
 
