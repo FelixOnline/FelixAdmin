@@ -35,7 +35,7 @@ class TextWidget implements Widget {
 		echo '<div class="form-group" id="grp-'.$this->fieldName.'">
 	<label for="'.$this->fieldName.'" class="col-sm-2 control-label">'.$this->label.$required.'</label>
 	<div class="col-sm-10">
-		<textarea rows="5" class="form-control" name="'.$this->fieldName.'" id="'.$this->fieldName.'" '.$readOnly.' aria-describedby="'.$this->fieldName.'-help">'.$this->currentValue.'</textarea>
+		<textarea rows="5" class="form-control" name="'.$this->fieldName.'" id="'.$this->fieldName.'" '.$readOnly.' aria-describedby="'.$this->fieldName.'-help">'.htmlentities($this->currentValue).'</textarea>
 		<span id="'.$this->fieldName.'-help" class="help-block">'.$this->help.'</span>
 	</div>
 </div>';

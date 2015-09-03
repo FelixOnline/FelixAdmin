@@ -27,14 +27,6 @@ class searchHelper {
 			}
 
 			if(array_key_exists('multiMap', $data)) {
-				$this->widgets[] = new \FelixOnline\Admin\Widgets\ErrorWidget(
-					$field,
-					$data['label'],
-					'MultiMap widgets are not currently supported in Search forms and will be ignored.',
-					false,
-					false,
-					$data['help'],
-					$otherData);
 		 		continue;
 			}
 

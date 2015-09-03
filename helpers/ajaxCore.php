@@ -61,7 +61,7 @@ class Core {
 	public function widgetValidator($page, $model, $submission, $pk) {
 		$badFields = array();
 		foreach($page->getPageData()['fields'] as $fieldName => $fieldInfo) {
-			if($fieldName == $pk) {
+			if($fieldName == $pk && $pk == 'id') {
 				continue;
 			}
 
