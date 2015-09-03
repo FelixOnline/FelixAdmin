@@ -64,10 +64,17 @@ The format of the page file is as follows:
 		"column": // Column name to order
 		"direction": // ASC or DESC
 	}]
+	"actions": { // Actions to run on selected records in a list view
+			"doThis": { // Action name - must be a class in the FelixOnline\Admin\Actions namespace
+				"label": "Do something", // Button label
+				"icon": "road" // Glyphicon name (see Bootstrap docs)
+		}
+	}
 	"modes": {
 		"new": {
 			"enabled": // Is this tab available
 			"roles": [] // What roles can access this table, if empty/not set applies to all roles
+			"callback": // If specified, the action (see the actions section) will be executed with the new record. Please note that the message from the callback will replace that of the link to the details page for the new entry
 		},
 		"search": {
 			"enabled": // Is this tab available

@@ -193,10 +193,23 @@ class newAjaxHelper extends Core {
 			}
 		}
 
-		if(!$page->canDo('details')) {
-			$this->success();
+		if(isset($page->getPageData()['modes']['new']['callback'])) {
+			try {
+				$action = 'FelixOnline\Admin\Actions\\'.$page->getPageData()['modes']['new']['callback'];
+
+				$action = new $action($page);
+
+				$message = $action->run(array($model));
+				$this->success(array("key" => $message));
+			} catch(\Exception $e) {
+				$this->error("Your entry has been created, however a problem occured in the callback function. Details: ".$e->getMessage(), 500);
+			}
 		} else {
-			$this->success(array("key" => '<a href="'.STANDARD_URL.$_POST['00page'].':details/'.$key.'">Click here to edit your new entry</a>.'));
+			if(!$page->canDo('details')) {
+				$this->success();
+			} else {
+				$this->success(array("key" => '<a href="'.STANDARD_URL.$_POST['00page'].':details/'.$key.'">Click here to edit your new entry</a>.'));
+			}
 		}
 	}
 }
