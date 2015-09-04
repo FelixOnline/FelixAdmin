@@ -8,7 +8,12 @@ class actionAjaxHelper extends Core {
 			$this->error("Action not specified.", 400);
 		}
 
+		if(!array_key_exists('page', $_POST) || $_POST['page'] == '') {
+			$this->error("Page not specified.", 400);
+		}
+
 		$action = $_POST['action'];
+		$page = $_POST['page'];
 
 		if(!array_key_exists('records', $_POST)) {
 			$records = array();
@@ -16,16 +21,31 @@ class actionAjaxHelper extends Core {
 			$records = $_POST['records'];
 		}
 
-		$action = 'FelixOnline\Admin\Actions\\'.$action;
+		$actionObj = 'FelixOnline\Admin\Actions\\'.$action;
 
 		try {
-			$action = new $action($page);
+			if(!class_exists($actionObj)) {
+				throw new \Exception('Could not find action');
+			}
+
+			$pageObj = new \FelixOnline\Admin\Page($page, true);
+			if(!$pageObj->lightLoad($page)) {
+				throw new \Exception('You do not have permission to do this');
+			}
+
+			if(isset($pageObj->getPageData()['actions'][$action]['roles'])) {
+				$roles = $pageObj->getPageData()['actions'][$action]['roles'];
+			} else {
+				$roles = array();
+			}
+
+			$actionObj = new $actionObj($roles);
 		} catch(\Exception $e) {
-			$this->error("Could not find action.", 500);
+			$this->error($e->getMessage(), 500);
 		}
 
 		try {
-			$message = $action->run($records);
+			$message = $actionObj->run($records);
 
 			$this->success(array("message" => $message));
 		} catch(\Exception $e) {

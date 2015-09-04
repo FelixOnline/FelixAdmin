@@ -23,6 +23,7 @@ require BASE_DIRECTORY.'/core/homepage.php';
 
 require BASE_DIRECTORY.'/widgets/interface.php';
 require BASE_DIRECTORY.'/helpers/ajaxCore.php';
+require BASE_DIRECTORY.'/actions/baseAction.php';
 
 foreach (glob(BASE_DIRECTORY.'/widgets/*.php') as $filename) {
 	require_once($filename);

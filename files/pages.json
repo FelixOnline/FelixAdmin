@@ -1,0 +1,58 @@
+{
+	"name": "Static Pages",
+	"model": "FelixOnline\\Core\\Page",
+	"baseRole": ["superUser"],
+	"constraints": [
+	],
+	"fields": {
+		"id": {
+			"label": "Page",
+			"readOnly": true,
+			"required": true
+		},
+		"slug": {
+			"label": "Slug",
+			"readOnly": false,
+			"required": true,
+			"help": "You can access the page at www.yoursite.com/&lt;slug&gt;. Please note that slugs have the least priority in URL maps - therefore if it clashes with the name of a category, or any of the following keywords, the page will be ignored. Reserved keywords (at time of last update) - user, search, login, logout, auth, issuearchive, rss, go, redirect, validate"
+		},
+		"title": {
+			"label": "Title",
+			"readOnly": false,
+			"required": true
+		},
+		"content": {
+			"label": "Content",
+			"readOnly": false,
+			"required": true,
+			"help": "Full HTML may be used, and PHP code can be included if encloded in &lt;?php ?&gt; tags. The keyword __CSRF_TOKEN__ will be automatically replaced with the CSRF token for AJAX forms in pages, place in a hidden input element of name 'token'"
+		}
+	},
+	"order": [
+		{
+			"column": "id",
+			"direction": "ASC"
+		}
+	],
+	"modes": {
+		"new": {
+			"enabled": true
+		},
+		"list": {
+			"enabled": true,
+			"columns": [
+				"id",
+				"slug",
+				"title"
+			],
+			"canDelete": true
+		},
+		"details": {
+			"enabled": true,
+			"headerHint": "title"
+		},
+		"search": {
+			"enabled": true
+		}
+	}
+}

@@ -2,11 +2,12 @@
 	"name": "Polls",
 	"model": "FelixOnline\\Core\\Poll",
 	"baseRole": ["superUser"],
-	"constraints": { },
+	"constraints": [
+	],
 	"hasId": true,
 	"fields": {
 		"id": {
-			"label": "Poll ID",
+			"label": "Poll",
 			"readOnly": true,
 			"required": true
 		},
@@ -67,7 +68,8 @@
 				"question",
 				"ended",
 				"options"
-			]
+			],
+			"canDelete": true
 		},
 		"details": {
 			"enabled": true,

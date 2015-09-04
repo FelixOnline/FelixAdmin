@@ -1,24 +1,24 @@
 {
-	"name": "Published Articles",
+	"name": "Draft Articles",
 	"model": "FelixOnline\\Core\\Article",
 	"baseRole": ["superUser"],
 	"constraints": [
 		{
 			"field": "published",
-			"operator": "IS NOT NULL",
+			"operator": "IS NULL",
 			"test": "",
 			"roles": []
 		},
 		{
 			"field": "approvedby",
-			"operator": "IS NOT NULL",
+			"operator": "IS NULL",
 			"test": "",
 			"roles": []
 		},
 		{
 			"field": "hidden",
 			"operator": "=",
-			"test": "0",
+			"test": "1",
 			"roles": []
 		},
 		{
@@ -33,10 +33,9 @@
 		}
 	],
 	"actions": {
-		"approve_unpublish": {
-			"label": "Unpublish",
-			"icon": "flash",
-			"roles": ["superUser"]
+		"approve_submit": {
+			"label": "Submit for publication",
+			"icon": "check"
 		}
 	},
 	"hasId": true,
@@ -45,6 +44,11 @@
 			"label": "Article",
 			"readOnly": true,
 			"required": true
+		},
+		"hidden": {
+			"label": "Draft",
+			"readOnly": false,
+			"help": "Uncheck this box to submit the article for publication. It will then disappear from this screen"
 		},
 		"title": {
 			"label": "Title",
@@ -110,12 +114,12 @@
 	},
 	"order": [
 		{
-			"column": "published",
+			"column": "date",
 			"direction": "DESC"
 		},
 		{
 			"column": "id",
-			"direction": "ASC"
+			"direction": "DESC"
 		}
 	],
 	"modes": {
@@ -128,14 +132,13 @@
 				"id",
 				"title",
 				"category",
-				"author",
-				"published"
+				"author"
 			],
 			"canDelete": false
 		},
 		"search": {
 			"enabled": true,
-			"fields": ["title", "teaser", "category", "author", "img1", "text1", "published", "searchable", "comment_status"]
+			"fields": ["title", "teaser", "category", "author", "img1", "text1", "searchable", "comment_status"]
 		},
 		"details": {
 			"enabled": true,

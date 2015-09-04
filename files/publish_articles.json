@@ -1,17 +1,17 @@
 {
-	"name": "Published Articles",
+	"name": "Publish Articles",
 	"model": "FelixOnline\\Core\\Article",
 	"baseRole": ["superUser"],
 	"constraints": [
 		{
 			"field": "published",
-			"operator": "IS NOT NULL",
+			"operator": "IS NULL",
 			"test": "",
 			"roles": []
 		},
 		{
 			"field": "approvedby",
-			"operator": "IS NOT NULL",
+			"operator": "IS NULL",
 			"test": "",
 			"roles": []
 		},
@@ -20,22 +20,27 @@
 			"operator": "=",
 			"test": "0",
 			"roles": []
-		},
-		{
-			"specialConstraint": "isEditor",
-			"reverse": false,
-			"roles": ["sectionEditor"]
-		},
-		{
-			"specialConstraint": "isAuthor",
-			"reverse": false,
-			"roles": ["author"]
 		}
 	],
 	"actions": {
-		"approve_unpublish": {
-			"label": "Unpublish",
-			"icon": "flash",
+		"approve_now": {
+			"label": "Publish: immediately",
+			"icon": "bullhorn",
+			"roles": ["superUser"]
+		},
+		"approve_tomorrow": {
+			"label": "Publish: Next 7:00 AM",
+			"icon": "time",
+			"roles": ["superUser"]
+		},
+		"approve_friday": {
+			"label": "Publish: This Friday 7:00 AM",
+			"icon": "fast-forward",
+			"roles": ["superUser"]
+		},
+		"approve_lastfriday": {
+			"label": "Publish: Last Friday 7:00 AM",
+			"icon": "fast-backward",
 			"roles": ["superUser"]
 		}
 	},
@@ -48,23 +53,17 @@
 		},
 		"title": {
 			"label": "Title",
-			"readOnly": false,
+			"readOnly": true,
 			"required": true
 		},
 		"teaser": {
 			"label": "Teaser",
-			"readOnly": false,
+			"readOnly": true,
 			"required": true
-		},
-		"category": {
-			"label": "Category",
-			"readOnly": false,
-			"required": true,
-			"foreignKeyField": "label"
 		},
 		"author": {
 			"label": "Authors",
-			"readOnly": false,
+			"readOnly": true,
 			"required": true,
 			"multiMap": {
 				"model": "FelixOnline\\Core\\ArticleAuthor",
@@ -73,49 +72,43 @@
 				"foreignKeyField": "name"
 			}
 		},
+		"category": {
+			"label": "Category",
+			"readOnly": true,
+			"required": true,
+			"foreignKeyField": "label"
+		},
 		"img1": {
 			"label": "Picture",
-			"readOnly": false,
+			"readOnly": true,
 			"imageDetailsEditor": true,
 			"canUpload": true,
-			"canPick": true
+			"canPick": true,
+			"defaultImage": 4819
 		},
 		"text1": {
 			"label": "Article text",
 			"foreignKeyField": "content",
-			"required": true
+			"required": true,
+			"readOnly": true
 		},
 		"published": {
 			"label": "Publish date",
-			"readOnly": true,
-			"required": true,
-			"help": "This will be set when the article is published"
+			"readOnly": false,
+			"required": true
 		},
 		"approvedby": {
 			"label": "Reviewed by",
-			"readOnly": true,
-			"required": true,
-			"help": "This will be set when the article is published",
-			"foreignKeyField": "name"
-		},
-		"searchable": {
-			"label": "Shown to search engines",
-			"readOnly": false
-		},
-		"comment_status": {
-			"label": "Comment status",
 			"readOnly": false,
-			"required": true
+			"required": true,
+			"help": "It is reccomended you set this to yourself",
+			"foreignKeyField": "name"
 		}
 	},
 	"order": [
 		{
-			"column": "published",
+			"column": "date",
 			"direction": "DESC"
-		},
-		{
-			"column": "id",
-			"direction": "ASC"
 		}
 	],
 	"modes": {
@@ -128,19 +121,18 @@
 				"id",
 				"title",
 				"category",
-				"author",
-				"published"
+				"author"
 			],
 			"canDelete": false
 		},
 		"search": {
 			"enabled": true,
-			"fields": ["title", "teaser", "category", "author", "img1", "text1", "published", "searchable", "comment_status"]
+			"fields": ["title", "teaser", "category", "author", "img1", "text1"]
 		},
 		"details": {
 			"enabled": true,
 			"headerHint": "title"
 		}
 	},
-	"auxHtml": ""
+	"auxHtml": "<p><center>If one of the default publication options is not suitable, click the edit icon and manually set a publication time.</center></p>"
 }

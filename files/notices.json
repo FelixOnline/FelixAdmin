@@ -1,0 +1,86 @@
+{
+	"name": "Notices",
+	"model": "FelixOnline\\Core\\Notice",
+	"baseRole": ["superUser"],
+	"constraints": [
+	],
+	"fields": {
+		"id": {
+			"label": "Notice",
+			"readOnly": true,
+			"required": true
+		},
+		"author": {
+			"label": "Author",
+			"readOnly": true,
+			"required": true,
+			"autoField": true,
+			"foreignKeyField": "name"
+		},
+		"content": {
+			"label": "Content",
+			"readOnly": false,
+			"required": true,
+			"help": "The following HTML tags may be used: b, i, u, a"
+		},
+		"start_time": {
+			"label": "Start time",
+			"readOnly": false,
+			"required": true,
+			"help": "Notice will be shown once this time has passed"
+		},
+		"end_time": {
+			"label": "End time",
+			"readOnly": false,
+			"required": true,
+			"help": "Notice will not be shown once this time has passed"
+		},
+		"hidden": {
+			"label": "Hidden",
+			"readOnly": false
+		},
+		"frontpage": {
+			"label": "Show on all pages",
+			"readOnly": false,
+			"help": "If unchecked, it will show on the front page only"
+		},
+		"sort_order": {
+			"label": "Sort order",
+			"readOnly": false
+		}
+	},
+	"order": [
+		{
+			"column": "start_time",
+			"direction": "DESC"
+		},
+		{
+			"column": "sort_order",
+			"direction": "ASC"
+		}
+	],
+	"modes": {
+		"new": {
+			"enabled": true
+		},
+		"list": {
+			"enabled": true,
+			"columns": [
+				"id",
+				"content",
+				"start_time",
+				"end_time",
+				"hidden",
+				"sort_order"
+			],
+			"canDelete": true
+		},
+		"details": {
+			"enabled": true,
+			"headerHint": "content"
+		},
+		"search": {
+			"enabled": true
+		}
+	}
+}

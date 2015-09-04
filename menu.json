@@ -1,15 +1,37 @@
 {
-	"categories": {
+	"articles": {
 		"children": {
-			"published_articles": {
-				"children": {
-					"text": {
-					}
-				}
-			}
+			"new_article": {},
+			"draft_articles": {},
+			"pending_articles": {},
+			"published_articles": {},
+			"publish_articles": {}
 		}
 	},
-	"settings": {},
-	"null": {},
-	"links": {}
+	"comments": {
+		"children": {
+			"pending_comments": {},
+			"approved_comments": {},
+			"rejected_comments": {},
+			"spam_comments": {}
+		}
+	},
+	"other_content": {
+		"children": {
+			"polls": {},
+			"adverts": {},
+			"links": {},
+			"pages": {}
+		}
+	},
+	"system": {
+		"children": {
+			"categories": {},
+			"users": {},
+			"create_user": {},
+			"settings": {},
+			"notices": {},
+			"frontpage": {}
+		}
+	}
 }

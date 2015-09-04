@@ -1,12 +1,11 @@
 {
-	"name": "External Links",
+	"name": "Redirection Links",
 	"model": "FelixOnline\\Core\\Link",
-	"table": "settings",
 	"baseRole": ["superUser"],
 	"constraints": { },
 	"fields": {
 		"link": {
-			"label": "Link ID",
+			"label": "Link",
 			"readOnly": false,
 			"required": true,
 			"help": "The link will be available at <i>your-felix-site.com</i>/go/<i>this-link-id</i>. This cannot be changed once set"

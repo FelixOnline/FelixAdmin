@@ -388,6 +388,7 @@ function runAction(action, page_name) {
 			data: {
 				q: "action",
 				action: action,
+				page: page_name,
 				records: records
 			},
 			beforeSend: function(data) {

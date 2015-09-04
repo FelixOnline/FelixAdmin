@@ -1,9 +1,9 @@
 {
-	"name": "System Settings",
+	"name": "Settings",
 	"model": "FelixOnline\\Core\\Settings",
-	"table": "settings",
 	"baseRole": ["superUser"],
-	"constraints": { },
+	"constraints": [
+	],
 	"fields": {
 		"setting": {
 			"label": "Setting",

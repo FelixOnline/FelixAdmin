@@ -1,17 +1,17 @@
 {
-	"name": "Published Articles",
+	"name": "Pending Articles",
 	"model": "FelixOnline\\Core\\Article",
 	"baseRole": ["superUser"],
 	"constraints": [
 		{
 			"field": "published",
-			"operator": "IS NOT NULL",
+			"operator": "IS NULL",
 			"test": "",
 			"roles": []
 		},
 		{
 			"field": "approvedby",
-			"operator": "IS NOT NULL",
+			"operator": "IS NULL",
 			"test": "",
 			"roles": []
 		},
@@ -20,23 +20,12 @@
 			"operator": "=",
 			"test": "0",
 			"roles": []
-		},
-		{
-			"specialConstraint": "isEditor",
-			"reverse": false,
-			"roles": ["sectionEditor"]
-		},
-		{
-			"specialConstraint": "isAuthor",
-			"reverse": false,
-			"roles": ["author"]
 		}
 	],
 	"actions": {
-		"approve_unpublish": {
-			"label": "Unpublish",
-			"icon": "flash",
-			"roles": ["superUser"]
+		"approve_cancel": {
+			"label": "Back to Draft",
+			"icon": "edit"
 		}
 	},
 	"hasId": true,
@@ -83,19 +72,19 @@
 		"text1": {
 			"label": "Article text",
 			"foreignKeyField": "content",
-			"required": true
+			"required": true,
+			"readOnly": true
 		},
 		"published": {
 			"label": "Publish date",
 			"readOnly": true,
-			"required": true,
-			"help": "This will be set when the article is published"
+			"required": true
 		},
 		"approvedby": {
 			"label": "Reviewed by",
 			"readOnly": true,
 			"required": true,
-			"help": "This will be set when the article is published",
+			"help": "It is reccomended you set this to yourself",
 			"foreignKeyField": "name"
 		},
 		"searchable": {
@@ -110,12 +99,12 @@
 	},
 	"order": [
 		{
-			"column": "published",
+			"column": "date",
 			"direction": "DESC"
 		},
 		{
 			"column": "id",
-			"direction": "ASC"
+			"direction": "DESC"
 		}
 	],
 	"modes": {
@@ -128,19 +117,18 @@
 				"id",
 				"title",
 				"category",
-				"author",
-				"published"
+				"author"
 			],
 			"canDelete": false
 		},
 		"search": {
 			"enabled": true,
-			"fields": ["title", "teaser", "category", "author", "img1", "text1", "published", "searchable", "comment_status"]
+			"fields": ["title", "teaser", "category", "author", "img1", "text1", "searchable", "comment_status"]
 		},
 		"details": {
 			"enabled": true,
 			"headerHint": "title"
 		}
 	},
-	"auxHtml": ""
+	"auxHtml": "<p><center>These articles are awaiting publication.</center></p>"
 }

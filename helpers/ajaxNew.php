@@ -199,7 +199,7 @@ class newAjaxHelper extends Core {
 
 				$action = new $action($page);
 
-				$message = $action->run(array($model));
+				$message = $action->run(array($model->fields[$pk]->getValue()));
 				$this->success(array("key" => $message));
 			} catch(\Exception $e) {
 				$this->error("Your entry has been created, however a problem occured in the callback function. Details: ".$e->getMessage(), 500);

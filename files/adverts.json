@@ -1,0 +1,126 @@
+{
+	"name": "Advertisments",
+	"model": "FelixOnline\\Core\\Advert",
+	"table": "settings",
+	"baseRole": ["superUser"],
+	"constraints": { },
+	"fields": {
+		"id": {
+			"label": "Advert",
+			"readOnly": true,
+			"required": true
+		},
+		"details": {
+			"label": "Details",
+			"readonly": false,
+			"required": false,
+			"help": "For your reference only"
+		},
+		"image": {
+			"label": "Picture",
+			"readonly": false,
+			"required": true,
+			"help": "Adverts may be GIF images if you want something animated",
+			"imageDetailsEditor": false,
+			"canUpload": true,
+			"canPick": true
+		},
+		"url": {
+			"label": "Redirection URL",
+			"readOnly": false,
+			"required": true
+		},
+		"start_date": {
+			"label": "Start date",
+			"readOnly": false,
+			"required": true
+		},
+		"end_date": {
+			"label": "End date",
+			"readOnly": false,
+			"required": true
+		},
+		"max_impressions": {
+			"label": "Maximum views",
+			"readOnly": false,
+			"required": true,
+			"help": "Adverts will stop being served when this number is reached, or when the end date passes"
+		},
+		"views": {
+			"label": "Views",
+			"readOnly": true,
+			"required": false
+		},
+		"clicks": {
+			"label": "Clicks",
+			"readOnly": true,
+			"required": false,
+			"help": "Conversion rate is given by (clicks / views) * 100"
+		},
+		"frontpage": {
+			"label": "Show on front page",
+			"readOnly": false,
+			"required": false,
+			"help": "Will also show on search pages, user pages, and the issue archive"
+		},
+		"categories": {
+			"label": "Show on category pages",
+			"readOnly": false,
+			"required": false
+		},
+		"articles": {
+			"label": "Show on article pages",
+			"readOnly": false,
+			"required": false
+		},
+		"cat_selection": {
+			"label": "Which categories",
+			"readOnly": false,
+			"required": false,
+			"multiMap": {
+				"model": "FelixOnline\\Core\\AdvertCategory",
+				"this": "advert",
+				"foreignKey": "category",
+				"foreignKeyField": "label"
+			},
+			"help": "If some categories are selected here, the advert will only show, when on a category or article page, on categories or articles which are in one of the categories you set here. If you leave this blank, it will be shown in all cases"
+		},
+		"sidebar": {
+			"label": "This is a sidebar advert",
+			"readOnly": false,
+			"required": false,
+			"help": "Sidebar adverts are square. If not checked, this will be a header advert and will be a landscape rectangle"
+		}
+	},
+	"order": [
+		{
+			"column": "start_date",
+			"direction": "DESC"
+		}
+	],
+	"modes": {
+		"new": {
+			"enabled": true
+		},
+		"list": {
+			"enabled": true,
+			"columns": [
+				"id",
+				"details",
+				"start_date",
+				"end_date",
+				"max_impressions",
+				"views",
+				"clicks"
+			],
+			"canDelete": true
+		},
+		"details": {
+			"enabled": true,
+			"headerHint": "details"
+		},
+		"search": {
+			"enabled": true
+		}
+	}
+}

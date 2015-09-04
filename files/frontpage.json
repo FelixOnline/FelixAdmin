@@ -1,0 +1,62 @@
+{
+	"name": "Front Page",
+	"model": "FelixOnline\\Core\\Frontpage",
+	"baseRole": ["superUser"],
+	"constraints": { },
+	"fields": {
+		"id": {
+			"label": "ID",
+			"readOnly": true,
+			"required": true
+		},
+		"article": {
+			"label": "Article",
+			"readonly": false,
+			"required": true,
+			"foreignKeyField": "title"
+		},
+		"section": {
+			"label": "Zone",
+			"readonly": false,
+			"required": true,
+			"help": "Ask the webmaster if you need to know what the zones are"
+		},
+		"sort_order": {
+			"label": "Sort Order",
+			"readOnly": false,
+			"required": false
+		}
+	},
+	"order": [
+		{
+			"column": "section",
+			"direction": "DESC"
+		},
+		{
+			"column": "sort_order",
+			"direction": "DESC"
+		}
+	],
+	"modes": {
+		"new": {
+			"enabled": true
+		},
+		"list": {
+			"enabled": true,
+			"columns": [
+				"id",
+				"article",
+				"section",
+				"sort_order"
+			],
+			"canDelete": true
+		},
+		"details": {
+			"enabled": true,
+			"headerHint": "id"
+		},
+		"search": {
+			"enabled": false
+		}
+	}
+}

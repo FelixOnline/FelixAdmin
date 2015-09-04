@@ -1,0 +1,96 @@
+{
+	"name": "New Article",
+	"model": "FelixOnline\\Core\\Article",
+	"baseRole": ["superUser"],
+	"constraints": [
+	],
+	"fields": {
+		"id": {
+			"label": "Article",
+			"readOnly": true,
+			"required": true
+		},
+		"title": {
+			"label": "Title",
+			"readOnly": false,
+			"required": true
+		},
+		"teaser": {
+			"label": "Teaser",
+			"readOnly": false,
+			"required": true
+		},
+		"category": {
+			"label": "Category",
+			"readOnly": false,
+			"required": true,
+			"foreignKeyField": "label"
+		},
+		"author": {
+			"label": "Authors",
+			"readOnly": false,
+			"required": true,
+			"multiMap": {
+				"model": "FelixOnline\\Core\\ArticleAuthor",
+				"this": "article",
+				"foreignKey": "author",
+				"foreignKeyField": "name"
+			}
+		},
+		"img1": {
+			"label": "Picture",
+			"readOnly": false,
+			"imageDetailsEditor": true,
+			"canUpload": true,
+			"canPick": true
+		},
+		"text1": {
+			"label": "Article text",
+			"foreignKeyField": "content",
+			"required": true,
+			"readOnly": false
+		},
+		"searchable": {
+			"label": "Shown to search engines",
+			"readOnly": false
+		},
+		"comment_status": {
+			"label": "Comment status",
+			"readOnly": false,
+			"required": true
+		},
+		"date": {
+			"label": "Created",
+			"readOnly": true,
+			"required": true,
+			"autoField": true
+		}
+	},
+	"order": [
+		{
+			"column": "date",
+			"direction": "DESC"
+		}
+	],
+	"modes": {
+		"new": {
+			"enabled": true,
+			"callback": "approve_draft"
+		},
+		"list": {
+			"enabled": false,
+			"columns": [],
+			"canDelete": false
+		},
+		"search": {
+			"enabled": false,
+			"fields": []
+		},
+		"details": {
+			"enabled": false,
+			"headerHint": "title"
+		}
+	},
+	"auxHtml": "",
+	"defaultTab": "new"
+}

@@ -1,0 +1,108 @@
+{
+	"name": "Spam",
+	"model": "FelixOnline\\Core\\Comment",
+	"baseRole": ["superUser"],
+	"constraints": [{
+			"field": "active",
+			"operator": "=",
+			"test": 0,
+			"roles": []
+		},
+		{
+			"field": "spam",
+			"operator": "=",
+			"test": 1,
+			"roles": []
+		},
+		{
+			"field": "pending",
+			"operator": "=",
+			"test": 0,
+			"roles": []
+		}
+	],
+	"fields": {
+		"id": {
+			"label": "Comment",
+			"readOnly": true,
+			"required": true
+		},
+		"name": {
+			"label": "Name",
+			"readonly": true,
+			"required": true
+		},
+		"comment": {
+			"label": "Comment",
+			"readonly": true,
+			"required": true
+		},
+		"article": {
+			"label": "Article",
+			"readonly": true,
+			"required": true,
+			"foreignKeyField": "title"
+		},
+		"timestamp": {
+			"label": "Posted at",
+			"readonly": true,
+			"required": true
+		},
+		"email": {
+			"label": "Email",
+			"readonly": true,
+			"required": true
+		},
+		"likes": {
+			"label": "Likes",
+			"readonly": true,
+			"required": true
+		},
+		"dislikes": {
+			"label": "Dislikes",
+			"readonly": true,
+			"required": true
+		}
+	},
+	"actions": {
+		"comment_approve": {
+			"label": "Not spam, approve comment",
+			"icon": "thumbs-up"
+		},
+		"comment_reject": {
+			"label": "Not spam but reject comment",
+			"icon": "thumbs-down"
+		}
+	},
+	"order": [
+		{
+			"column": "timestamp",
+			"direction": "DESC"
+		}
+	],
+	"modes": {
+		"new": {
+			"enabled": false
+		},
+		"list": {
+			"enabled": true,
+			"columns": [
+				"id",
+				"comment",
+				"name",
+				"article",
+				"timestamp"
+			],
+			"canDelete": false
+		},
+		"details": {
+			"enabled": true,
+			"headerHint": "name",
+			"readOnly": true
+		},
+		"search": {
+			"enabled": true
+		}
+	},
+	"auxHtml": "<p><center>These are periodically deleted from the database.</center></p>"
+}

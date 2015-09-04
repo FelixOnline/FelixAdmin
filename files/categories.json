@@ -6,20 +6,9 @@
 		{
 			"specialConstraint": "isEditor",
 			"reverse": false,
-			"roles": []
+			"roles": ["sectionEditor"]
 		}
 	],
-	"hasId": true,
-	"actions": {
-		"doThis": {
-			"label": "Do something",
-			"icon": "road"
-		},
-		"doThat": {
-			"label": "Do something else",
-			"icon": "road"
-		}
-	},
 	"fields": {
 		"id": {
 			"label": "Category",
@@ -54,6 +43,20 @@
 			"label": "Twitter",
 			"readOnly": false
 		},
+		"order": {
+			"label": "Sort order",
+			"readOnly": false
+		},
+		"parent": {
+			"label": "Parent category",
+			"readOnly": false,
+			"foreignKeyField": "label"
+		},
+		"secret": {
+			"label": "Secret",
+			"readOnly": false,
+			"help": "You must be logged in to see a secret category, or access any articles within one."
+		},
 		"editors": {
 			"label": "Section editors",
 			"multiMap": {
@@ -66,7 +69,7 @@
 	},
 	"order": [
 		{
-			"column": "id",
+			"column": "order",
 			"direction": "ASC"
 		}
 	],
@@ -89,7 +92,7 @@
 				"editors",
 				"active"
 			],
-			"canDelete": true
+			"canDelete": false
 		},
 		"details": {
 			"enabled": true,

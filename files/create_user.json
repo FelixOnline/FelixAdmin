@@ -1,0 +1,48 @@
+{
+	"name": "Create User",
+	"model": "FelixOnline\\Core\\User",
+	"baseRole": ["superUser"],
+	"constraints": { },
+	"fields": {
+		"user": {
+			"label": "Username",
+			"readOnly": false,
+			"required": true,
+			"help": "Please enter the username for the new user. If the username is a valid College username, the user's name and other details will be automatically obtained from the address book. Otherwise, a user will be created who will not be able to log in. In both cases you can update user details from the main User page."
+		},
+		"image": {
+			"label": "Avatar",
+			"readOnly": true,
+			"required": true,
+			"autoField": true,
+			"defaultImage": 696,
+			"help": "You can adjust this later."
+		}
+	},
+	"order": [
+		{
+			"column": "id",
+			"direction": "ASC"
+		}
+	],
+	"modes": {
+		"new": {
+			"enabled": true,
+			"callback": "user_ldap"
+		},
+		"list": {
+			"enabled": false,
+			"columns": [
+			],
+			"canDelete": false
+		},
+		"details": {
+			"enabled": false,
+			"headerHint": "name"
+		},
+		"search": {
+			"enabled": false
+		}
+	},
+	"defaultTab": "new"
+}
