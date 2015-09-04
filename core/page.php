@@ -25,6 +25,7 @@ class Page {
 		$this->page = $page[0];
 		$this->pageInfo = $page[1];
 		$this->userRoles = $app['env']['session']->session['roles'];
+		$this->userExplicitRoles = $app['env']['session']->session['explicitRoles'];
 
 		$this->loadPage();
 
@@ -43,6 +44,7 @@ class Page {
 			$this->page = $page[0];
 			$this->pageInfo = $page[1];
 			$this->userRoles = $app['env']['session']->session['roles'];
+			$this->userExplicitRoles = $app['env']['session']->session['explicitRoles'];
 
 			$this->loadPage();
 
@@ -63,10 +65,8 @@ class Page {
 			return true;
 		} else {
 			if(array_key_exists('roles', $this->pageData['modes'][$action]) && count($this->pageData['modes'][$action]['roles']) > 0) {
-				foreach($this->userRoles as $role) {
-					if(array_search($role, $this->pageData['modes'][$action]['roles'], true) !== false) {
-						return true;
-					}
+				if(count(array_intersect($this->pageData['modes'][$action]['roles'], $this->userRoles)) > 0) {
+					return true;
 				}
 			} else {
 				return true;
@@ -106,10 +106,8 @@ class Page {
 			return;
 		}
 
-		foreach($this->pageData['baseRole'] as $role) {
-			if(array_search($role, $this->userRoles) !== false) {
-				$access = true;
-			}
+		if(count(array_intersect($this->pageData['baseRole'], $this->userRoles)) > 0) {
+			$access = true;
 		}
 
 		if(!$access) {
@@ -138,8 +136,8 @@ class Page {
 		if(count($toTest) != 0) {
 			foreach($toTest as $constraint) {
 				if(count($constraint['roles']) > 0) {
-					if(!array_search($constraint['roles'], $this->userRoles)) {
-						continue; // Constraint does not apply
+					if(count(array_intersect($constraint['roles'], $this->userExplicitRoles)) == 0) {
+						continue; // Does not apply
 					}
 				}
 
@@ -217,7 +215,11 @@ class Page {
 		}
 
 		foreach($constraints as $constraint) {
-			$this->manager->filter($constraint['field'].' '.$constraint['operator'].' '.$constraint['op'], $constraint['test']);
+			if($constraint['operator'] == 'IS NULL' || $constraint['operator'] == 'IS NOT NULL') {
+				$this->manager->filter($constraint['field'].' '.$constraint['operator']);
+			} else {
+				$this->manager->filter($constraint['field'].' '.$constraint['operator'].' '.$constraint['op'], $constraint['test']);
+			}
 		}
 
 		// Sort the records

@@ -357,10 +357,8 @@ class UXHelper {
 		} else {
 			if(array_key_exists('roles', $pageData['modes']['new']) && count($pageData['modes']['new']['roles']) > 0) {
 				$newAccess = false;
-				foreach($app['env']['session']->session['roles'] as $role) {
-					if(array_search($role, $pageData['modes']['new']['roles'])) {
-						$newAccess = true;
-					}
+				if(count(array_intersect($app['env']['session']->session['roles'], $pageData['modes']['new']['roles'])) > 0) {
+					$newAccess = true;
 				}
 			} else {
 				$newAccess = true;
@@ -374,10 +372,8 @@ class UXHelper {
 		} else {
 			if(array_key_exists('roles', $pageData['modes']['details']) && count($pageData['modes']['details']['roles']) > 0) {
 				$detailsAccess = false;
-				foreach($app['env']['session']->session['roles'] as $role) {
-					if(array_search($role, $pageData['modes']['details']['roles'])) {
-						$detailsAccess = true;
-					}
+				if(count(array_intersect($app['env']['session']->session['roles'], $pageData['modes']['details']['roles'])) > 0) {
+					$detailsAccess = true;
 				}
 			} else {
 				$detailsAccess = true;
@@ -391,10 +387,8 @@ class UXHelper {
 		} else {
 			if(array_key_exists('roles', $pageData['modes']['list']) && count($pageData['modes']['list']['roles']) > 0) {
 				$listAccess = false;
-				foreach($app['env']['session']->session['roles'] as $role) {
-					if(array_search($role, $pageData['modes']['list']['roles'])) {
-						$listAccess = true;
-					}
+				if(count(array_intersect($app['env']['session']->session['roles'], $pageData['modes']['list']['roles'])) > 0) {
+					$listAccess = true;
 				}
 			} else {
 				$listAccess = true;
@@ -408,10 +402,8 @@ class UXHelper {
 		} else {
 			if(array_key_exists('roles', $pageData['modes']['search']) && count($pageData['modes']['search']['roles']) > 0) {
 				$searchAccess = false;
-				foreach($app['env']['session']->session['roles'] as $role) {
-					if(array_search($role, $pageData['modes']['search']['roles'])) {
-						$searchAccess = true;
-					}
+				if(count(array_intersect($app['env']['session']->session['roles'], $pageData['modes']['search']['roles'])) > 0) {
+					$searchAccess = true;
 				}
 			} else {
 				$searchAccess = true;

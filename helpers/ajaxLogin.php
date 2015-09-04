@@ -63,12 +63,18 @@ class loginAjaxHelper extends Core {
 		$app = \FelixOnline\Core\App::getInstance();
 
 		$roles = array();
+		$explicitRoles = array();
 
 		foreach($currentuser->getRoles() as $role) {
 			$roles[] = $role->getName();
 		}
 
+		foreach($currentuser->getExplicitRoles() as $role) {
+			$explicitRoles[] = $role->getName();
+		}
+
 		$app['env']['session']->session['roles'] = $roles;
+		$app['env']['session']->session['explicitRoles'] = $explicitRoles;
 
 		// Test menu
 		$finalMenu = array();

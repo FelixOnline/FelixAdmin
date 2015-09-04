@@ -25,11 +25,11 @@ The format of the page file is as follows:
 {
 	"name": // Title shown in menus
 	"model": // Class name for the model which must inherit BaseDB in Core
-	"baseRole": [] // Array of role names which are required to access the page.
+	"baseRole": [] // Array of role names which are required to access the page - a user with ANY of these roles (even if inherited) will be allowed in
 	"constraints": [{ // array of objects
 		"specialConstraint": // If this is specified, a special constraint will be applied. Valid options are isAuthor (for core Article objects only) or isEditor (for core Article objects - is article in a category the user edits - or core Category objects only)
 		"reverse": // If above is present, make the test negative
-		"roles": [] // Array of roles this constraint applies to, if empty/not set applies to all roles
+		"roles": [] // Array of roles this constraint applies to, if empty/not set applies to all roles - if a user has ANY of these roles it will apply _UNLESS_ the role is inherited
 		"field": // If specialConstraint NOT specified, what field to test
 		"operator": // If above is present, what SQL operator to apply
 		"test": // What value to compare to
@@ -67,29 +67,30 @@ The format of the page file is as follows:
 	"actions": { // Actions to run on selected records in a list view
 			"doThis": { // Action name - must be a class in the FelixOnline\Admin\Actions namespace
 				"label": "Do something", // Button label
-				"icon": "road" // Glyphicon name (see Bootstrap docs)
+				"icon": "road", // Glyphicon name (see Bootstrap docs)
+				"roles": [] // What roles can access this action, if empty/not set applies to all roles - a user with any of the roles in this list (even if inherited) will be allowed
 		}
 	}
 	"modes": {
 		"new": {
 			"enabled": // Is this tab available
-			"roles": [] // What roles can access this table, if empty/not set applies to all roles
+			"roles": [], // What roles can access this table, if empty/not set applies to all roles - a user with any of the roles in this list (even if inherited) will be allowed to access this tab
 			"callback": // If specified, the action (see the actions section) will be executed with the new record. Please note that the message from the callback will replace that of the link to the details page for the new entry
 		},
 		"search": {
 			"enabled": // Is this tab available
-			"roles": [] // What roles can access this table, if empty/not set applies to all roles
+			"roles": [] // What roles can access this table, if empty/not set applies to all roles - a user with any of the roles in this list (even if inherited) will be allowed to access this tab
 			"fields": [] // What fields can be searched. Note that multiMap fields cannot be searched and will be ignored
 		},
 		"list": {
 			"enabled": // Is this tab available
-			"roles": [] // What roles can access this table, if empty/not set applies to all roles
+			"roles": [] // What roles can access this table, if empty/not set applies to all roles - a user with any of the roles in this list (even if inherited) will be allowed to access this tab
 			"columns": [] // What columns to show in the table. This will also apply to searches. Foreign keys pointing to core Text objects cannot be shown here
 			"canDelete": // Can people delete objects, will show a bin icon if true
 		},
 		"details": {
 			"enabled": // Is this tab available
-			"roles": [] // What roles can access this table, if empty/not set applies to all roles
+			"roles": [] // What roles can access this table, if empty/not set applies to all roles - a user with any of the roles in this list (even if inherited) will be allowed to access this tab
 		},
 	}
 	"defaultTab": // Which of the above tabs to show by default. Showing details by default may not be hugely beneficial
