@@ -124,6 +124,13 @@ thead {
   width: 100px;
 }
 
+.read-only-sir-t {
+  border: 2px solid gray;
+  max-height: 300px;
+  overflow-x: auto;
+  padding: 10px;
+}
+
 /** source: http://www.startutorial.com/articles/view/how-to-build-a-file-upload-form-using-dropzonejs-and-php **/
 /*
  * The MIT License
