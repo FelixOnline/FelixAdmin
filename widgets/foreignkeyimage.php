@@ -66,7 +66,7 @@ class ForeignKeyImageWidget implements Widget {
 				echo '<p><img src="'.$this->currentValue->getUrl().'" alt="Selected image" style="width: 100%"></p>';
 			}
 
-			echo '</div></div>';
+			echo '</div>';
 		} else {
 			echo '<ul id="tabs-'.$this->fieldName.'" class="nav nav-tabs" role="tablist">
 				<li role="presentation" class="active"><a href="#'.$this->fieldName.'-current" id="'.$this->fieldName.'-current-tab" role="tab" data-toggle="tab" aria-controls="'.$this->fieldName.'-current" aria-expanded="true">Current Image</a></li>';
@@ -216,7 +216,7 @@ class ForeignKeyImageWidget implements Widget {
 		echo '<span id="'.$this->fieldName.'-help" class="help-block">'.$this->help.'</span>';
 
 	echo '</div>
-</div>';
+		</div>';
 
 	}
 }
