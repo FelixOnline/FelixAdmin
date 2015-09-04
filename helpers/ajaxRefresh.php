@@ -37,10 +37,20 @@ class refreshAjaxHelper extends Core {
 
 		$access = \FelixOnline\Admin\UXHelper::getAccess($pageData);
 
-		if(!array_key_exists('actions', $pageData)) {
-			$actions = array();
-		} else {
-			$actions = $pageData['actions'];
+		$actions = array();
+
+		$app = \FelixOnline\Core\App::getInstance();
+
+		if(array_key_exists('actions', $pageData)) {
+			foreach($pageData['actions'] as $key => $action) {
+				if(isset($action['roles'])) {
+					if(count(array_intersect($action['roles'], $app['env']['session']->session['roles'])) == 0) {
+						continue; // Cannot access action
+					}
+				}
+
+				$actions[$key] = $action;
+			}
 		}
 
 		$return = \FelixOnline\Admin\UXHelper::recordList(
