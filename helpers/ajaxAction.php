@@ -34,9 +34,9 @@ class actionAjaxHelper extends Core {
 			}
 
 			if(isset($pageObj->getPageData()['actions'][$action]['roles'])) {
-				$roles = $pageObj->getPageData()['actions'][$action]['roles'];
+				$roles = array_merge($pageObj->getPageData()['actions'][$action]['roles'], $pageObj->getPageData()['baseRole']);
 			} else {
-				$roles = array();
+				$roles = $pageObj->getPageData()['baseRole'];
 			}
 
 			$actionObj = new $actionObj($roles);
