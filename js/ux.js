@@ -535,7 +535,9 @@ $('.datetimefield').datetimepicker({
 	useCurrent: false,
 	icons: {
 		clear: "glyphicon glyphicon-ban-circle"
-	}
+	},
+	inline: false,
+	sideBySide: true
 });
 
 // http://codepen.io/DawsonMediaD/pen/byDqv/
