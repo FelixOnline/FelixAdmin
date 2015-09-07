@@ -109,6 +109,7 @@
 		"comment_status": {
 			"label": "Comment status",
 			"readOnly": false,
+			"foreignKeyField": "description",
 			"required": true
 		}
 	},

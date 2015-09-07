@@ -86,7 +86,7 @@
 			"required": true
 		},
 		"published": {
-			"label": "Publish date",
+			"label": "Publication date",
 			"readOnly": true,
 			"required": true,
 			"help": "This will be set when the article is published"
@@ -105,6 +105,7 @@
 		"comment_status": {
 			"label": "Comment status",
 			"readOnly": false,
+			"foreignKeyField": "description",
 			"required": true
 		}
 	},

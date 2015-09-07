@@ -15,8 +15,7 @@ class approve_draft extends BaseAction {
 		$this->validateAccess();
 
 		$this->validateClass($records, 'FelixOnline\Core\Article');
-
-		$record = $records[0];
+		$record = new \FelixOnline\Core\Article($records[0]);
 
 		$record->setHidden(1);
 		$record->save();

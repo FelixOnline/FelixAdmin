@@ -50,20 +50,23 @@
 			"required": true,
 			"readOnly": false
 		},
-		"searchable": {
-			"label": "Shown to search engines",
-			"readOnly": false
-		},
-		"comment_status": {
-			"label": "Comment status",
-			"readOnly": false,
-			"required": true
-		},
 		"date": {
 			"label": "Created",
 			"readOnly": true,
 			"required": true,
 			"autoField": true
+		},
+		"searchable": {
+			"label": "Shown to search engines",
+			"readOnly": false,
+			"defaultValue": 1
+		},
+		"comment_status": {
+			"label": "Comment status",
+			"readOnly": false,
+			"foreignKeyField": "description",
+			"required": true,
+			"defaultValue": 1
 		}
 	},
 	"order": [

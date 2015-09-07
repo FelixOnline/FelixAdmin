@@ -197,9 +197,9 @@ class newAjaxHelper extends Core {
 			try {
 				$action = 'FelixOnline\Admin\Actions\\'.$page->getPageData()['modes']['new']['callback'];
 
-				$action = new $action($page);
+				$action = new $action($page->getPageData()['baseRole']);
 
-				$message = $action->run(array($model->fields[$pk]->getValue()));
+				$message = $action->run(array($key));
 				$this->success(array("key" => $message));
 			} catch(\Exception $e) {
 				$this->error("Your entry has been created, however a problem occured in the callback function. Details: ".$e->getMessage(), 500);

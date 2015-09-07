@@ -118,6 +118,14 @@ class newHelper {
 				}
 			}
 
+			if(isset($data['defaultValue'])) {
+				if($widgetClass == 'FelixOnline\Admin\Widgets\ForeignKeyWidget') {
+					$currentValue = new $class($data['defaultValue']);
+				} else {
+					$currentValue = $data['defaultValue'];
+				}
+			}
+
 			$this->widgets[] = new $widgetClass(
 				$field,
 				$data['label'],
