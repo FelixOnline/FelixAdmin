@@ -24,6 +24,13 @@
 			"pages": {}
 		}
 	},
+	"archive": {
+		"children": {
+			"archive_publications": {},
+			"archive_issues": {},
+			"archive_files": {}
+		}
+	},
 	"system": {
 		"children": {
 			"categories": {},

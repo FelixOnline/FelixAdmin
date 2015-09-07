@@ -1,0 +1,4 @@
+{
+	"name": "Issue Archive",
+	"baseRole": ["superUser"]
+}

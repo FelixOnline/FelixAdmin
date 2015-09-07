@@ -1,0 +1,65 @@
+{
+	"name": "Files",
+	"model": "FelixOnline\\Core\\ArchiveFile",
+	"baseRole": ["superUser"],
+	"constraints": [
+	],
+	"auxHtml": "<p><center>Do not alter the records on this page unless absolutely necessary as you may break the archive</center></p>",
+	"fields": {
+		"id": {
+			"label": "ID",
+			"readOnly": true,
+			"required": true
+		},
+		"issue_id": {
+			"label": "Issue ID",
+			"readOnly": false,
+			"required": true,
+			"help": "NOT issue number",
+			"foreignKeyField": "id"
+		},
+		"part": {
+			"label": "Part",
+			"readOnly": false,
+			"required": true,
+			"help": "The primary part for an issue is A. Then, parts should proceed sequentially to allow multiple PDFs for one issue"
+		},
+		"filename": {
+			"label": "Filename",
+			"readOnly": false,
+			"required": true,
+			"help": "Relative to archive root"
+		},
+		"content": {
+			"label": "Extracted plain text content",
+			"readOnly": true,
+			"help": "This is automatically generated"
+		}
+	},
+	"order": [
+	],
+	"actions": {
+	},
+	"modes": {
+		"new": {
+			"enabled": true
+		},
+		"list": {
+			"enabled": true,
+			"columns": [
+				"id",
+				"issue_id",
+				"part",
+				"filename"
+			],
+			"canDelete": true
+		},
+		"details": {
+			"enabled": true,
+			"headerHint": "id"
+		},
+		"search": {
+			"enabled": true
+		}
+	}
+}

@@ -1,0 +1,66 @@
+{
+	"name": "Issues",
+	"model": "FelixOnline\\Core\\ArchiveIssue",
+	"baseRole": ["superUser"],
+	"constraints": [
+	],
+	"fields": {
+		"id": {
+			"label": "ID",
+			"readOnly": true,
+			"required": true
+		},
+		"issue": {
+			"label": "Issue Number",
+			"readOnly": false,
+			"required": true,
+			"help": "You may have multiple issues with the same number if they are in different publications"
+		},
+		"publication": {
+			"label": "Publication",
+			"readOnly": false,
+			"required": true,
+			"foreignKeyField": "name"
+		},
+		"date": {
+			"label": "Date",
+			"readOnly": false,
+			"required": true
+		},
+		"inactive": {
+			"label": "Inactive",
+			"readOnly": false
+		}
+	},
+	"order": [
+		{
+			"column": "date",
+			"direction": "DESC"
+		}
+	],
+	"actions": {
+	},
+	"modes": {
+		"new": {
+			"enabled": true
+		},
+		"list": {
+			"enabled": true,
+			"columns": [
+				"id",
+				"issue",
+				"publication",
+				"date",
+				"inactive"
+			],
+			"canDelete": true
+		},
+		"details": {
+			"enabled": true,
+			"headerHint": "issue"
+		},
+		"search": {
+			"enabled": true
+		}
+	}
+}

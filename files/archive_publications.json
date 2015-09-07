@@ -1,0 +1,49 @@
+{
+	"name": "Publications",
+	"model": "FelixOnline\\Core\\ArchivePublication",
+	"baseRole": ["superUser"],
+	"constraints": [
+	],
+	"fields": {
+		"id": {
+			"label": "Publication",
+			"readOnly": true,
+			"required": true
+		},
+		"name": {
+			"label": "Name",
+			"readOnly": false,
+			"required": true
+		},
+		"inactive": {
+			"label": "Inactive",
+			"readOnly": false,
+			"help": "This will also disable access to all issues within the publication"
+		}
+	},
+	"order": [
+	],
+	"actions": {
+	},
+	"modes": {
+		"new": {
+			"enabled": true
+		},
+		"list": {
+			"enabled": true,
+			"columns": [
+				"id",
+				"name",
+				"inactive"
+			],
+			"canDelete": true
+		},
+		"details": {
+			"enabled": true,
+			"headerHint": "name"
+		},
+		"search": {
+			"enabled": true
+		}
+	}
+}
