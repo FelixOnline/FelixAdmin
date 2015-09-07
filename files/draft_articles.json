@@ -89,19 +89,6 @@
 			"foreignKeyField": "content",
 			"required": true
 		},
-		"published": {
-			"label": "Publish date",
-			"readOnly": true,
-			"required": true,
-			"help": "This will be set when the article is published"
-		},
-		"approvedby": {
-			"label": "Reviewed by",
-			"readOnly": true,
-			"required": true,
-			"help": "This will be set when the article is published",
-			"foreignKeyField": "name"
-		},
 		"searchable": {
 			"label": "Shown to search engines",
 			"readOnly": false
