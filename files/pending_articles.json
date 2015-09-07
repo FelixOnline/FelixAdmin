@@ -72,7 +72,7 @@
 		"text1": {
 			"label": "Article text",
 			"foreignKeyField": "content",
-			"required": true,
+			"required": false,
 			"readOnly": true
 		},
 		"published": {
