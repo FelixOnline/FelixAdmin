@@ -428,6 +428,8 @@ class UXHelper {
 			});
 			</script>';
 
+		$string .= self::modalStub();
+
 		return $string;
 	}
 
@@ -646,8 +648,12 @@ class UXHelper {
 
 		$string .= '<p><span class="label label-default">'.$numRecords.' record'.$plural.' found</span></p>';
 
+		return $string;
+	}
+
+	public static function modalStub() {
 		// Modal for popup details forms
-		$string .= '<div class="modal fade modal-wide" id="detailsview">
+		$string = '<div class="modal fade modal-wide" id="detailsview">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -808,7 +814,7 @@ class UXHelper {
 		$string .= '<div class="form-group">
 <div class="col-sm-12">';
 		$string .= '<button onClick="runSearch(\''.$pageSlug.'\', 1); return false;" class="btn btn-primary search-button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search</button>';
-		$string .= '<b class="text text-success form-status" style="display: none"></b>';
+		$string .= '<b class="text text-success form-status form-status-no-indent" style="display: none"></b>';
 		$string .= '</div></div>';
 
 		$string .= self::widgetForm($widgets);
@@ -816,6 +822,8 @@ class UXHelper {
 		$string .= '<button onClick="runSearch(\''.$pageSlug.'\', 1); return false;" class="btn btn-primary search-button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search</button><br><br>';
 
 		$string .= '<div id="search-results"></div>';
+
+		$string .= self::modalStub();
 
 		return $string;
 	}

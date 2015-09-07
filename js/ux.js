@@ -49,7 +49,6 @@ function save(page_name, key) {
 			success: function(data) {
 				if($('#detailsview').length) {
 					$('#detailsview').modal('hide');
-					$('.modal-backdrop').remove();
 				}
 
 				$('.form-status').html('<span class="glyphicon glyphicon-ok"></span> Succesfully saved!');
