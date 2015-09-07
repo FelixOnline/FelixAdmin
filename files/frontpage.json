@@ -11,13 +11,13 @@
 		},
 		"article": {
 			"label": "Article",
-			"readonly": false,
+			"readOnly": false,
 			"required": true,
 			"foreignKeyField": "title"
 		},
 		"section": {
 			"label": "Zone",
-			"readonly": false,
+			"readOnly": false,
 			"required": true,
 			"help": "Ask the webmaster if you need to know what the zones are"
 		},

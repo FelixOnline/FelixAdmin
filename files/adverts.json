@@ -12,13 +12,13 @@
 		},
 		"details": {
 			"label": "Details",
-			"readonly": false,
+			"readOnly": false,
 			"required": false,
 			"help": "For your reference only"
 		},
 		"image": {
 			"label": "Picture",
-			"readonly": false,
+			"readOnly": false,
 			"required": true,
 			"help": "Adverts may be GIF images if you want something animated",
 			"imageDetailsEditor": false,

@@ -39,38 +39,38 @@
 		},
 		"name": {
 			"label": "Name",
-			"readonly": true,
+			"readOnly": true,
 			"required": true
 		},
 		"comment": {
 			"label": "Comment",
-			"readonly": true,
+			"readOnly": true,
 			"required": true
 		},
 		"article": {
 			"label": "Article",
-			"readonly": true,
+			"readOnly": true,
 			"required": true,
 			"foreignKeyField": "title"
 		},
 		"timestamp": {
 			"label": "Posted at",
-			"readonly": true,
+			"readOnly": true,
 			"required": true
 		},
 		"email": {
 			"label": "Email",
-			"readonly": true,
+			"readOnly": true,
 			"required": true
 		},
 		"likes": {
 			"label": "Likes",
-			"readonly": true,
+			"readOnly": true,
 			"required": true
 		},
 		"dislikes": {
 			"label": "Dislikes",
-			"readonly": true,
+			"readOnly": true,
 			"required": true
 		}
 	},
