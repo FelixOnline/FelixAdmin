@@ -20,6 +20,19 @@ class approve_draft extends BaseAction {
 		$record->setHidden(1);
 		$record->save();
 
+		// Add author if needed
+		$authors = $record->getAuthors();
+
+		if(!$authors) {
+			global $currentuser;
+			$currentuser = new \FelixOnline\Core\CurrentUser();
+
+			$rec2 = new \FelixOnline\Core\ArticleAuthor();
+			$rec2->setArticle($record);
+			$rec2->setAuthor($currentuser);
+			$rec2->save();
+		}
+
 		return 'Article created. To edit it, <a href="'.STANDARD_URL.'draft_articles:details/'.$record->getId().'">click here</a>.';
 	}
 }
