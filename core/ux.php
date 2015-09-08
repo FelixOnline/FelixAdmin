@@ -234,8 +234,7 @@ class UXHelper {
 
 	public static function login() {
 		$string .= '<p>Welcome to '.SERVICE_NAME.'. Please log in with your IC credentials.</p>';
-		$string .= '<p>You can only log in to this website if you have a Felix Online account and have been given access to this website.</p>';
-		$string .= '<p>To create an account, simply log in on the main website. To be granted access, please contact a member of the Felix team.</p>';
+		$string .= '<p>You can only log in to this website if you have been granted access, for example because you have written an article or you edit a section.</p>';
 
 		$required = ' <span class="text-danger" title="Required">*</span>';
 
