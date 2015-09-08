@@ -3,6 +3,11 @@
 	"model": "FelixOnline\\Core\\Poll",
 	"baseRole": ["author"],
 	"constraints": [
+		{
+			"specialConstraint": "isAuthor",
+			"reverse": false,
+			"roles": ["author"]
+		}
 	],
 	"hasId": true,
 	"fields": {

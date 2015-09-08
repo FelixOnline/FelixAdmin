@@ -144,20 +144,20 @@ class Page {
 				if(array_key_exists('specialConstraint', $constraint)) {
 					switch($constraint['specialConstraint']) {
 						case 'isAuthor':
-							if($this->pageData['model'] != 'FelixOnline\Core\Article') {
-								continue; // This constraint is not valid here
+							if($this->pageData['model'] == 'FelixOnline\Core\Article') {
+								if($constraint['reverse']) {
+									$op = '!=';
+								} else {
+									$op = '=';
+								}
+
+								$manager2 = \FelixOnline\Core\BaseManager::build('\FelixOnline\Core\ArticleAuthor', 'article_author', 'article');
+								$manager2->filter('author '.$op.' "%s"', array($currentuser->getUser()));
+
+								$this->manager->join($manager2);
+							} elseif($this->pageData['model'] == 'FelixOnline\Core\Poll') {
+								$this->manager->filter('author = "'.$currentuser->getUser().'"');
 							}
-
-							if($constraint['reverse']) {
-								$op = '!=';
-							} else {
-								$op = '=';
-							}
-
-							$manager2 = \FelixOnline\Core\BaseManager::build('\FelixOnline\Core\ArticleAuthor', 'article_author', 'article');
-							$manager2->filter('author '.$op.' "%s"', array($currentuser->getUser()));
-
-							$this->manager->join($manager2);
 
 							continue;
 						case 'isEditor':
