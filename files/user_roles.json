@@ -3,6 +3,7 @@
 	"model": "FelixOnline\\Core\\UserRole",
 	"baseRole": ["sysAdmin"],
 	"constraints": { },
+	"auxHtml": "<p><center>You do not normally need to apply the author or sectionEditor roles as these may be automatically managed by helper scripts</center></p>",
 	"fields": {
 		"id": {
 			"label": "ID",

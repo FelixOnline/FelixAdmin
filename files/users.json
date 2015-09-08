@@ -77,7 +77,8 @@
 				"this": "user",
 				"foreignKey": "role",
 				"foreignKeyField": "description"
-			}
+			},
+			"help": "You do not normally need to apply the author or sectionEditor roles as these may be automatically managed by helper scripts"
 		}
 	},
 	"order": [
