@@ -1,7 +1,7 @@
 {
 	"name": "Pending",
 	"model": "FelixOnline\\Core\\Comment",
-	"baseRole": ["superUser"],
+	"baseRole": ["commentModerator"],
 	"constraints": [{
 			"field": "active",
 			"operator": "=",

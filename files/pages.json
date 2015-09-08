@@ -1,7 +1,7 @@
 {
 	"name": "Static Pages",
 	"model": "FelixOnline\\Core\\Page",
-	"baseRole": ["superUser"],
+	"baseRole": ["webMaster"],
 	"constraints": [
 	],
 	"fields": {

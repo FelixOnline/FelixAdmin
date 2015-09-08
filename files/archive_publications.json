@@ -1,7 +1,7 @@
 {
 	"name": "Publications",
 	"model": "FelixOnline\\Core\\ArchivePublication",
-	"baseRole": ["superUser"],
+	"baseRole": ["archivist"],
 	"constraints": [
 	],
 	"fields": {

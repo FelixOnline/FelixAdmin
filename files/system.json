@@ -1,4 +1,4 @@
 {
 	"name": "System Parameters",
-	"baseRole": ["superUser"]
+	"baseRole": ["sysAdmin", "webMaster"]
 }

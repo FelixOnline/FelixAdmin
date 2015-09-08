@@ -1,8 +1,7 @@
 {
 	"name": "Advertisments",
 	"model": "FelixOnline\\Core\\Advert",
-	"table": "settings",
-	"baseRole": ["superUser"],
+	"baseRole": ["adverts"],
 	"constraints": { },
 	"fields": {
 		"id": {

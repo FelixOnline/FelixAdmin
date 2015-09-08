@@ -1,7 +1,7 @@
 {
 	"name": "Redirection Links",
 	"model": "FelixOnline\\Core\\Link",
-	"baseRole": ["superUser"],
+	"baseRole": ["webMaster"],
 	"constraints": { },
 	"fields": {
 		"link": {

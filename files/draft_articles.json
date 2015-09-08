@@ -1,7 +1,7 @@
 {
 	"name": "Draft Articles",
 	"model": "FelixOnline\\Core\\Article",
-	"baseRole": ["superUser"],
+	"baseRole": ["author"],
 	"constraints": [
 		{
 			"field": "published",

@@ -1,0 +1,49 @@
+{
+	"name": "User Roles",
+	"model": "FelixOnline\\Core\\UserRole",
+	"baseRole": ["sysAdmin"],
+	"constraints": { },
+	"fields": {
+		"id": {
+			"label": "ID",
+			"readOnly": true,
+			"required": true
+		},
+		"user": {
+			"label": "Login",
+			"readOnly": false,
+			"required": true,
+			"foreignKeyField": "user"
+		},
+		"role": {
+			"label": "Role",
+			"readOnly": false,
+			"required": true,
+			"foreignKeyField": "name",
+			"help": "The user will also inherit all child roles"
+		}
+	},
+	"order": [
+	],
+	"modes": {
+		"new": {
+			"enabled": true
+		},
+		"list": {
+			"enabled": true,
+			"columns": [
+				"id",
+				"user",
+				"role"
+			],
+			"canDelete": true
+		},
+		"details": {
+			"enabled": true,
+			"headerHint": "id"
+		},
+		"search": {
+			"enabled": true
+		}
+	}
+}

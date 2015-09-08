@@ -1,7 +1,7 @@
 {
 	"name": "Spam",
 	"model": "FelixOnline\\Core\\Comment",
-	"baseRole": ["superUser"],
+	"baseRole": ["commentEditor"],
 	"constraints": [{
 			"field": "active",
 			"operator": "=",

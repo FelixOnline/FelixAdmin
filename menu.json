@@ -5,7 +5,8 @@
 			"draft_articles": {},
 			"pending_articles": {},
 			"published_articles": {},
-			"publish_articles": {}
+			"publish_articles": {},
+			"polls": {}
 		}
 	},
 	"comments": {
@@ -18,7 +19,7 @@
 	},
 	"other_content": {
 		"children": {
-			"polls": {},
+			"notices": {},
 			"adverts": {},
 			"links": {},
 			"pages": {}
@@ -37,8 +38,9 @@
 			"users": {},
 			"create_user": {},
 			"settings": {},
-			"notices": {},
-			"frontpage": {}
+			"frontpage": {},
+			"roles": {},
+			"user_roles": {}
 		}
 	}
 }

@@ -1,7 +1,7 @@
 {
 	"name": "Pending Articles",
 	"model": "FelixOnline\\Core\\Article",
-	"baseRole": ["superUser"],
+	"baseRole": ["sectionEditor"],
 	"constraints": [
 		{
 			"field": "published",
@@ -20,6 +20,11 @@
 			"operator": "=",
 			"test": "0",
 			"roles": []
+		},
+		{
+			"specialConstraint": "isEditor",
+			"reverse": false,
+			"roles": ["sectionEditor"]
 		}
 	],
 	"actions": {

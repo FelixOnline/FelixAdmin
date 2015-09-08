@@ -1,7 +1,7 @@
 {
 	"name": "Front Page",
 	"model": "FelixOnline\\Core\\Frontpage",
-	"baseRole": ["superUser"],
+	"baseRole": ["seniorEditor"],
 	"constraints": { },
 	"fields": {
 		"id": {

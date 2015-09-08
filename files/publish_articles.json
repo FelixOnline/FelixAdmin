@@ -1,7 +1,7 @@
 {
 	"name": "Publish Articles",
 	"model": "FelixOnline\\Core\\Article",
-	"baseRole": ["superUser"],
+	"baseRole": ["webMaster"],
 	"constraints": [
 		{
 			"field": "published",
@@ -25,23 +25,19 @@
 	"actions": {
 		"approve_now": {
 			"label": "Publish: immediately",
-			"icon": "bullhorn",
-			"roles": ["superUser"]
+			"icon": "bullhorn"
 		},
 		"approve_tomorrow": {
 			"label": "Publish: Next 7:00 AM",
-			"icon": "time",
-			"roles": ["superUser"]
+			"icon": "time"
 		},
 		"approve_friday": {
 			"label": "Publish: This Friday 7:00 AM",
-			"icon": "fast-forward",
-			"roles": ["superUser"]
+			"icon": "fast-forward"
 		},
 		"approve_lastfriday": {
 			"label": "Publish: Last Friday 7:00 AM",
-			"icon": "fast-backward",
-			"roles": ["superUser"]
+			"icon": "fast-backward"
 		}
 	},
 	"hasId": true,

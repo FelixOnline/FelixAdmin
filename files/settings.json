@@ -1,7 +1,7 @@
 {
 	"name": "Settings",
 	"model": "FelixOnline\\Core\\Settings",
-	"baseRole": ["superUser"],
+	"baseRole": ["sysAdmin"],
 	"constraints": [
 	],
 	"fields": {

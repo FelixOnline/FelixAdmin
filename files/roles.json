@@ -1,0 +1,54 @@
+{
+	"name": "Roles",
+	"model": "FelixOnline\\Core\\Role",
+	"baseRole": ["sysAdmin"],
+	"constraints": { },
+	"fields": {
+		"id": {
+			"label": "ID",
+			"readOnly": true,
+			"required": true
+		},
+		"name": {
+			"label": "Name",
+			"readOnly": true,
+			"required": true
+		},
+		"description": {
+			"label": "Description",
+			"readOnly": true,
+			"required": true
+		},
+		"parent": {
+			"label": "Parent",
+			"readOnly": true,
+			"required": false,
+			"foreignKeyField": "name"
+		}
+	},
+	"auxHtml": "<p><b>This is for your information only, it is read only.</b></p>",
+	"order": [
+	],
+	"modes": {
+		"new": {
+			"enabled": false
+		},
+		"list": {
+			"enabled": true,
+			"columns": [
+				"id",
+				"name",
+				"description",
+				"parent"
+			],
+			"canDelete": false
+		},
+		"details": {
+			"enabled": false,
+			"headerHint": "details"
+		},
+		"search": {
+			"enabled": false
+		}
+	}
+}

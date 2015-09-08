@@ -1,4 +1,4 @@
 {
 	"name": "Issue Archive",
-	"baseRole": ["superUser"]
+	"baseRole": ["archivist"]
 }

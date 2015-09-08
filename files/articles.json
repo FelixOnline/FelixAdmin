@@ -1,4 +1,4 @@
 {
 	"name": "Articles",
-	"baseRole": ["superUser"]
+	"baseRole": ["author"]
 }

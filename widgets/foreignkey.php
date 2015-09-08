@@ -37,6 +37,7 @@ class ForeignKeyWidget implements Widget {
 		} else {
 			$this->currentValuePk = $this->currentValue->fields[$this->fkPk]->getValue();
 			$this->currentValueDescr = $this->currentValue->fields[$this->fkField]->getValue();
+
 		}
 	}
 

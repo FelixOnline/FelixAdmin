@@ -1,7 +1,7 @@
 {
 	"name": "Files",
 	"model": "FelixOnline\\Core\\ArchiveFile",
-	"baseRole": ["superUser"],
+	"baseRole": ["archivist"],
 	"constraints": [
 	],
 	"auxHtml": "<p><center>Do not alter the records on this page unless absolutely necessary as you may break the archive</center></p>",

@@ -1,4 +1,4 @@
 {
 	"name": "Other Content",
-	"baseRole": ["superUser"]
+	"baseRole": ["webMaster", "adverts"]
 }

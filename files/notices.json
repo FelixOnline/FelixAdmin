@@ -1,7 +1,7 @@
 {
 	"name": "Notices",
 	"model": "FelixOnline\\Core\\Notice",
-	"baseRole": ["superUser"],
+	"baseRole": ["webMaster"],
 	"constraints": [
 	],
 	"fields": {

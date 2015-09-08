@@ -1,7 +1,7 @@
 {
 	"name": "Categories",
 	"model": "FelixOnline\\Core\\Category",
-	"baseRole": ["superUser"],
+	"baseRole": ["webMaster"],
 	"constraints": [
 		{
 			"specialConstraint": "isEditor",

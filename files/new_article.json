@@ -1,7 +1,7 @@
 {
 	"name": "New Article",
 	"model": "FelixOnline\\Core\\Article",
-	"baseRole": ["superUser"],
+	"baseRole": ["author"],
 	"constraints": [
 	],
 	"fields": {
@@ -29,13 +29,14 @@
 		"author": {
 			"label": "Authors",
 			"readOnly": false,
-			"required": true,
+			"required": false,
 			"multiMap": {
 				"model": "FelixOnline\\Core\\ArticleAuthor",
 				"this": "article",
 				"foreignKey": "author",
 				"foreignKeyField": "name"
-			}
+			},
+			"help": "If you leave this blank, it will be automatically set to you. If you do not add yourself as an author, you may not be able to edit the article after creation"
 		},
 		"img1": {
 			"label": "Picture",

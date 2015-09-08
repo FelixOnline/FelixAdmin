@@ -1,7 +1,7 @@
 {
 	"name": "Published Articles",
 	"model": "FelixOnline\\Core\\Article",
-	"baseRole": ["superUser"],
+	"baseRole": ["sectionEditor"],
 	"constraints": [
 		{
 			"field": "published",
@@ -25,18 +25,13 @@
 			"specialConstraint": "isEditor",
 			"reverse": false,
 			"roles": ["sectionEditor"]
-		},
-		{
-			"specialConstraint": "isAuthor",
-			"reverse": false,
-			"roles": ["author"]
 		}
 	],
 	"actions": {
 		"approve_unpublish": {
 			"label": "Unpublish",
 			"icon": "flash",
-			"roles": ["superUser"]
+			"roles": ["webMaster"]
 		}
 	},
 	"hasId": true,
