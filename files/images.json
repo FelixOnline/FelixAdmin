@@ -14,8 +14,7 @@
 		"uri": {
 			"label": "URI",
 			"readOnly": false,
-			"required": true,
-			"help": "Relative to img folder"
+			"required": true
 		},
 		"user": {
 			"label": "User who uploaded",
