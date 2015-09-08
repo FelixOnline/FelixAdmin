@@ -1,0 +1,88 @@
+{
+	"name": "Images",
+	"model": "FelixOnline\\Core\\Image",
+	"baseRole": ["sysAdmin"],
+	"constraints": [
+	],
+	"hasId": true,
+	"fields": {
+		"id": {
+			"label": "Image ID",
+			"readOnly": true,
+			"required": true
+		},
+		"uri": {
+			"label": "URI",
+			"readOnly": false,
+			"required": true,
+			"help": "Relative to img folder"
+		},
+		"user": {
+			"label": "User who uploaded",
+			"readOnly": false,
+			"required": true,
+			"foreignKeyField": "name"
+		},
+		"description": {
+			"label": "Description",
+			"readOnly": false,
+			"required": false,
+			"help": "Used when searching for an image"
+		},
+		"timestamp": {
+			"label": "Upload time",
+			"readOnly": false,
+			"required": true
+		},
+		"attribution": {
+			"label": "Attribution",
+			"readOnly": false,
+			"required": false
+		},
+		"attr_link": {
+			"label": "URL for attribution",
+			"readOnly": false,
+			"required": false
+		},
+		"width": {
+			"label": "Width (px)",
+			"readOnly": false,
+			"required": true
+		},
+		"height": {
+			"label": "Height (px)",
+			"readOnly": false,
+			"required": true
+		}
+	},
+	"order": [
+		{
+			"column": "timestamp",
+			"direction": "DESC"
+		}
+	],
+	"modes": {
+		"new": {
+			"enabled": true
+		},
+		"list": {
+			"enabled": true,
+			"columns": [
+				"id",
+				"uri",
+				"timestamp",
+				"user",
+				"description"
+			],
+			"canDelete": true
+		},
+		"details": {
+			"enabled": true,
+			"headerHint": "uri"
+		},
+		"search": {
+			"enabled": true
+		}
+	},
+	"auxHtml": ""
+}
