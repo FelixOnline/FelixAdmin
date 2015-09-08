@@ -32,7 +32,10 @@
 			"label": "Closed"
 		},
 		"location": {
-			"label": "TBD"
+			"label": "Show in",
+			"readOnly": false,
+			"required": true,
+			"foreignKeyField": "description"
 		},
 		"hide_results": {
 			"label": "Show results only after voting"
@@ -52,7 +55,8 @@
 				"model": "FelixOnline\\Core\\PollOption",
 				"this": "poll",
 				"field": "text"
-			}
+			},
+			"help": "Type and press enter to create options"
 		}
 	},
 	"order": [
