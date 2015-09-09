@@ -85,6 +85,10 @@ if (LOCAL) { // development connector
 	$app['cache'] = new \Stash\Pool();
 }
 
+if (DISABLE_STASH) {
+	$app['cache'] = new \Stash\Pool();
+}
+
 // Initialize Sentry
 $app['sentry'] = new \Raven_Client($app->getOption('sentry_dsn', NULL));
 
