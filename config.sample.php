@@ -14,6 +14,7 @@
 	define('COOKIE_NAME', 'felixonline-admin');
 	define('SSH_LOGIN', false); // if login via pam_auth fails, try via ssh2? (this is mostly a thing for the live ICU deployment)
 	define('SSH_HOST', ''); // hostname to connect to
+	define('DISABLE_STASH', false); // Set to true of production flag is off on main site
 
 	$config = array(
 		'db_name' => "",
