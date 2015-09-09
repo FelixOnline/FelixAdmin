@@ -2,8 +2,9 @@
 
 Proper instructions coming soon.
 
-1. Set up config.php as per config.example.php
-2. Set up htaccess. Example format:
+1. Run composer install
+2. Set up config.php as per config.example.php
+3. Set up htaccess. Example format:
 
 ```
 RewriteEngine on
@@ -12,6 +13,8 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
 ```
+
+A sample file has been provided.
 
 ## Writing page files
 
