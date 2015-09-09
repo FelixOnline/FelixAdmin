@@ -35,7 +35,7 @@ class newHelper {
 			$otherData = array();
 			$currentValue = '';
 
-			if(!array_key_exists('multiMap', $data) && !array_key_exists('choiceMap', $data)) {
+			if(!array_key_exists('multiMap', $data) && !array_key_exists('choiceMap', $data) && !array_key_exists('uploader', $data)) {
 				switch(get_class($modelField)) {
 					case "FelixOnline\Core\Type\TextField":
 						$widgetClass = 'FelixOnline\Admin\Widgets\TextWidget';
@@ -116,6 +116,8 @@ class newHelper {
 						$otherData);
 					continue;
 				}
+			} elseif(array_key_exists('uploader', $data)) {
+				$widgetClass = 'FelixOnline\Admin\Widgets\Uploader';
 			}
 
 			if(isset($data['defaultValue'])) {

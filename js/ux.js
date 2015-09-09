@@ -77,28 +77,24 @@ function create(page_name) {
 			$(this).val(trevor.$el.val());
 		});
 
-		var formData = $('form').serializeArray();
-		formData.push({
-			name: "q",
-			value: "new"
-		});
-		formData.push({
-			name: "00page",
-			value: page_name
-		});
+		var formData = new FormData($('#new-form')[0]);
+		formData.append('q', 'new');
+		formData.append('00page', page_name);
 
 		$.ajax(getAjaxEndpoint(), {
 			type: "POST",
 			data: formData,
+			processData: false,
+			contentType: false,
 			beforeSend: function(data) {
 				$('.form-status').hide();
-				$('.save-button').html('<span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> Creating...');
-				$('.save-button').attr('disabled', 'disabled');
+				$('.new-button').html('<span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> Creating...');
+				$('.new-button').attr('disabled', 'disabled');
 				$('.form-group').removeClass('has-error');
 			},
 			complete: function(data) {
-				$('.save-button').html('<span class="glyphicon glyphicon-saved" aria-hidden="true"></span> Create');
-				$('.save-button').removeAttr('disabled');
+				$('.new-button').html('<span class="glyphicon glyphicon-saved" aria-hidden="true"></span> Create');
+				$('.new-button').removeAttr('disabled');
 			},
 			error: function(data) {
 				message = data.responseJSON.message;

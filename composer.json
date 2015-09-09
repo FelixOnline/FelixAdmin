@@ -27,7 +27,8 @@
 		"dominicsayers/isemail": "dev-master",
 		"raven/raven": "0.8.0",
         "abhishekbhardwaj/twitter-api-php": "dev-master",
-        "woutersioen/sir-trevor-php": "dev-master"
+        "woutersioen/sir-trevor-php": "dev-master",
+        "smalot/pdfparser": "dev-master"
     },
 	"minimum-stability": "dev"
 }

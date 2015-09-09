@@ -49,7 +49,7 @@ class detailsHelper {
 
 			$modelField = current($this->record)->fields[$field];
 
-			if(!array_key_exists('multiMap', $data) && !array_key_exists('choiceMap', $data)) {
+			if(!array_key_exists('multiMap', $data) && !array_key_exists('choiceMap', $data) && !array_key_exists('uploader', $data)) {
 				try {
 					$modelFieldValue = $modelField->getValue();
 				} catch(\Exception $e) {
@@ -145,6 +145,8 @@ class detailsHelper {
 						$otherData);
 					continue;
 				}
+			} else {
+				continue;
 			}
 
 			if(array_key_exists('readOnly', $this->pageData['modes']['details']) && $this->pageData['modes']['details']['readOnly'] == true) {

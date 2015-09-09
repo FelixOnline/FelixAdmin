@@ -61,6 +61,10 @@ class searchAjaxHelper extends Core {
 				continue; // FIXME: These fields are not supported at present.
 			}
 
+			if(array_key_exists('uploader', $fieldInfo)) {
+				continue; // Not supported
+			}
+
 			$filteredSomething = true;
 
 			if(array_key_exists('choiceMap', $fieldInfo)) {

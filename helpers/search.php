@@ -30,6 +30,10 @@ class searchHelper {
 		 		continue;
 			}
 
+			if(array_key_exists('uploader', $data)) {
+		 		continue;
+			}
+
 			if(array_key_exists('choiceMap', $data)) {
 				$widgetClass = 'FelixOnline\Admin\Widgets\StringWidget';
 

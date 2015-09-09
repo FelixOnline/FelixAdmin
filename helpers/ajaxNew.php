@@ -61,8 +61,8 @@ class newAjaxHelper extends Core {
 				continue;
 			}
 
-			if(array_key_exists('multiMap', $fieldInfo) || array_key_exists('choiceMap', $fieldInfo)) {
-				continue; // Do later
+			if(array_key_exists('multiMap', $fieldInfo) || array_key_exists('choiceMap', $fieldInfo) || array_key_exists('uploader', $fieldInfo)) {
+				continue; // Do later - uploader fields will be done by callback actions
 			}
 
 			$fieldType = get_class($model->fields[$fieldName]);

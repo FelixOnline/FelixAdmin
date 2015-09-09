@@ -59,6 +59,10 @@ class saveAjaxHelper extends Core {
 					continue;
 				}
 
+				if($fieldInfo['uploader']) {
+		 			continue;
+		 		}
+
 				if(array_key_exists('multiMap', $fieldInfo)) {
 					$table = (new $fieldInfo['multiMap']['model'])->dbtable;
 

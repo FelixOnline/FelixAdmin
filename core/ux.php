@@ -572,6 +572,14 @@ class UXHelper {
 					continue;
 				}
 
+				if(array_key_exists('uploader', $pageData['fields'][$colid])) {
+					$value = '<td><span class="text-danger">This field cannot be shown - it is for new record entry only</span></td>';
+
+					$string .= $value;
+
+					continue;
+				}
+
 
 				// Type transformations
 				$type = get_class($record->fields[$colid]);
@@ -787,7 +795,7 @@ class UXHelper {
 		$pk) {
 
 		$string = '<h3>New Entry</h3>';
-		$string .= '<form class="form-horizontal">';
+		$string .= '<form class="form-horizontal" id="new-form">';
 
 		$string .= '<div class="form-group">
 <div class="col-sm-12">';

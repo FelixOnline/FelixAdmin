@@ -30,6 +30,12 @@
 		"inactive": {
 			"label": "Inactive",
 			"readOnly": false
+		},
+		"pdf": {
+			"label": "Upload PDF",
+			"readOnly": false,
+			"required": true,
+			"uploader": true
 		}
 	},
 	"order": [
@@ -42,7 +48,8 @@
 	},
 	"modes": {
 		"new": {
-			"enabled": true
+			"enabled": true,
+			"callback": "archive_upload"
 		},
 		"list": {
 			"enabled": true,
@@ -62,5 +69,6 @@
 		"search": {
 			"enabled": true
 		}
-	}
+	},
+	"auxHtml": "<p><center>You can upload new PDFs when creating a new entry here. To modify PDF data after uploading, use the Files tab</center></p>"
 }
