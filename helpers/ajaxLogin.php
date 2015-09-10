@@ -12,18 +12,20 @@ class loginAjaxHelper extends Core {
 			$this->error("Password not specified.", 400);
 		}
 
-		if(!\pam_auth($_POST['username'], $_POST['password'])) {
-			if(!SSH_LOGIN) {
-				$this->error("Your login details were not accepted.", 403);
-			} else {
-				$resource = \ssh2_connect(SSH_HOST);
-
-				if(!\ssh2_auth_password($resource, $_POST['username'], $_POST['password'])) {
+		if(!LOCAL) {
+			if(!\pam_auth($_POST['username'], $_POST['password'])) {
+				if(!SSH_LOGIN) {
 					$this->error("Your login details were not accepted.", 403);
+				} else {
+					$resource = \ssh2_connect(SSH_HOST);
+
+					if(!\ssh2_auth_password($resource, $_POST['username'], $_POST['password'])) {
+						$this->error("Your login details were not accepted.", 403);
+					}
 				}
 			}
 		}
-
+		
 		// Login accepted now see if the user exists
 		$manager = \FelixOnline\Core\BaseManager::build('FelixOnline\Core\User', 'user', 'user');
 		$manager->filter('user = "%s"', array(\strtolower($_POST['username'])));
