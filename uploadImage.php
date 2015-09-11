@@ -54,8 +54,6 @@
 			$object->setUser($userObject);
 			$object->setUri('img/upload/'.$fileName);
 			$object->setDescription('');
-			$object->setVOffset('');
-			$object->setHOffset('');
 
 			$sizeInfo = get_image_size($targetFile);
 

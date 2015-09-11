@@ -248,10 +248,6 @@ class Page {
 		return $this->manager;
 	}
 
-	public function setManager(\FelixOnline\Core\BaseManager $manager) {
-		$this->manager = $manager;
-	}
-
 	public function isRecordAccessible($key) {
 		$tempManager = $this->manager;
 		$tempManager->filter($this->pk.' = "%s"', array($key));
