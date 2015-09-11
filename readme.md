@@ -16,6 +16,10 @@ RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
 
 A sample file has been provided.
 
+## How does this all work?
+
+Details are provided in the Github wiki.
+
 ## Writing page files
 
 These go in the "files" folder.
@@ -125,6 +129,10 @@ The menu is stored in the menu.json file and takes the following format:
 While it is possible for a page to exist in multiple places, this may confuse the menuing system as the menu has no knowledge of the hierarchy used to reach the page you requested. Therefore, the page may be shown as belonging under a different parent to the one you originally clicked.
 
 The menu shown on screen is based on this file, with pages the user cannot access (and any children they have) removed. This will be refreshed on every login.
+
+## rebuildArchive.php
+
+Run this script to rebuild issue archive thumbnails and extract contents for the fulltext search.
 
 ## Sir Trevor twitter
 
