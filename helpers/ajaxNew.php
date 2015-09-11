@@ -73,7 +73,8 @@ class newAjaxHelper extends Core {
 				switch($fieldType) {
 					case 'FelixOnline\Core\Type\ForeignKey':
 						if($model->fields[$fieldName]->class == 'FelixOnline\Core\User') {
-							global $currentuser;
+							$app = \FelixOnline\Core\App::getInstance();
+							$currentuser = $app['currentuser'];
 							
 							$value = $currentuser;
 						} elseif($model->fields[$fieldName]->class == 'FelixOnline\Core\Image' && $fieldInfo['defaultImage']) {

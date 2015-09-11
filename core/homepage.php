@@ -7,7 +7,8 @@ class HomePage {
 	private $userRoles;
 
 	public function __construct() {
-		global $currentuser;
+		$app = \FelixOnline\Core\App::getInstance();
+		$currentuser = $app['currentuser'];
 
 		$this->userName = $currentuser->getName();
 		$this->userRoles = $currentuser->getRoles();

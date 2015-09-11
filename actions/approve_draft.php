@@ -24,8 +24,8 @@ class approve_draft extends BaseAction {
 		$authors = $record->getAuthors();
 
 		if(!$authors) {
-			global $currentuser;
-			$currentuser = new \FelixOnline\Core\CurrentUser();
+			$app = \FelixOnline\Core\App::getInstance();
+			$currentuser = $app['currentuser'];
 
 			$rec2 = new \FelixOnline\Core\ArticleAuthor();
 			$rec2->setArticle($record);

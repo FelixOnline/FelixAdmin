@@ -117,7 +117,8 @@ class Page {
 
 	// Set up the manager and apply page constraints
 	private function applyConstraints() {
-		global $currentuser;
+		$app = \FelixOnline\Core\App::getInstance();
+		$currentuser = $app['currentuser'];
 
 		if($this->pageData['model'] == '') {
 			return; // null pages

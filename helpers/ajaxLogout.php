@@ -5,7 +5,8 @@ namespace FelixOnline\Admin\Ajax;
 class logoutAjaxHelper extends Core {
 	public function run() {
 		// Register the logout
-		global $currentuser;
+		$app = \FelixOnline\Core\App::getInstance();
+		$currentuser = $app['currentuser'];
 
 		$currentuser->resetSession();
 		$currentuser->removeCookie();

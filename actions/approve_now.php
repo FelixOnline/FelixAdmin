@@ -17,7 +17,8 @@ class approve_now extends BaseAction {
 		$this->validateClass($records, 'FelixOnline\Core\Article');
 
 		$time = time();
-		global $currentuser;
+		$app = \FelixOnline\Core\App::getInstance();
+		$currentuser = $app['currentuser'];
 
 		foreach($records as $record) {
 			$record = new \FelixOnline\Core\Article($record);

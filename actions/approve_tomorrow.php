@@ -21,7 +21,8 @@ class approve_tomorrow extends BaseAction {
 		} else {
 			$time = strtotime('today 7am');
 		}
-		global $currentuser;
+		$app = \FelixOnline\Core\App::getInstance();
+		$currentuser = $app['currentuser'];
 
 		foreach($records as $record) {
 			$record = new \FelixOnline\Core\Article($record);

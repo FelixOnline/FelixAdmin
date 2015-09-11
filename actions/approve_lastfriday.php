@@ -17,7 +17,8 @@ class approve_lastfriday extends BaseAction {
 		$this->validateClass($records, 'FelixOnline\Core\Article');
 
 		$time = strtotime('last friday 7am');
-		global $currentuser;
+		$app = \FelixOnline\Core\App::getInstance();
+		$currentuser = $app['currentuser'];
 
 		foreach($records as $record) {
 			$record = new \FelixOnline\Core\Article($record);

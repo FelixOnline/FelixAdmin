@@ -9,8 +9,8 @@
 	// www.felixonline.co.uk
 	require('core/setup.php');
 
-	global $currentuser;
-	$currentuser = new \FelixOnline\Core\CurrentUser();
+	$app = \FelixOnline\Core\App::getInstance();
+	$currentuser = $app['currentuser'];
 
 	if(!$currentuser->isLoggedIn()) {
 		echo UXHelper::header('Login');

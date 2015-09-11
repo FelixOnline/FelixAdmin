@@ -57,7 +57,8 @@ class loginAjaxHelper extends Core {
 		}
 
 		// Register the login
-		global $currentuser;
+		$app = \FelixOnline\Core\App::getInstance();
+		$currentuser = $app['currentuser'];
 
 		$currentuser->setUser($_POST['username']);
 		$currentuser->createSession();

@@ -6,7 +6,8 @@ class UXHelper {
 	public static function header(
 		$pageName,
 		$endpoint = '') {
-		global $currentuser;
+		$app = \FelixOnline\Core\App::getInstance();
+		$currentuser = $app['currentuser'];
 
 		$string = '<!doctype html>
 
@@ -166,7 +167,8 @@ class UXHelper {
 			</footer>
 		</div>';
 
-		global $currentuser;
+		$app = \FelixOnline\Core\App::getInstance();
+		$currentuser = $app['currentuser'];
 
 		$string .= '<div class="modal fade" id="rap">
 		<div class="modal-dialog">
