@@ -90,7 +90,9 @@
 				"cat",
 				"email",
 				"editors",
-				"active"
+				"order",
+				"active",
+				"hidden"
 			],
 			"canDelete": false
 		},
