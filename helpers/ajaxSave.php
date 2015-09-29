@@ -181,9 +181,11 @@ class saveAjaxHelper extends Core {
 						}
 
 						if($_POST[$fieldName] == '') {
-							continue; // Dont set a null key
-						}
+							$setter = 'set'.$this->to_camel_case($fieldName);
 
+							$model->$setter(NULL);
+							continue;
+						}
 						$fk = new $fkType($_POST[$fieldName]);
 
 						$setter = 'set'.$this->to_camel_case($fieldName);
