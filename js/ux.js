@@ -123,6 +123,10 @@ function create(page_name) {
 				$('.select2').val(null).trigger('change');
 				$('.image-group .image-key').val(null);
 				$('.image-group #current').html('<i>No image selected.</i>');
+
+				$('html, body').animate({
+					scrollTop: $("body").offset().top
+				}, 500);
 			},
 			cache: false
 		});
