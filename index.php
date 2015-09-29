@@ -13,6 +13,7 @@
 	$currentuser = $app['currentuser'];
 
 	if(!$currentuser->isLoggedIn()) {
+		$app['env']['session']->reset(); // Clear old session variables
 		echo UXHelper::header('Login');
 		echo UXHelper::login();
 		echo UXHelper::footer();

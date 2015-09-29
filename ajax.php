@@ -29,6 +29,8 @@
 	$currentuser = $app['currentuser'];
 
 	if(!$currentuser->isLoggedIn() && $_POST['q'] != 'login' && $_POST['q'] != 'logout') {
+		$app['env']['session']->reset(); // Clear old session variables
+		
 		header('HTTP/1.1 403 Forbidden');
 		header("Cache-Control: no-cache, must-revalidate", false);
 		header("Expires: Sat, 26 Jul 1997 05:00:00 GMT", false);
