@@ -50,12 +50,13 @@
 		"parent": {
 			"label": "Parent category",
 			"readOnly": false,
-			"foreignKeyField": "label"
+			"foreignKeyField": "label",
+			"help": "If the parent category has no articles, it will show a few articles from all categories it is a parent of - including this one"
 		},
 		"secret": {
 			"label": "Secret",
 			"readOnly": false,
-			"help": "You must be logged in to see a secret category, or access any articles within one."
+			"help": "You must be logged in to see a secret category, or access any articles within one. This does NOT affect child categories."
 		},
 		"editors": {
 			"label": "Section editors",
