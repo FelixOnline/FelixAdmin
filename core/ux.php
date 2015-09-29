@@ -52,7 +52,11 @@ class UXHelper {
 	</div>';
 
 		$app = \FelixOnline\Core\App::getInstance();
-		$string .= self::menu($app['env']['session']->session['menu'], $endpoint);
+		$currentuser = $app['currentuser'];
+
+		if($currentuser->isLoggedIn()) {
+			$string .= self::menu($app['env']['session']->session['menu'], $endpoint);
+		}
 
 		$string .= '<div class="container">
 	<h2>'.$pageName.'</h2>';
