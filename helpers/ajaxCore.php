@@ -68,8 +68,7 @@ class Core {
 			if($fieldInfo['required']
 				&& ((!array_key_exists($fieldName, $_FILES) && $submission[$fieldName] == '') 
 					|| (array_key_exists($fieldName, $_FILES) && $_FILES[$fieldName]['error'] == 4))
-				&& (($fieldInfo['readOnly'] && (!$fieldInfo['autoField'] && $pk != $fieldName))
-					|| !$fieldInfo['readOnly'])) {
+				&& !$fieldInfo['readOnly']) {
 				$badFields[] = array('name' => $fieldName, 'reason' => $fieldInfo['label'].' is required.');
 
 				continue;
