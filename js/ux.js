@@ -178,6 +178,10 @@ function runSearch(page_name, paginator_page) {
 					zebra: ["even", "odd"]
 	    		}
 			});
+
+			$('html, body').animate({
+				scrollTop: $("#search-results").offset().top
+			}, 500);
 		},
 		cache: false
 	});
