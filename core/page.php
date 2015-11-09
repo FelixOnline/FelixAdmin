@@ -189,6 +189,17 @@ class Page {
 								$this->manager->join($manager2, null, "category");
 							}
 							continue;
+						case 'isMe':
+							if($this->pageData['model'] == 'FelixOnline\Core\User') {
+								if($constraint['reverse']) {
+									$op = '!=';
+								} else {
+									$op = '=';
+								}
+
+								$this->manager->filter('user '.$op.' "%s"', array($currentuser->getUser()));
+							}
+							continue;
 						default:
 							throw new \FelixOnline\Core\Exceptions\InternalException("This special constraint is not understood");
 					}
