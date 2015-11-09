@@ -1,3 +1,7 @@
+body {
+  font-family: -apple-system, -webkit-system-font, "Helvetica Neue", "Arial", sans-serif;
+}
+
 .container-header {
 /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#6d0019+0,8f0222+56,a90329+100 */
 background: #6d0019; /* Old browsers */
