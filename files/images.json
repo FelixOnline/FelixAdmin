@@ -7,7 +7,7 @@
 	"hasId": true,
 	"fields": {
 		"id": {
-			"label": "Image ID",
+			"label": "Image",
 			"readOnly": true,
 			"required": true
 		},
