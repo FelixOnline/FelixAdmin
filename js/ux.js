@@ -53,13 +53,12 @@ function save(page_name, key) {
 
 				$('.form-status').html('<span class="glyphicon glyphicon-ok"></span> Succesfully saved!');
 				$('.form-status').fadeIn('fast').delay(5000).fadeOut('slow');
+				// Get paginator page
+				paginator_page = $('#list-table').attr('data-currentpage');
 
 				if ($('#search-results').length) {
-					search(page_name); // Reload results
+					runSearch(page_name, paginator_page); // Reload results
 				} else if($('#list-table').length) {
-					// Get paginator page
-					paginator_page = $('#list-table').attr('data-currentpage');
-
 					refreshList(page_name, paginator_page); // Reload results
 				}
 			},
@@ -322,12 +321,12 @@ function del(page_name, key) {
 				alert(message);
 			},
 			success: function(data) {
-				if ($('#search-results').length) {
-					search(page_name); // Reload results
-				} else {
-					// Get paginator page
-					paginator_page = $('#list-table').attr('data-currentpage');
+				// Get paginator page
+				paginator_page = $('#list-table').attr('data-currentpage');
 
+				if ($('#search-results').length) {
+					runSearch(page_name, paginator_page); // Reload results
+				} else {
 					refreshList(page_name, paginator_page); // Reload results
 				}
 			},
@@ -401,13 +400,12 @@ function runAction(action, page_name) {
 			error: function(data) {
 				$('.action-msg').hide();
 				$('.list-area').show();
+				// Get paginator page
+				paginator_page = $('#list-table').attr('data-currentpage');
 
 				if ($('#search-results').length) {
-					search(page_name); // Reload results
+					runSearch(page_name, paginator_page); // Reload results
 				} else if($('#list-table').length) {
-					// Get paginator page
-					paginator_page = $('#list-table').attr('data-currentpage');
-
 					refreshList(page_name, paginator_page); // Reload results
 				}
 
@@ -417,13 +415,12 @@ function runAction(action, page_name) {
 			success: function(data) {
 				$('.action-msg').hide();
 				$('.list-area').show();
+				// Get paginator page
+				paginator_page = $('#list-table').attr('data-currentpage');
 
 				if ($('#search-results').length) {
-					search(page_name); // Reload results
+					runSearch(page_name, paginator_page); // Reload results
 				} else if($('#list-table').length) {
-					// Get paginator page
-					paginator_page = $('#list-table').attr('data-currentpage');
-
 					refreshList(page_name, paginator_page); // Reload results
 				}
 
