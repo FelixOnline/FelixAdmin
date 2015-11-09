@@ -17,7 +17,7 @@
 			"required": true
 		},
 		"user": {
-			"label": "User who uploaded",
+			"label": "Uploaded by",
 			"readOnly": false,
 			"required": true,
 			"foreignKeyField": "name"
@@ -29,7 +29,7 @@
 			"help": "Used when searching for an image"
 		},
 		"timestamp": {
-			"label": "Upload time",
+			"label": "Uploaded at",
 			"readOnly": false,
 			"required": true
 		},
