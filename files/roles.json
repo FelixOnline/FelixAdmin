@@ -2,7 +2,7 @@
 	"name": "Roles",
 	"model": "FelixOnline\\Core\\Role",
 	"baseRole": ["sysAdmin"],
-	"constraints": { },
+	"constraints": [],
 	"fields": {
 		"id": {
 			"label": "ID",
