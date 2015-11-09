@@ -591,13 +591,14 @@ class UXHelper {
 				$type = get_class($record->fields[$colid]);
 
 				if($type == "FelixOnline\Core\Type\ForeignKey") {
+					if($record->fields[$colid]->getValue() == null) {
+						$string .= '<td></td>';
+						continue; // No value set
+					}
+
 					try {
 						if($record->fields[$colid]->class == 'FelixOnline\Core\Image') {
-							if($record->fields[$colid]->getValue() == null) {
-								$value = ''; // No image set
-							} else {
-								$value = '<a href="'.$record->fields[$colid]->getValue()->getUrl().'">'.$record->fields[$colid]->getValue()->getUrl().'</a>';
-							}
+							$value = '<a href="'.$record->fields[$colid]->getValue()->getUrl().'">'.$record->fields[$colid]->getValue()->getUrl().'</a>';
 						} elseif($record->fields[$colid]->class == 'FelixOnline\Core\Text') {
 							$value = '<span class="text-danger">Text fields cannot be shown here</span>';
 						} else {
