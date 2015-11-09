@@ -34,7 +34,7 @@ The format of the page file is as follows:
 	"model": // Class name for the model which must inherit BaseDB in Core
 	"baseRole": [] // Array of role names which are required to access the page - a user with ANY of these roles (even if inherited) will be allowed in
 	"constraints": [{ // array of objects
-		"specialConstraint": // If this is specified, a special constraint will be applied. Valid options are isAuthor (for core Article objects only) or isEditor (for core Article objects - is article in a category the user edits - or core Category objects only)
+		"specialConstraint": // If this is specified, a special constraint will be applied. Valid options are isAuthor (for core Article objects only) or isEditor (for core Article objects - is article in a category the user edits - or core Category objects only) or isMe (for core User objects - is user the logged in user)
 		"reverse": // If above is present, make the test negative
 		"roles": [] // Array of roles this constraint applies to, if empty/not set applies to all roles - if a user has ANY of these roles it will apply _UNLESS_ the role is inherited
 		"field": // If specialConstraint NOT specified, what field to test
