@@ -23,12 +23,12 @@
 		}
 	],
     "require": {
-		"felixonline/core": "dev-master",
-		"dominicsayers/isemail": "dev-master",
-		"raven/raven": "0.8.0",
+	"felixonline/core": "0.5.*",
+	"dominicsayers/isemail": "dev-master",
+	"raven/raven": "0.8.0",
         "abhishekbhardwaj/twitter-api-php": "dev-master",
         "woutersioen/sir-trevor-php": "dev-master",
         "smalot/pdfparser": "dev-master"
     },
-	"minimum-stability": "dev"
+    "minimum-stability": "dev"
 }
