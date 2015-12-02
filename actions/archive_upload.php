@@ -55,7 +55,7 @@ class archive_upload extends BaseAction {
 				try {
 					$imagick = new \Imagick();
 					if(!$imagick->readImage($finalDest.'[0]')) { throw new Exception('Could not load PDF file'); }
-					if(!$imagick->thumbnailImage(200, 200, true)) { throw new Exception('failed to generate'); }
+					if(!$imagick->thumbnailImage(400, 400, true)) { throw new Exception('failed to generate'); }
 					if(!$imagick->setImageFormat('png')) { throw new Exception('failed to set format'); }
 					if(!$imagick->writeImage($folder.'thumbs/'.$date[0].'_'.($record->getPublication()->getId()).'_'.($record->getIssue()).'_A.png')) { throw new Exception('failed to save'); }
 				} catch(\Exception $e) {
