@@ -7,6 +7,8 @@ if(php_sapi_name() !== 'cli') {
 	die('CLI only');
 }
 
+ini_set('memory_limit','1G');
+
 date_default_timezone_set('Europe/London');
 
 require('core/setup.php');
