@@ -15,6 +15,7 @@ require('core/setup.php');
 
 $manager = \FelixOnline\Core\BaseManager::build('FelixOnline\Core\ArchiveFile', 'archive_file');
 $manager->filter('part = "A"');
+$manager->order('id', 'DESC');
 
 $values = $manager->values();
 
