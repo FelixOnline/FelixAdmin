@@ -369,6 +369,8 @@ function show_details(page_name, key) {
 		success: function(data) {
 			$('#detailsview .modal-body').html(data.form.string);
 			$('#detailsview .modal-title').html(data.form.heading);
+
+			addCalendar();
 		},
 		complete: function(data) {
 			$('.glyphicon-'+key).removeClass('glyphicon-hourglass');
@@ -526,19 +528,23 @@ function toggleSelect() {
 	
 }
 
-$('.datetimefield').datetimepicker({
-	locale: 'en',
-	format: 'YYYY-MM-DD HH:mm:ss',
-	showClear: true,
-	showClose: true,
-	showTodayButton: true,
-	useCurrent: false,
-	icons: {
-		clear: "glyphicon glyphicon-ban-circle"
-	},
-	inline: false,
-	sideBySide: true
-});
+function addCalendar() {
+	$('.datetimefield').datetimepicker({
+		locale: 'en',
+		format: 'YYYY-MM-DD HH:mm:ss',
+		showClear: true,
+		showClose: true,
+		showTodayButton: true,
+		useCurrent: false,
+		icons: {
+			clear: "glyphicon glyphicon-ban-circle"
+		},
+		inline: false,
+		sideBySide: true
+	});
+}
+
+addCalendar();
 
 // http://codepen.io/DawsonMediaD/pen/byDqv/
 $(".modal-wide").on("show.bs.modal", function() {
