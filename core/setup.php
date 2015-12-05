@@ -82,11 +82,11 @@ if (LOCAL) { // development connector
 	$app['email'] = \Swift_Mailer::newInstance($transport);
 
 	// Don't cache in local mode
-	$app['cache'] = new \Stash\Pool();
+	$app['cache'] = new \Stash\Pool(new \Stash\Driver\BlackHole());
 }
 
 if (DISABLE_STASH) {
-	$app['cache'] = new \Stash\Pool();
+	$app['cache'] = new \Stash\Pool(new \Stash\Driver\BlackHole());
 }
 
 // Initialize Sentry
