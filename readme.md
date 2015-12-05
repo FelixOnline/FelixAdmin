@@ -16,6 +16,8 @@ RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
 
 A sample file has been provided.
 
+If you host Admin on the same server as the main site, you may need to define CACHE_PATH in the configuration file and set it to the same path as the main site for cache resetting to work.
+
 ## How does this all work?
 
 Details are provided in the Github wiki.
