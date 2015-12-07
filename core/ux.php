@@ -619,13 +619,7 @@ class UXHelper {
 
 				switch($type) {
 					case "FelixOnline\Core\Type\TextField":
-						$dots = '';
-
-						if(strlen(strip_tags($value)) > 200) {
-							$dots = '...';
-						}
-						
-						$value = substr(strip_tags($value), 0, 200).$dots;
+						$value = mb_strimwidth($value, 0, 200, '...', 'utf-8');
 						break;
 					case "FelixOnline\Core\Type\DateTimeField":
 						$value = date('Y-m-d H:i:s', $value);
