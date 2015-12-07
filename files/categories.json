@@ -76,7 +76,8 @@
 	],
 	"modes": {
 		"new": {
-			"enabled": true
+			"enabled": true,
+			"roles": ["sysAdmin", "webMaster"]
 		},
 		"search": {
 			"enabled": true,
