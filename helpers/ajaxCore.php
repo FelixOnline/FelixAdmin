@@ -47,12 +47,18 @@ class Core {
 	}
 
 	public function success($response) {
-		header("HTTP/1.1 200 OK");
-		header("Cache-Control: no-cache, must-revalidate", false);
-		header("Expires: Sat, 26 Jul 1997 05:00:00 GMT", false);
-		header("Content-Type: text/json", false);
+		$status = json_encode($response);
 
-		echo json_encode($response);
+		if($status === false) {
+			return $this->error('JSON Error '.json_last_error().'.');
+		} else {
+			header("HTTP/1.1 200 OK");
+			header("Cache-Control: no-cache, must-revalidate", false);
+			header("Expires: Sat, 26 Jul 1997 05:00:00 GMT", false);
+			header("Content-Type: text/json", false);
+
+			echo $status;
+		}
 
 		session_write_close();
 		exit;
