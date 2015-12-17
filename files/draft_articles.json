@@ -84,6 +84,12 @@
 			"canUpload": true,
 			"canPick": true
 		},
+		"img_caption": {
+			"label": "Image caption",
+			"readOnly": false,
+			"required": false,
+			"help": "This will only be shown if an image is supplied."
+		},
 		"text1": {
 			"label": "Article text",
 			"foreignKeyField": "content",
