@@ -225,7 +225,7 @@ function refreshList(page_name, paginator_page) {
 function removeImage(location) {
 	$('#tabs-'+location+'-content #'+location+'-current').html('<i>No image selected.</i>');
 
-	$('#'+location).val('');
+	$('input#'+location).val('');
 }
 
 function imageForm(location, image, hasEditor, inTrevor) {
@@ -248,7 +248,7 @@ function imageForm(location, image, hasEditor, inTrevor) {
 		success: function(data) {
 			$('#tabs-'+location+'-content #'+location+'-current').html(data.form);
 
-			$('#'+location).val(data.id);
+			$('input#'+location).val(data.id);
 
 			$('#tabs-'+location+' #'+location+'-current-tab').tab('show');
 
