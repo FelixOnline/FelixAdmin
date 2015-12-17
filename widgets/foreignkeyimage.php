@@ -157,6 +157,11 @@ class ForeignKeyImageWidget implements Widget {
 							        query: params.term // search term
 							      };
 							    },
+								error: function(data) {
+									message = data.responseJSON.message;
+
+									alert(message);
+								},
 							    processResults: function (data, page) {
 							      return {
 							        results: data
