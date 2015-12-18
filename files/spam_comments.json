@@ -65,13 +65,9 @@
 		}
 	},
 	"actions": {
-		"comment_approve": {
-			"label": "Not spam, approve comment",
-			"icon": "thumbs-up"
-		},
-		"comment_reject": {
-			"label": "Not spam but reject comment",
-			"icon": "thumbs-down"
+		"comment_notspam": {
+			"label": "Not spam, return to pending",
+			"icon": "adjust"
 		}
 	},
 	"order": [

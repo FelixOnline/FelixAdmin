@@ -2,7 +2,7 @@
 
 namespace FelixOnline\Admin\Actions;
 
-class comment_spam extends BaseAction {
+class comment_notspam extends BaseAction {
 	public function __construct($permissions) {
 		parent::__construct($permissions);
 	}
@@ -17,9 +17,9 @@ class comment_spam extends BaseAction {
 		$records = $this->getRecords($records);
 
 		foreach($records as $record) {
-			$record->markAsSpam();
+			$record->markAsHam();
 		}
 
-		return 'Comments submitted to the spam detection service and marked as spam.';
+		return 'Comments returned to pending status and marked as not spam.';
 	}
 }

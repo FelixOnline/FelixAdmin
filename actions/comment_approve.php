@@ -17,8 +17,6 @@ class comment_approve extends BaseAction {
 		$records = $this->getRecords($records);
 
 		foreach($records as $record) {
-			$record->markAsHam();
-
 			$record->setActive(1)
 				   ->setPending(0)
 				   ->setSpam(0)
