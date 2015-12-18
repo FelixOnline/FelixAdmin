@@ -3,8 +3,8 @@
 namespace FelixOnline\Admin\Actions;
 
 class BaseAction {
-	private $permissions;
-	private $page;
+	protected $permissions;
+	protected $page;
 
 	public function __construct($pageObj) {
 		$this->page = $pageObj->getPageData();

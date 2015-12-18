@@ -32,6 +32,7 @@ class refreshAjaxHelper extends Core {
 		$manager = $page->getManager();
 		$numRecords = $manager->count();
 		$manager->limit((-LISTVIEW_PAGINATION_LIMIT + $page2*LISTVIEW_PAGINATION_LIMIT), LISTVIEW_PAGINATION_LIMIT);
+
 		$records = $manager->values();
 		$pageData = $page->getPageData();
 
@@ -51,6 +52,12 @@ class refreshAjaxHelper extends Core {
 
 				$actions[$key] = $action;
 			}
+		}
+
+		if($pageData['modes']['list']['canDelete']) {
+			$actions['bulk_delete'] = array(
+				"label" => "Delete",
+				"icon" => "trash");
 		}
 
 		$return = \FelixOnline\Admin\UXHelper::recordList(
