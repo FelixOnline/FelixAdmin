@@ -135,7 +135,7 @@ class ForeignKeyImageWidget implements Widget {
 						<div class="input-group select2-bootstrap-append">
 							<select class="form-control select2" id="'.$this->fieldName.'-picker" name="'.$this->fieldName.'-picker" style="width: 100%"></select>
 							<span class="input-group-btn">
-								<button class="btn btn-primary" onClick="pickLookupPic(); return false;">
+								<button class="btn btn-primary" onClick="pickLookupPic(\''.$this->fieldName.'\', false); return false;">
 									<span class="glyphicon glyphicon-ok"></span> Select this image
 								</button>
 							</span>
@@ -173,24 +173,7 @@ class ForeignKeyImageWidget implements Widget {
 							  minimumInputLength: 0
 							});
 						});
-
-						function pickLookupPic() {
-							if(!($("#'.$this->fieldName.'-picker").val())) {
-								alert(\'Please select a picture\');
-								return;
-							}
-
-							imageForm("'.$this->fieldName.'", $("#'.$this->fieldName.'-picker").val(), "'.(int) $this->editor.'");
-							$("#'.$this->fieldName.'-picker").val(null).trigger("change");
-							return;
-						}
-
-						function formatImagePicker(img) {
-							if (img.loading) return img.text;
-							var image = $(\'<span><img src="\' + img.url + \'" class="lookup-img" /> \' + img.text + \'</span>\');
-							return image;
-						};
-						</script>';
+					</script>';
 			endif;
 
 			if($this->defaultImage):

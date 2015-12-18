@@ -551,3 +551,20 @@ $(".modal-wide").on("show.bs.modal", function() {
   var height = $(window).height() - 200;
   $(this).find(".modal-body").css("max-height", height);
 });
+
+function pickLookupPic(blockId, isTrevor) {
+	if(!$("#"+blockId+"-picker").val()) {
+		alert('Please select a picture');
+		return;
+	}
+
+	imageForm(blockId, $("#"+blockId+"-picker").val(), "1", isTrevor);
+	$("#"+blockId+"-picker").val(null).trigger("change");
+	return;
+}
+
+function formatImagePicker(img) {
+	if (img.loading) return img.text;
+	var image = $('<span><img src="' + img.url + '" class="lookup-img" /> ' + img.text + '</span>');
+	return image;
+};

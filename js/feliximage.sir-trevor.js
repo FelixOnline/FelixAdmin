@@ -47,7 +47,7 @@ SirTrevor.Blocks.Feliximage = (function() {
           '      <div class="input-group select2-bootstrap-append">',
           '        <select class="form-control select2" id="'+blockId+'-picker" style="width: 100%"></select>',
           '        <span class="input-group-btn">',
-          '          <button class="btn btn-primary" onClick="pickLookupPic(); return false;">',
+          '          <button class="btn btn-primary" onClick="pickLookupPic(\''+blockId+'\', true); return false;">',
           '            <span class="glyphicon glyphicon-ok"></span> Select this image',
           '          </button>',
           '        </span>',
@@ -83,21 +83,7 @@ SirTrevor.Blocks.Feliximage = (function() {
           '          minimumInputLength: 0',
           '        });',
           '      });',
-          '      function pickLookupPic() {',
-          '        if(!$("#'+blockId+'-picker").val()) {',
-          '          alert(\'Please select a picture\');',
-          '          return;',
-          '        }',
-          '        imageForm("'+blockId+'", $("#'+blockId+'-picker").val(), "1", true);',
-          '        $("#'+blockId+'-picker").val(null).trigger("change");',
-          '        return;',
-          '      }',
-          '      function formatImagePicker(img) {',
-          '        if (img.loading) return img.text;',
-          '        var image = $(\'<span><img src="\' + img.url + \'" class="lookup-img" /> \' + img.text + \'</span>\');',
-          '        return image;',
-          '      };',
-          '      </script>'
+          '    </script>'
       ].join("\n"));
       return template(this);
     },
