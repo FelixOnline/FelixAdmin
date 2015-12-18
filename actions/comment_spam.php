@@ -14,11 +14,9 @@ class comment_spam extends BaseAction {
 
 		$this->validateAccess();
 
-		$this->validateClass($records, 'FelixOnline\Core\Comment');
+		$records = $this->getRecords($records);
 
 		foreach($records as $record) {
-			$record = new \FelixOnline\Core\Comment($record);
-
 			$record->markAsSpam();
 
 			$record->setActive(0)

@@ -33,13 +33,7 @@ class actionAjaxHelper extends Core {
 				throw new \Exception('You do not have permission to do this');
 			}
 
-			if(isset($pageObj->getPageData()['actions'][$action]['roles'])) {
-				$roles = array_merge($pageObj->getPageData()['actions'][$action]['roles'], $pageObj->getPageData()['baseRole']);
-			} else {
-				$roles = $pageObj->getPageData()['baseRole'];
-			}
-
-			$actionObj = new $actionObj($roles);
+			$actionObj = new $actionObj($pageObj);
 		} catch(\Exception $e) {
 			$this->error($e->getMessage(), 500);
 		}

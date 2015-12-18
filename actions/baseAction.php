@@ -4,19 +4,33 @@ namespace FelixOnline\Admin\Actions;
 
 class BaseAction {
 	private $permissions;
+	private $page;
 
-	public function __construct($permissions) {
-		$this->permissions = $permissions;
+	public function __construct($pageObj) {
+		$this->page = $pageObj->getPageData();
+
+		if(isset($pageObj->getPageData()['actions'][$action]['roles'])) {
+			$roles = array_merge($pageObj->getPageData()['actions'][$action]['roles'], $pageObj->getPageData()['baseRole']);
+		} else {
+			$roles = $pageObj->getPageData()['baseRole'];
+		}
+
+		$this->permissions = $roles;
 	}
 
-	protected function validateClass($records, $class) {
+	protected function getRecords($records) {
+		$obj = array();
+		$class = $this->page['model'];
+
 		try {
 			foreach($records as $record) {
-				$obj = new $class($record);
+				$obj[] = new $class($record);
 			}
 		} catch(\Exception $e) {
 			throw new Exception('Not everything you requested could be found.');
 		}
+
+		return $obj;
 	}
 
 	protected function validateAccess() {

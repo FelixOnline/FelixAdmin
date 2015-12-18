@@ -14,10 +14,9 @@ class approve_cancel extends BaseAction {
 
 		$this->validateAccess();
 
-		$this->validateClass($records, 'FelixOnline\Core\Article');
+		$records = $this->getRecords($records);
 
 		foreach($records as $record) {
-			$record = new \FelixOnline\Core\Article($record);
 			$record->setHidden(1);
 			$record->save();
 		}

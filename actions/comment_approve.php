@@ -14,11 +14,9 @@ class comment_approve extends BaseAction {
 
 		$this->validateAccess();
 
-		$this->validateClass($records, 'FelixOnline\Core\Comment');
+		$records = $this->getRecords($records);
 
 		foreach($records as $record) {
-			$record = new \FelixOnline\Core\Comment($record);
-
 			$record->markAsHam();
 
 			$record->setActive(1)

@@ -14,7 +14,7 @@ class approve_friday extends BaseAction {
 
 		$this->validateAccess();
 
-		$this->validateClass($records, 'FelixOnline\Core\Article');
+		$records = $this->getRecords($records);
 
 		if(date('l', time()) == 'Friday') {
 			$time = strtotime('today 7am');
@@ -25,7 +25,6 @@ class approve_friday extends BaseAction {
 		$currentuser = $app['currentuser'];
 
 		foreach($records as $record) {
-			$record = new \FelixOnline\Core\Article($record);
 			$record->setPublished($time);
 			$record->setApprovedby($currentuser);
 			$record->save();

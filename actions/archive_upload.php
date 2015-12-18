@@ -14,8 +14,8 @@ class archive_upload extends BaseAction {
 
 		$this->validateAccess();
 
-		$this->validateClass($records, 'FelixOnline\Core\ArchiveIssue');
-		$record = new \FelixOnline\Core\ArchiveIssue($records[0]);
+		$records = $this->getRecords($records);
+		$record = $records[0];
 
 		// Handle the uploaded file
 		$allowedExts = array("pdf");

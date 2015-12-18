@@ -14,10 +14,9 @@ class user_ldap extends BaseAction {
 
 		$this->validateAccess();
 
-		$this->validateClass($records, 'FelixOnline\Core\User');
+		$records = $this->getRecords($records);
 
 		foreach($records as $record) {
-			$record = new \FelixOnline\Core\User($record);
 			$record->syncLdap();
 		}
 

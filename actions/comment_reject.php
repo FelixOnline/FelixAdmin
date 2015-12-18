@@ -14,11 +14,9 @@ class comment_reject extends BaseAction {
 
 		$this->validateAccess();
 
-		$this->validateClass($records, 'FelixOnline\Core\Comment');
+		$records = $this->getRecords($records);
 
 		foreach($records as $record) {
-			$record = new \FelixOnline\Core\Comment($record);
-
 			$record->setActive(0)
 				   ->setPending(0)
 				   ->setSpam(0)

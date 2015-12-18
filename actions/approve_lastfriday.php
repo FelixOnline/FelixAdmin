@@ -14,14 +14,13 @@ class approve_lastfriday extends BaseAction {
 
 		$this->validateAccess();
 
-		$this->validateClass($records, 'FelixOnline\Core\Article');
+		$records = $this->getRecords($records);
 
 		$time = strtotime('last friday 7am');
 		$app = \FelixOnline\Core\App::getInstance();
 		$currentuser = $app['currentuser'];
 
 		foreach($records as $record) {
-			$record = new \FelixOnline\Core\Article($record);
 			$record->setPublished($time);
 			$record->setApprovedby($currentuser);
 			$record->save();

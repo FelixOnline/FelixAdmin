@@ -14,10 +14,9 @@ class approve_unpublish extends BaseAction {
 
 		$this->validateAccess();
 
-		$this->validateClass($records, 'FelixOnline\Core\Article');
+		$records = $this->getRecords($records);
 
 		foreach($records as $record) {
-			$record = new \FelixOnline\Core\Article($record);
 			$record->setPublished(NULL);
 			$record->setApprovedby(NULL);
 			$record->save();
