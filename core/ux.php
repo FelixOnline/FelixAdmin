@@ -464,6 +464,10 @@ class UXHelper {
 		$columns = array();
 
 		foreach($pageData['modes']['list']['columns'] as $column) {
+			if(!array_key_exists($column, $pageData['fields'])) {
+				throw new \Exception('You have requested column '.$column.' in this list view but it does not exist');
+			}
+
 			$columns[$column] = $pageData['fields'][$column]['label'];
 		}
 
@@ -586,6 +590,10 @@ class UXHelper {
 					continue;
 				}
 
+				if(!array_key_exists($colid, $record->fields)) {
+					throw new \Exception('You are trying to render a field '.$colid.' which is not in the model');
+					continue;
+				}
 
 				// Type transformations
 				$type = get_class($record->fields[$colid]);
@@ -608,7 +616,11 @@ class UXHelper {
 								throw new \Exception('No value found');
 							}
 
-							$value = $value->fields[$pageData['fields'][$colid]['foreignKeyField']]->getValue(); // This gets the desired field from the object
+							if(!array_key_exists('foreignKeyField', $pageData['fields'][$colid])) {
+								$value = '<span class="text-danger">No foreign key field specified</span>';
+							} else {
+								$value = $value->fields[$pageData['fields'][$colid]['foreignKeyField']]->getValue(); // This gets the desired field from the object
+							}
 						}
 					} catch(\Exception $e) {
 						$value = '<span class="text-danger">Error finding data</span>';
