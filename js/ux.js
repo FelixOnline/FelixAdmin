@@ -114,6 +114,17 @@ function create(page_name) {
 			success: function(data) {
 				$('.form-status').html('<span class="glyphicon glyphicon-ok"></span> Succesfully created! ' + data.key);
 				$('.form-status').fadeIn('fast').delay(5000).fadeOut('slow');
+				$('.datetimefield').each(function() {
+					$(this).data('DateTimePicker').date(null);
+				});
+
+				$('input').each(function() {
+					$(this).val('');
+					if($(this).attr('type') == 'checkbox') {
+						$(this).prop('checked', false);
+					}
+				});
+
 				$('form').trigger("reset");
 
 				$('.st-outer').each(function() {
@@ -123,6 +134,29 @@ function create(page_name) {
 				});
 
 				$('.select2').val(null).trigger('change');
+
+				$('select[data-default-pk]').each(function() {
+					$(this).append($("<option></option>")
+						.attr("value", $(this).attr('data-default-pk'))
+						.attr("selected", "selected")
+						.text($(this).attr('data-default-value') + " (" + $(this).attr('data-default-pk') + ")"));
+
+					$(this).val($(this).attr('data-default-pk')).trigger('change');
+				});
+
+				$('input[data-default]').each(function() {
+					if($(this).attr('type') == 'checkbox') {
+						if($(this).attr('data-default') == 1) {
+							$(this).prop('checked', true);
+						}
+					} else {
+						$(this).val($(this).attr('data-default'));
+						if($(this).hasClass('datetimefield')) {
+							$(this).data('DateTimePicker').date($(this).attr('data-default'));
+						}
+					}
+				});
+
 				$('.image-group .image-key').val(null);
 				$('.image-group #current').html('<i>No image selected.</i>');
 

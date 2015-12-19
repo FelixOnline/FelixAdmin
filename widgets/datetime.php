@@ -9,6 +9,7 @@ class DateTimeWidget implements Widget {
 	private $readOnly;
 	private $required;
 	private $help;
+	private $defaultValue;
 
 	public function __construct($fieldName, $label, $currentValue, $readOnly, $required, $help, $otherProperties = array()) {
 		$this->fieldName = $fieldName;
@@ -17,6 +18,7 @@ class DateTimeWidget implements Widget {
 		$this->readOnly = $readOnly;
 		$this->required = $required;
 		$this->help = $help;
+		$this->defaultValue = $otherProperties['defaultValue'];
 	}
 
 	public function render() {
@@ -26,10 +28,19 @@ class DateTimeWidget implements Widget {
 			$required = '';
 		}
 
+		$valDate = '';
+
+		if($this->defaultValue) {
+			$default = 'data-default="'.date("Y-m-d H:i:s", $this->defaultValue).'"';
+			if(!$this->currentValue) {
+				$valDate = date("Y-m-d H:i:s", $this->defaultValue);
+			}
+		} else {
+			$default = '';
+		}
+
 		if($this->currentValue != '') {
 			$valDate = date("Y-m-d H:i:s", $this->currentValue);
-		} else {
-			$valDate = '';
 		}
 
 		if($this->readOnly):
@@ -53,7 +64,7 @@ class DateTimeWidget implements Widget {
 			echo ' whited datetimefield';
 		endif;
 
-		echo '" name="'.$this->fieldName.'" id="'.$this->fieldName.'" value="'.$valDate.'" aria-describedby="'.$this->fieldName.'-help">
+		echo '" name="'.$this->fieldName.'" id="'.$this->fieldName.'" value="'.$valDate.'" '.$default.' aria-describedby="'.$this->fieldName.'-help">
 		<span id="'.$this->fieldName.'-help" class="help-block">'.$this->help.'</span>';
 
 		if(!$this->readOnly):

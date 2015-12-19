@@ -121,11 +121,24 @@ class newHelper {
 			}
 
 			if(isset($data['defaultValue'])) {
-				if($widgetClass == 'FelixOnline\Admin\Widgets\ForeignKeyWidget') {
-					$currentValue = new $class($data['defaultValue']);
-				} else {
-					$currentValue = $data['defaultValue'];
+				switch($widgetClass) {
+					case 'FelixOnline\Admin\Widgets\ForeignKeyWidget':
+						$defaultValue = new $class($data['defaultValue']);
+						break;
+					case 'FelixOnline\Admin\Widgets\ForeignKeyChoiceMapWidget':
+					case 'FelixOnline\Admin\Widgets\ForeignKeyMultiMapWidget':
+					case 'FelixOnline\Admin\Widgets\ForeignKeyTextWidget':
+					case 'FelixOnline\Admin\Widgets\ForeignKeyImageWidget':
+					case 'FelixOnline\Admin\Widgets\Uploader':
+					case 'FelixOnline\Admin\Widgets\TextWidget':
+						// These do not support defaults
+						break;
+					default:
+						$defaultValue = $data['defaultValue'];
+						break;
 				}
+
+				$otherData['defaultValue'] = $defaultValue;
 			}
 
 			$this->widgets[] = new $widgetClass(

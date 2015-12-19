@@ -6,6 +6,7 @@ class ForeignKeyWidget implements Widget {
 	private $fieldName;
 	private $label;
 	private $currentValue;
+	private $defaultValue;
 	private $readOnly;
 	private $required;
 	private $help;
@@ -17,6 +18,8 @@ class ForeignKeyWidget implements Widget {
 
 	private $currentValuePk;
 	private $currentValueDescr;
+	private $defaultValuePk;
+	private $defaultValueDescr;
 
 	public function __construct($fieldName, $label, $currentValue, $readOnly, $required, $help, $otherProperties = array()) {
 		$this->fieldName = $fieldName;
@@ -30,6 +33,7 @@ class ForeignKeyWidget implements Widget {
 		$this->fkPk = $this->currentValue->pk;
 		$this->page = $otherProperties['page'];
 		$this->class = $otherProperties['class'];
+		$this->defaultValue = $otherProperties['defaultValue'];
 
 		if($this->currentValue == '') {
 			$this->currentValuePk = '';
@@ -37,7 +41,14 @@ class ForeignKeyWidget implements Widget {
 		} else {
 			$this->currentValuePk = $this->currentValue->fields[$this->fkPk]->getValue();
 			$this->currentValueDescr = $this->currentValue->fields[$this->fkField]->getValue();
+		}
 
+		if($this->defaultValue == '') {
+			$this->defaultValuePk = '';
+			$this->defaultValueDescr = '';
+		} else {
+			$this->defaultValuePk = $this->defaultValue->fields[$this->fkPk]->getValue();
+			$this->defaultValueDescr = $this->defaultValue->fields[$this->fkField]->getValue();
 		}
 	}
 
@@ -67,10 +78,21 @@ class ForeignKeyWidget implements Widget {
 			echo ' readonly disabled';
 		endif;
 
-		echo ' name="'.$this->fieldName.'" id="'.$this->fieldName.'" aria-describedby="'.$this->fieldName.'-help" style="width: 100%">';
-			if(!($this->currentValuePk == '')) {
-				echo '<option selected="selected" value="'.$this->currentValuePk.'">'.\htmlentities($this->currentValueDescr).' ('.$this->currentValuePk.')</option>';
+		echo ' name="'.$this->fieldName.'" id="'.$this->fieldName.'" aria-describedby="'.$this->fieldName.'-help" style="width: 100%"';
+
+		if($this->defaultValue) {
+			echo ' data-default-pk="'.$this->defaultValuePk.'" data-default-value="'.\htmlentities($this->defaultValueDescr).'">';
+
+			if($this->currentValuePk == '') {
+				echo '<option selected="selected" value="'.$this->defaultValuePk.'">'.\htmlentities($this->defaultValueDescr).' ('.$this->defaultValuePk.')</option>';
 			}
+		} else {
+			echo '>';
+		}
+
+		if(!($this->currentValuePk == '')) {
+			echo '<option selected="selected" value="'.$this->currentValuePk.'">'.\htmlentities($this->currentValueDescr).' ('.$this->currentValuePk.')</option>';
+		}
 
 		echo '</select>';
 

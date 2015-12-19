@@ -68,7 +68,7 @@ The format of the page file is as follows:
 				"this": // The column in the model relating to this page
 				"field": // What field from the foreign table to allow editing in
 			}
-			"defaultValue": // Default value for new entry forms - will be lost when the form resets after succesful creation
+			"defaultValue": // Default value for new entry forms - will NO LONGER be lost when the form resets after succesful creation. Valid only on checkbox, datetime, numeric, string, and foreignkey fields. On datetime fields, please supply a POSIX timestamp.
 		}
 	}
 	"order": [{ // array of objects
