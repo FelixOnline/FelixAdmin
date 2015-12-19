@@ -1,8 +1,9 @@
 function save(page_name, key) {
 	if(SirTrevor.onBeforeSubmit() == 0) {
-		$('.sir-trevor').each(function() {
-			trevor = SirTrevor.getInstance($(this).data('trevor-id'));
-			$(this).val(trevor.$el.val());
+		$('.st-outer').each(function() {
+			editorId = $(this).attr('id');
+			trevor = SirTrevor.getInstance(editorId);
+			$('#'+editorId+' textarea.form-control').val(trevor.$el.val());
 		});
 
 		var formData = $('form').serializeArray();
@@ -71,9 +72,10 @@ function save(page_name, key) {
 
 function create(page_name) {
 	if(SirTrevor.onBeforeSubmit() == 0) {
-		$('.sir-trevor').each(function() {
-			trevor = SirTrevor.getInstance($(this).data('trevor-id'));
-			$(this).val(trevor.$el.val());
+		$('.st-outer').each(function() {
+			editorId = $(this).attr('id');
+			trevor = SirTrevor.getInstance(editorId);
+			$('#'+editorId+' textarea.form-control').val(trevor.$el.val());
 		});
 
 		var formData = new FormData($('#new-form')[0]);
@@ -114,8 +116,9 @@ function create(page_name) {
 				$('.form-status').fadeIn('fast').delay(5000).fadeOut('slow');
 				$('form').trigger("reset");
 
-				$('.sir-trevor').each(function() {
-					trevor = SirTrevor.getInstance($(this).data('trevor-id'));
+				$('.st-outer').each(function() {
+					editorId = $(this).attr('id');
+					trevor = SirTrevor.getInstance(editorId);
 					trevor.reinitialize();
 				});
 

@@ -838,11 +838,7 @@ class UXHelper {
 
 
 	public static function widgetForm($widgets) {
-		$string = '<script>
-			document.addEventListener("DOMContentLoaded", function(event) {
-				SirTrevor.runOnAllInstances("destroy");
-			});
-		</script>';
+		$string = '';
 
 		foreach($widgets as $widget) {
 			ob_start();

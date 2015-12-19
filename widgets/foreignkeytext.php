@@ -84,8 +84,6 @@ class ForeignKeyTextWidget implements Widget {
 							return "'.STANDARD_URL.'ajaxTweet.php?tweet_id=" + tweetID;
 						}
 					});
-					id = trevor.ID;
-					$(\'.sir-trevor-'.$this->fieldName.'\').data(\'trevor-id\', id);
 				});
 			</script>
 		</div>';
