@@ -6,7 +6,8 @@
 		{
 			"specialConstraint": "isAuthor",
 			"reverse": false,
-			"roles": ["author"]
+			"roles": ["author"],
+			"notRoles": ["webMaster"]
 		}
 	],
 	"hasId": true,

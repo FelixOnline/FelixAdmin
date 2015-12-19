@@ -6,6 +6,7 @@ class Page {
 	private $page = null;
 	private $pageInfo = null;
 	private $userRoles = array();
+	private $userExplicitRoles = array();
 
 	private $pageData = null; // JSON describing page
 	private $manager = null; // What is the manager used to iterate over data
@@ -138,6 +139,12 @@ class Page {
 			foreach($toTest as $constraint) {
 				if(count($constraint['roles']) > 0) {
 					if(count(array_intersect($constraint['roles'], $this->userExplicitRoles)) == 0) {
+						continue; // Does not apply
+					}
+				}
+
+				if(count($constraint['notRoles']) > 0) {
+					if(count(array_intersect($constraint['notRoles'], $this->userRoles)) != 0) {
 						continue; // Does not apply
 					}
 				}

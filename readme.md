@@ -39,6 +39,7 @@ The format of the page file is as follows:
 		"specialConstraint": // If this is specified, a special constraint will be applied. Valid options are isAuthor (for core Article objects only) or isEditor (for core Article objects - is article in a category the user edits - or core Category objects only) or isMe (for core User objects - is user the logged in user)
 		"reverse": // If above is present, make the test negative
 		"roles": [] // Array of roles this constraint applies to, if empty/not set applies to all roles - if a user has ANY of these roles it will apply _UNLESS_ the role is inherited
+		"notRoles": [] // Array of roles that, if the user has (*even if implicitly*), the constraint will not apply. For example, if you have an isAuthor constraint but put sectionEditor here, section editors will not have to be authors of articles to see them on this page.
 		"field": // If specialConstraint NOT specified, what field to test
 		"operator": // If above is present, what SQL operator to apply
 		"test": // What value to compare to

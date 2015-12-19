@@ -29,7 +29,8 @@
 		{
 			"specialConstraint": "isAuthor",
 			"reverse": false,
-			"roles": ["author"]
+			"roles": ["author"],
+			"notRoles": ["sectionEditor"]
 		}
 	],
 	"actions": {
