@@ -1,0 +1,81 @@
+{
+	"name": "My Articles",
+	"model": "FelixOnline\\Core\\Article",
+	"baseRole": ["author", "commentModerator"],
+	"constraints": [
+		{
+			"specialConstraint": "isAuthor",
+			"reverse": false,
+			"roles": []
+		}
+	],
+	"fields": {
+		"id": {
+			"label": "ID",
+			"readOnly": true,
+			"required": true
+		},
+		"title": {
+			"label": "Title",
+			"readOnly": true,
+			"required": true
+		},
+		"category": {
+			"label": "Section",
+			"readOnly": true,
+			"required": true,
+			"foreignKeyField": "label"
+		},
+		"date": {
+			"label": "Created",
+			"readOnly": true,
+			"required": true
+		},
+		"hidden": {
+			"label": "Draft",
+			"readOnly": true,
+			"required": true
+		},
+		"published": {
+			"label": "Published on",
+			"readOnly": true,
+			"required": true
+		},
+		"approvedby": {
+			"label": "Published by",
+			"readOnly": true,
+			"required": true,
+			"foreignKeyField": "name"
+		}
+	},
+	"order": [
+		{
+			"column": "date",
+			"direction": "DESC"
+		}
+	],
+	"modes": {
+		"new": {
+			"enabled": false
+		},
+		"list": {
+			"enabled": true,
+			"columns": [
+				"title",
+				"category",
+				"date",
+				"hidden",
+				"published",
+				"approvedby"
+			],
+			"canDelete": false
+		},
+		"details": {
+			"enabled": false,
+			"headerHint": "name"
+		},
+		"search": {
+			"enabled": true
+		}
+	}
+}

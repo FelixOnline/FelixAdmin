@@ -1,0 +1,122 @@
+{
+	"name": "My Account",
+	"model": "FelixOnline\\Core\\User",
+	"baseRole": ["author", "commentModerator"],
+	"constraints": [
+		{
+			"specialConstraint": "isMe",
+			"reverse": false,
+			"roles": []
+		}
+	],
+	"fields": {
+		"user": {
+			"label": "Username",
+			"readOnly": true,
+			"required": true
+		},
+		"name": {
+			"label": "Name",
+			"readOnly": false,
+			"required": true
+		},
+		"email": {
+			"label": "Email address",
+			"readOnly": false,
+			"required": false
+		},
+		"description": {
+			"label": "Bio",
+			"readOnly": false,
+			"required": false
+		},
+		"facebook": {
+			"label": "Facebook",
+			"readOnly": false,
+			"required": false
+		},
+		"twitter": {
+			"label": "Twitter",
+			"readOnly": false,
+			"required": false
+		},
+		"websitename": {
+			"label": "Website link name",
+			"readOnly": false,
+			"required": false
+		},
+		"websiteurl": {
+			"label": "Website link URL",
+			"readOnly": false,
+			"required": false
+		},
+		"show_email": {
+			"label": "Show email address",
+			"readOnly": false,
+			"required": false
+		},
+		"show_ldap": {
+			"label": "Show LDAP info",
+			"readOnly": false,
+			"required": false
+		},
+		"info": {
+			"label": "LDAP info",
+			"readOnly": true
+		},
+		"image": {
+			"label": "Avatar",
+			"readOnly": true,
+			"required": false,
+			"imageDetailsEditor": false,
+			"canUpload": true,
+			"canPick": true,
+			"defaultImage": 696
+		},
+		"roles": {
+			"label": "Roles",
+			"readOnly": true,
+			"required": false,
+			"multiMap": {
+				"model": "FelixOnline\\Core\\UserRole",
+				"this": "user",
+				"foreignKey": "role",
+				"foreignKeyField": "description"
+			}
+		}
+	},
+	"order": [
+		{
+			"column": "user",
+			"direction": "asc"
+		}
+	],
+	"actions": {
+		"user_ldap": {
+			"label": "Refresh data from LDAP",
+			"icon": "globe"
+		}
+	},
+	"modes": {
+		"new": {
+			"enabled": false
+		},
+		"list": {
+			"enabled": true,
+			"columns": [
+				"user",
+				"name",
+				"email",
+				"roles"
+			],
+			"canDelete": false
+		},
+		"details": {
+			"enabled": true,
+			"headerHint": "name"
+		},
+		"search": {
+			"enabled": false
+		}
+	}
+}
