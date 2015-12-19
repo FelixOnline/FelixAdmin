@@ -622,7 +622,11 @@ class UXHelper {
 						$value = mb_strimwidth($value, 0, 200, '...', 'utf-8');
 						break;
 					case "FelixOnline\Core\Type\DateTimeField":
-						$value = date('Y-m-d H:i:s', $value);
+						if($value == null) {
+							$value = '';
+						} else {
+							$value = date('Y-m-d H:i:s', $value);
+						}
 						break;
 					case "FelixOnline\Core\Type\BooleanField":
 						if($value) {
