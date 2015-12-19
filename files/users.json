@@ -1,7 +1,7 @@
 {
 	"name": "Users",
 	"model": "FelixOnline\\Core\\User",
-	"baseRole": ["sysAdmin"],
+	"baseRole": ["sysAdmin", "webMaster"],
 	"constraints": [
 	],
 	"fields": {
