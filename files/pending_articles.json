@@ -1,5 +1,5 @@
 {
-	"name": "Pending Articles",
+	"name": "Articles Awaiting Publication",
 	"model": "FelixOnline\\Core\\Article",
 	"baseRole": ["sectionEditor"],
 	"constraints": [
@@ -142,5 +142,5 @@
 			"headerHint": "title"
 		}
 	},
-	"auxHtml": "<p><center>These articles are awaiting publication.</center></p>"
+	"auxHtml": "<p><center>These are articles in your section(s) that are awaiting publication by the website team. You can edit some details, or send them back for further editing here.</center></p>"
 }
