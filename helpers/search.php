@@ -87,6 +87,10 @@ class searchHelper {
 				}
 			}
 
+			if((!isset($this->pageData['modes']['search']['fields']) || array_search($field, $this->pageData['modes']['search']['fields']) === FALSE) && $field == $pk) {
+				continue;
+			}
+
 			$this->widgets[] = new $widgetClass(
 				$field,
 				$data['label'],
