@@ -198,7 +198,7 @@ class newAjaxHelper extends Core {
 			try {
 				$action = 'FelixOnline\Admin\Actions\\'.$page->getPageData()['modes']['new']['callback'];
 
-				$action = new $action($page->getPageData()['baseRole']);
+				$action = new $action($page);
 
 				$message = $action->run(array($key));
 				$this->success(array("key" => $message));
