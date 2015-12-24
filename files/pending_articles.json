@@ -84,7 +84,18 @@
 			"label": "Article text",
 			"foreignKeyField": "content",
 			"required": false,
-			"readOnly": true
+			"readOnly": false
+		},
+		"topics": {
+			"label": "Topics",
+			"readOnly": false,
+			"required": false,
+			"multiMap": {
+				"model": "FelixOnline\\Core\\ArticleTopic",
+				"this": "article",
+				"foreignKey": "topic",
+				"foreignKeyField": "name"
+			}
 		},
 		"published": {
 			"label": "Publish date",

@@ -13,7 +13,8 @@
 		"title": {
 			"label": "Title",
 			"readOnly": false,
-			"required": true
+			"required": true,
+			"defaultValue": "Abcd"
 		},
 		"teaser": {
 			"label": "Teaser",
@@ -57,11 +58,23 @@
 			"required": true,
 			"readOnly": false
 		},
+		"topics": {
+			"label": "Topics",
+			"readOnly": false,
+			"required": false,
+			"multiMap": {
+				"model": "FelixOnline\\Core\\ArticleTopic",
+				"this": "article",
+				"foreignKey": "topic",
+				"foreignKeyField": "name"
+			}
+		},
 		"date": {
 			"label": "Created",
-			"readOnly": true,
+			"readOnly": false,
 			"required": true,
-			"autoField": true
+			"autoField": true,
+			"defaultValue": 1
 		},
 		"searchable": {
 			"label": "Shown to search engines",

@@ -86,6 +86,17 @@
 			"foreignKeyField": "content",
 			"required": true
 		},
+		"topics": {
+			"label": "Topics",
+			"readOnly": false,
+			"required": false,
+			"multiMap": {
+				"model": "FelixOnline\\Core\\ArticleTopic",
+				"this": "article",
+				"foreignKey": "topic",
+				"foreignKeyField": "name"
+			}
+		},
 		"published": {
 			"label": "Publication date",
 			"readOnly": true,
@@ -137,7 +148,7 @@
 		},
 		"search": {
 			"enabled": true,
-			"fields": ["title", "teaser", "category", "author", "img1", "text1", "published", "searchable", "comment_status"]
+			"fields": ["title", "teaser", "category", "author", "img1", "text1", "published", "searchable", "comment_status", "blah"]
 		},
 		"details": {
 			"enabled": true,

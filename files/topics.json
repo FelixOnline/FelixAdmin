@@ -1,0 +1,69 @@
+{
+	"name": "Topics",
+	"model": "FelixOnline\\Core\\Topic",
+	"baseRole": ["webMaster"],
+	"constraints": [
+	],
+	"fields": {
+		"slug": {
+			"label": "URL key",
+			"readOnly": false,
+			"required": true,
+			"help": "Enter the address to go in the URL after your-site.com/topic/. Use letters and numbers only."
+		},
+		"name": {
+			"label": "Name",
+			"readOnly": false,
+			"required": true
+		},
+		"text": {
+			"label": "Blurb",
+			"readOnly": false,
+			"required": false,
+			"help": "Enter some informative text about this topic. HTML is welcome."
+		},
+		"image": {
+			"label": "Image",
+			"readOnly": false,
+			"required": true,
+			"imageDetailsEditor": true,
+			"canUpload": true,
+			"canPick": true
+		},
+		"disabled": {
+			"label": "Disabled",
+			"readOnly": false,
+			"help": "If a topic is disabled, it is not shown anywhere (or accessible) but the articles within it will still be accessible (unless their category is secret)."
+		}
+	},
+	"order": [
+		{
+			"column": "slug",
+			"direction": "ASC"
+		}
+	],
+	"modes": {
+		"new": {
+			"enabled": true,
+			"roles": ["sysAdmin", "webMaster"]
+		},
+		"search": {
+			"enabled": true,
+			"fields": ["slug", "name", "text", "disabled"]
+		},
+		"list": {
+			"enabled": true,
+			"columns": [
+				"slug",
+				"name",
+				"disabled"
+			],
+			"canDelete": false
+		},
+		"details": {
+			"enabled": true,
+			"headerHint": "name"
+		}
+	},
+	"auxHtml": ""
+}

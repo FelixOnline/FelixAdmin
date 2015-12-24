@@ -96,6 +96,17 @@
 			"foreignKeyField": "content",
 			"required": true
 		},
+		"topics": {
+			"label": "Topics",
+			"readOnly": false,
+			"required": false,
+			"multiMap": {
+				"model": "FelixOnline\\Core\\ArticleTopic",
+				"this": "article",
+				"foreignKey": "topic",
+				"foreignKeyField": "name"
+			}
+		},
 		"searchable": {
 			"label": "Shown to search engines",
 			"readOnly": false

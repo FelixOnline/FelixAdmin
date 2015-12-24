@@ -12,7 +12,8 @@
 			"pending_articles": {},
 			"publish_articles": {},
 			"published_articles": {},
-			"polls": {}
+			"polls": {},
+			"topics": {}
 		}
 	},
 	"comments": {

@@ -88,6 +88,17 @@
 			"required": true,
 			"readOnly": true
 		},
+		"topics": {
+			"label": "Topics",
+			"readOnly": true,
+			"required": false,
+			"multiMap": {
+				"model": "FelixOnline\\Core\\ArticleTopic",
+				"this": "article",
+				"foreignKey": "topic",
+				"foreignKeyField": "name"
+			}
+		},
 		"published": {
 			"label": "Publish date",
 			"readOnly": false,
