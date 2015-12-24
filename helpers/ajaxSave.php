@@ -214,6 +214,19 @@ class saveAjaxHelper extends Core {
 			$this->error("Failed to save: ".$e->getMessage(), 500);
 		}
 
+		if(isset($page->getPageData()['modes']['details']['callback'])) {
+			try {
+				$action = 'FelixOnline\Admin\Actions\\'.$page->getPageData()['modes']['details']['callback'];
+
+				$action = new $action($page);
+
+				$message = $action->run(array($model->getId()));
+				$this->success($message);
+			} catch(\Exception $e) {
+				$this->error("Your entry has been saved, however a problem occured in the callback function. Details: ".$e->getMessage(), 500);
+			}
+		}
+
 		$this->success("Saved");
 	}
 }

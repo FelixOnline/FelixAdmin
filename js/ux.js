@@ -52,7 +52,7 @@ function save(page_name, key) {
 					$('#detailsview').modal('hide');
 				}
 
-				$('.form-status').html('<span class="glyphicon glyphicon-ok"></span> Succesfully saved!');
+				$('.form-status').html('<span class="glyphicon glyphicon-ok"></span> '+data);
 				$('.form-status').fadeIn('fast').delay(5000).fadeOut('slow');
 				// Get paginator page
 				paginator_page = $('#list-table').attr('data-currentpage');

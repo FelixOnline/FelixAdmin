@@ -103,13 +103,6 @@
 			"label": "Publish date",
 			"readOnly": false,
 			"required": true
-		},
-		"approvedby": {
-			"label": "Reviewed by",
-			"readOnly": false,
-			"required": true,
-			"help": "It is reccomended you set this to yourself",
-			"foreignKeyField": "name"
 		}
 	},
 	"order": [
@@ -138,7 +131,8 @@
 		},
 		"details": {
 			"enabled": true,
-			"headerHint": "title"
+			"headerHint": "title",
+			"callback": "manual_approve_article"
 		}
 	},
 	"auxHtml": "<p><center>If one of the default publication options is not suitable, click the edit icon and manually set a publication time.</center></p>"
