@@ -9,11 +9,10 @@
 		"children": {
 			"new_article": {},
 			"draft_articles": {},
-			"pending_articles": {},
-			"publish_articles": {},
+			"review_queue": {},
+			"publication_queue": {},
 			"published_articles": {},
-			"polls": {},
-			"topics": {}
+			"section_articles": {}
 		}
 	},
 	"comments": {
@@ -29,7 +28,9 @@
 			"notices": {},
 			"adverts": {},
 			"links": {},
-			"pages": {}
+			"pages": {},
+			"polls": {},
+			"topics": {}
 		}
 	},
 	"archive": {

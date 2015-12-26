@@ -1,12 +1,36 @@
 {
-	"name": "My Articles",
+	"name": "Published in My Sections",
 	"model": "FelixOnline\\Core\\Article",
-	"baseRole": ["author", "commentModerator"],
+	"baseRole": ["sectionEditor"],
 	"constraints": [
 		{
-			"specialConstraint": "isAuthor",
-			"reverse": false,
+			"field": "published",
+			"operator": "IS NOT NULL",
+			"test": "",
 			"roles": []
+		},
+		{
+			"field": "approvedby",
+			"operator": "IS NOT NULL",
+			"test": "",
+			"roles": []
+		},
+		{
+			"field": "reviewedby",
+			"operator": "IS NOT NULL",
+			"test": "",
+			"roles": []
+		},
+		{
+			"field": "hidden",
+			"operator": "=",
+			"test": "0",
+			"roles": []
+		},
+		{
+			"specialConstraint": "isEditor",
+			"reverse": false,
+			"roles": ["sectionEditor"]
 		}
 	],
 	"fields": {

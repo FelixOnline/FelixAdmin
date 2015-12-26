@@ -1,7 +1,7 @@
 {
-	"name": "Publish Articles",
+	"name": "Articles Awaiting Review",
 	"model": "FelixOnline\\Core\\Article",
-	"baseRole": ["webMaster"],
+	"baseRole": ["sectionEditor"],
 	"constraints": [
 		{
 			"field": "published",
@@ -16,28 +16,31 @@
 			"roles": []
 		},
 		{
+			"field": "reviewedby",
+			"operator": "IS NULL",
+			"test": "",
+			"roles": []
+		},
+		{
 			"field": "hidden",
 			"operator": "=",
 			"test": "0",
 			"roles": []
+		},
+		{
+			"specialConstraint": "isEditor",
+			"reverse": false,
+			"roles": ["sectionEditor"]
 		}
 	],
 	"actions": {
-		"approve_now": {
-			"label": "Publish: immediately",
-			"icon": "bullhorn"
+		"approve_reject": {
+			"label": "Reject (author)",
+			"icon": "remove-circle"
 		},
-		"approve_tomorrow": {
-			"label": "Publish: Next 7:00 AM",
-			"icon": "time"
-		},
-		"approve_friday": {
-			"label": "Publish: This Friday 7:00 AM",
-			"icon": "fast-forward"
-		},
-		"approve_lastfriday": {
-			"label": "Publish: Last Friday 7:00 AM",
-			"icon": "fast-backward"
+		"approve_accept": {
+			"label": "Accept for publication",
+			"icon": "ok-circle"
 		}
 	},
 	"hasId": true,
@@ -49,17 +52,23 @@
 		},
 		"title": {
 			"label": "Title",
-			"readOnly": true,
+			"readOnly": false,
 			"required": true
 		},
 		"teaser": {
 			"label": "Teaser",
-			"readOnly": true,
+			"readOnly": false,
 			"required": true
+		},
+		"category": {
+			"label": "Category",
+			"readOnly": false,
+			"required": true,
+			"foreignKeyField": "label"
 		},
 		"author": {
 			"label": "Authors",
-			"readOnly": true,
+			"readOnly": false,
 			"required": true,
 			"multiMap": {
 				"model": "FelixOnline\\Core\\ArticleAuthor",
@@ -68,29 +77,28 @@
 				"foreignKeyField": "name"
 			}
 		},
-		"category": {
-			"label": "Category",
-			"readOnly": true,
-			"required": true,
-			"foreignKeyField": "label"
-		},
 		"img1": {
 			"label": "Picture",
-			"readOnly": true,
+			"readOnly": false,
 			"imageDetailsEditor": true,
 			"canUpload": true,
-			"canPick": true,
-			"defaultImage": 4819
+			"canPick": true
+		},
+		"img_caption": {
+			"label": "Image caption",
+			"readOnly": false,
+			"required": false,
+			"help": "This will only be shown if an image is supplied."
 		},
 		"text1": {
 			"label": "Article text",
 			"foreignKeyField": "content",
-			"required": true,
-			"readOnly": true
+			"required": false,
+			"readOnly": false
 		},
 		"topics": {
 			"label": "Topics",
-			"readOnly": true,
+			"readOnly": false,
 			"required": false,
 			"multiMap": {
 				"model": "FelixOnline\\Core\\ArticleTopic",
@@ -99,15 +107,24 @@
 				"foreignKeyField": "name"
 			}
 		},
-		"published": {
-			"label": "Publish date",
+		"searchable": {
+			"label": "Shown to search engines",
+			"readOnly": false
+		},
+		"comment_status": {
+			"label": "Comment status",
 			"readOnly": false,
+			"foreignKeyField": "description",
 			"required": true
 		}
 	},
 	"order": [
 		{
 			"column": "date",
+			"direction": "DESC"
+		},
+		{
+			"column": "id",
 			"direction": "DESC"
 		}
 	],
@@ -127,13 +144,12 @@
 		},
 		"search": {
 			"enabled": true,
-			"fields": ["title", "teaser", "category", "author", "img1", "text1"]
+			"fields": ["title", "teaser", "category", "author", "img1", "text1", "searchable", "comment_status"]
 		},
 		"details": {
 			"enabled": true,
-			"headerHint": "title",
-			"callback": "manual_approve_article"
+			"headerHint": "title"
 		}
 	},
-	"auxHtml": "<p><center>If one of the default publication options is not suitable, click the edit icon and manually set a publication time.</center></p>"
+	"auxHtml": "<p><center>These are articles in your section(s) that are awaiting your review. You can edit them, submit them to the web team for publication, or send them back to the author for editing.</center></p>"
 }

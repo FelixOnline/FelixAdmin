@@ -34,9 +34,9 @@
 		}
 	],
 	"actions": {
-		"approve_submit": {
+		"approve_section": {
 			"label": "Submit for publication",
-			"icon": "check"
+			"icon": "ok-circle"
 		}
 	},
 	"hasId": true,

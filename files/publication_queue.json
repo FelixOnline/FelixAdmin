@@ -1,7 +1,7 @@
 {
 	"name": "Articles Awaiting Publication",
 	"model": "FelixOnline\\Core\\Article",
-	"baseRole": ["sectionEditor"],
+	"baseRole": ["webMaster"],
 	"constraints": [
 		{
 			"field": "published",
@@ -16,21 +16,38 @@
 			"roles": []
 		},
 		{
+			"field": "reviewedby",
+			"operator": "IS NOT NULL",
+			"test": "",
+			"roles": []
+		},
+		{
 			"field": "hidden",
 			"operator": "=",
 			"test": "0",
 			"roles": []
-		},
-		{
-			"specialConstraint": "isEditor",
-			"reverse": false,
-			"roles": ["sectionEditor"]
 		}
 	],
 	"actions": {
-		"approve_cancel": {
-			"label": "Back to Draft",
-			"icon": "edit"
+		"reject_section": {
+			"label": "Reject (section editor)",
+			"icon": "remove-circle"
+		},
+		"publish_now": {
+			"label": "Publish: now",
+			"icon": "bullhorn"
+		},
+		"publish_tomorrow": {
+			"label": "Publish: Next 7 AM",
+			"icon": "time"
+		},
+		"publish_friday": {
+			"label": "Publish: Friday 7 AM",
+			"icon": "fast-forward"
+		},
+		"publish_lastfriday": {
+			"label": "Publish: Last Friday 7 AM",
+			"icon": "fast-backward"
 		}
 	},
 	"hasId": true,
@@ -97,18 +114,6 @@
 				"foreignKeyField": "name"
 			}
 		},
-		"published": {
-			"label": "Publish date",
-			"readOnly": true,
-			"required": true
-		},
-		"approvedby": {
-			"label": "Reviewed by",
-			"readOnly": true,
-			"required": true,
-			"help": "It is reccomended you set this to yourself",
-			"foreignKeyField": "name"
-		},
 		"searchable": {
 			"label": "Shown to search engines",
 			"readOnly": false
@@ -118,6 +123,18 @@
 			"readOnly": false,
 			"foreignKeyField": "description",
 			"required": true
+		},
+		"reviewedby": {
+			"label": "Reviewed by",
+			"readOnly": true,
+			"required": true,
+			"foreignKeyField": "name"
+		},
+		"published": {
+			"label": "Published at",
+			"readOnly": false,
+			"required": false,
+			"help": "Setting a time here will publish the article at the specified time."
 		}
 	},
 	"order": [
@@ -150,8 +167,9 @@
 		},
 		"details": {
 			"enabled": true,
-			"headerHint": "title"
+			"headerHint": "title",
+			"callback": "publish_manual"
 		}
 	},
-	"auxHtml": "<p><center>These are articles in your section(s) that are awaiting publication by the website team. You can edit some details, or send them back for further editing here.</center></p>"
+	"auxHtml": "<p><center>These are articles that are awaiting publication. You can edit them, publish them, or send them back to the section editor for further editing. To publish at a different time to the options available, enter a time in the edit screen for the relevant article.</center></p>"
 }

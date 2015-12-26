@@ -17,10 +17,10 @@ class approve_cancel extends BaseAction {
 		$records = $this->getRecords($records);
 
 		foreach($records as $record) {
-			$record->setHidden(1);
+			$record->setReviewedby(NULL);
 			$record->save();
 		}
 
-		return 'Articles returned to draft stage.';
+		return 'Articles rejected to section editor.';
 	}
 }

@@ -2,7 +2,7 @@
 
 namespace FelixOnline\Admin\Actions;
 
-class approve_submit extends BaseAction {
+class approve_reject extends BaseAction {
 	public function __construct($permissions) {
 		parent::__construct($permissions);
 	}
@@ -17,10 +17,10 @@ class approve_submit extends BaseAction {
 		$records = $this->getRecords($records);
 
 		foreach($records as $record) {
-			$record->setHidden(0);
+			$record->setHidden(1);
 			$record->save();
 		}
 
-		return 'Articles submitted for publication.';
+		return 'Articles rejected to author for amendment.';
 	}
 }

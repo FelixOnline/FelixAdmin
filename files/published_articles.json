@@ -1,7 +1,7 @@
 {
 	"name": "Published Articles",
 	"model": "FelixOnline\\Core\\Article",
-	"baseRole": ["sectionEditor"],
+	"baseRole": ["webMaster"],
 	"constraints": [
 		{
 			"field": "published",
@@ -16,19 +16,20 @@
 			"roles": []
 		},
 		{
+			"field": "reviewedby",
+			"operator": "IS NOT NULL",
+			"test": "",
+			"roles": []
+		},
+		{
 			"field": "hidden",
 			"operator": "=",
 			"test": "0",
 			"roles": []
-		},
-		{
-			"specialConstraint": "isEditor",
-			"reverse": false,
-			"roles": ["sectionEditor"]
 		}
 	],
 	"actions": {
-		"approve_unpublish": {
+		"unpublish": {
 			"label": "Unpublish",
 			"icon": "flash",
 			"roles": ["webMaster"]
@@ -97,19 +98,6 @@
 				"foreignKeyField": "name"
 			}
 		},
-		"published": {
-			"label": "Publication date",
-			"readOnly": true,
-			"required": true,
-			"help": "This will be set when the article is published"
-		},
-		"approvedby": {
-			"label": "Reviewed by",
-			"readOnly": true,
-			"required": true,
-			"help": "This will be set when the article is published",
-			"foreignKeyField": "name"
-		},
 		"searchable": {
 			"label": "Shown to search engines",
 			"readOnly": false
@@ -119,6 +107,25 @@
 			"readOnly": false,
 			"foreignKeyField": "description",
 			"required": true
+		},
+		"reviewedby": {
+			"label": "Reviewed by",
+			"readOnly": true,
+			"required": true,
+			"foreignKeyField": "name"
+		},
+		"published": {
+			"label": "Publication date",
+			"readOnly": true,
+			"required": true,
+			"help": "This will be set when the article is published"
+		},
+		"approvedby": {
+			"label": "Published by",
+			"readOnly": true,
+			"required": true,
+			"help": "This will be set when the article is published",
+			"foreignKeyField": "name"
 		}
 	},
 	"order": [

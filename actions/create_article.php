@@ -35,11 +35,15 @@ class approve_draft extends BaseAction {
 
 		$userRoles = $app['env']['session']->session['roles'];
 
-		if (count(array_intersect($userRoles, array('webMaster'))) != 0) {
+		if (count(array_intersect($userRoles, array('seniorEditor'))) != 0 ||
+			(count(array_intersect($userRoles, array('sectionEditor'))) != 0 && count(array_intersect($currentuser->getCategories(), array($record->getCategory()))) != 0 )) {
+			// If user is a senior editor or above, or if the user is the section editor for the category this article is in, auto review and submit for publication.
+
+			$record->setReviewer($currentuser);
 			$record->setHidden(0);
 			$record->save();
 
-			return 'Article created and is ready for publication. To edit it, <a href="'.STANDARD_URL.'pending_articles:details/'.$record->getId().'">click here</a>.';
+			return 'Article created and is ready for publication. To edit it, <a href="'.STANDARD_URL.'publication_queue:details/'.$record->getId().'">click here</a>.';
 		} else {
 			$record->setHidden(1);
 			$record->save();
