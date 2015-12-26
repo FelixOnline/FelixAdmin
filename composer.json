@@ -1,13 +1,13 @@
 {
-    "name": "felixonline/online",
-    "description": "Felix Online",
-    "license": "MIT",
-    "authors": [
+	"name": "felixonline/online",
+	"description": "Felix Online",
+	"license": "MIT",
+	"authors": [
 		{
 			"name": "Philip Kent",
 			"email": "kentphilip@gmail.com"
 		}
-    ],
+	],
 	"repositories": [
 		{
 			"type": "vcs",
@@ -15,20 +15,16 @@
 		},
 		{
 			"type": "vcs",
-			"url": "https://github.com/Xymanek/ezSQL.git"
-		},
-		{
-			"type": "vcs",
 			"url": "https://github.com/FelixOnline/sir-trevor-php.git"
 		}
 	],
-    "require": {
-	"felixonline/core": "0.5.*",
-	"dominicsayers/isemail": "dev-master",
-	"raven/raven": "0.8.0",
-        "abhishekbhardwaj/twitter-api-php": "dev-master",
-        "woutersioen/sir-trevor-php": "dev-master",
-        "smalot/pdfparser": "dev-master"
-    },
-    "minimum-stability": "dev"
+	"require": {
+		"felixonline/core": "dev-master",
+		"dominicsayers/isemail": "dev-master",
+		"raven/raven": "0.13.*",
+		"abhishekbhardwaj/twitter-api-php": "dev-master",
+		"woutersioen/sir-trevor-php": "dev-master",
+		"smalot/pdfparser": "dev-master"
+	},
+	"minimum-stability": "dev"
 }
