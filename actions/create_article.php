@@ -1,7 +1,7 @@
 <?php
 
 namespace FelixOnline\Admin\Actions;
-xdebug_start_trace('/Users/pkent/Desktop/foo');
+
 class create_article extends BaseAction {
 	public function __construct($permissions) {
 		parent::__construct($permissions);
