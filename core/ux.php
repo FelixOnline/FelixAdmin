@@ -650,7 +650,13 @@ class UXHelper {
 				}
 
 				if($colid == $primaryKey && $canDetails) {
-					$value = '<center><a href="'.STANDARD_URL.$pageSlug.':details/'.$value.'" onClick="show_details(\''.$pageSlug.'\', \''.$value.'\'); return false;"><span class="glyphicon glyphicon-'.$value.' glyphicon-pencil" aria-hidden="true"></span> '.$value.'</a></center>';
+					$editable = 'pencil';
+
+					if($pageData['modes']['details']['readOnly']) {
+						$editable = 'info-sign';
+					}
+
+					$value = '<center><a href="'.STANDARD_URL.$pageSlug.':details/'.$value.'" onClick="show_details(\''.$pageSlug.'\', \''.$value.'\'); return false;"><span class="glyphicon glyphicon-'.$editable.'" aria-hidden="true"></span> '.$value.'</a></center>';
 				}
 
 				$string .= '<td>'.$value.'</td>';

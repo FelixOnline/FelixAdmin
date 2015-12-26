@@ -77,7 +77,7 @@ class Page {
 
 	// Load the page into memory
 	private function loadPage() {
-		if(preg_match('/[^a-zA-Z0-9_]/', $this->page)) {
+		if(preg_match('/[^a-zA-Z0-9_\/]/', $this->page)) {
 			throw new Exceptions\PageNotFoundException($this->page);
 		}
 

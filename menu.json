@@ -1,55 +1,55 @@
 {
 	"details": {
 		"children": {
-			"my_details": {},
-			"my_articles": {}
+			"details/my_details": {},
+			"details/my_articles": {}
 		}
 	},
 	"articles": {
 		"children": {
-			"new_article": {},
-			"draft_articles": {},
-			"review_queue": {},
-			"publication_queue": {},
-			"published_articles": {},
-			"section_articles": {}
+			"articles/new": {},
+			"articles/drafts": {},
+			"articles/for_review": {},
+			"articles/for_publication": {},
+			"articles/published": {},
+			"articles/in_section": {}
 		}
 	},
 	"comments": {
 		"children": {
-			"pending_comments": {},
-			"approved_comments": {},
-			"rejected_comments": {},
-			"spam_comments": {}
+			"comments/pending": {},
+			"comments/approved": {},
+			"comments/rejected": {},
+			"comments/spam": {}
 		}
 	},
 	"other_content": {
 		"children": {
-			"notices": {},
-			"adverts": {},
-			"links": {},
-			"pages": {},
-			"polls": {},
-			"topics": {}
+			"other_content/notices": {},
+			"other_content/adverts": {},
+			"other_content/links": {},
+			"other_content/pages": {},
+			"other_content/other_content/polls": {},
+			"other_content/topics": {}
 		}
 	},
 	"archive": {
 		"children": {
-			"archive_publications": {},
-			"archive_issues": {},
-			"archive_files": {}
+			"archive/publications": {},
+			"archive/issues": {},
+			"archive/files": {}
 		}
 	},
 	"system": {
 		"children": {
-			"categories": {},
-			"users": {},
-			"create_user": {},
-			"settings": {},
-			"frontpage": {},
-			"roles": {},
-			"user_roles": {},
-			"images": {}
+			"system/categories": {},
+			"system/users": {},
+			"system/create_user": {},
+			"system/settings": {},
+			"system/frontpage": {},
+			"system/roles": {},
+			"system/user_roles": {},
+			"system/images": {}
 		}
 	}
 }
