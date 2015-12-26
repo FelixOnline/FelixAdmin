@@ -13,8 +13,7 @@
 		"title": {
 			"label": "Title",
 			"readOnly": false,
-			"required": true,
-			"defaultValue": "Abcd"
+			"required": true
 		},
 		"teaser": {
 			"label": "Teaser",
@@ -71,10 +70,9 @@
 		},
 		"date": {
 			"label": "Created",
-			"readOnly": false,
+			"readOnly": true,
 			"required": true,
-			"autoField": true,
-			"defaultValue": 1
+			"autoField": true
 		},
 		"searchable": {
 			"label": "Shown to search engines",
