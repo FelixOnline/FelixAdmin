@@ -5,8 +5,10 @@ namespace FelixOnline\Admin\Actions;
 class BaseAction {
 	protected $permissions;
 	protected $page;
+	protected $rawPage;
 
 	public function __construct($pageObj) {
+		$this->rawPage = $pageObj;
 		$this->page = $pageObj->getPageData();
 
 		if(isset($pageObj->getPageData()['actions'][$action]['roles'])) {

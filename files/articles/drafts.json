@@ -139,7 +139,8 @@
 		},
 		"details": {
 			"enabled": true,
-			"headerHint": "title"
+			"headerHint": "title",
+			"callback": "force_author"
 		}
 	},
 	"auxHtml": ""
