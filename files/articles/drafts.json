@@ -49,7 +49,7 @@
 		"hidden": {
 			"label": "Draft",
 			"readOnly": false,
-			"help": "Uncheck this box to submit the article for publication. It will then disappear from this screen"
+			"help": "Uncheck this box to submit the article for publication. It will then disappear from this screen."
 		},
 		"title": {
 			"label": "Title",
@@ -76,7 +76,8 @@
 				"this": "article",
 				"foreignKey": "author",
 				"foreignKeyField": "name"
-			}
+			},
+			"help": "If you only have an author role, and you do not add yourself as an author to this article, you will be automatically added as one."
 		},
 		"img1": {
 			"label": "Picture",
@@ -106,16 +107,6 @@
 				"foreignKey": "topic",
 				"foreignKeyField": "name"
 			}
-		},
-		"searchable": {
-			"label": "Shown to search engines",
-			"readOnly": false
-		},
-		"comment_status": {
-			"label": "Comment status",
-			"readOnly": false,
-			"foreignKeyField": "description",
-			"required": true
 		}
 	},
 	"order": [

@@ -76,14 +76,17 @@
 		},
 		"searchable": {
 			"label": "Shown to search engines",
-			"readOnly": false,
+			"readOnly": true,
+			"required": true,
+			"autoField": true,
 			"defaultValue": 1
 		},
 		"comment_status": {
 			"label": "Comment status",
-			"readOnly": false,
+			"readOnly": true,
 			"foreignKeyField": "description",
 			"required": true,
+			"autoField": true,
 			"defaultValue": 1
 		}
 	},

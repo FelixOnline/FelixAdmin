@@ -80,14 +80,23 @@ class newAjaxHelper extends Core {
 						} elseif($model->fields[$fieldName]->class == 'FelixOnline\Core\Image' && $fieldInfo['defaultImage']) {
 							$value = new \FelixOnline\Core\Image($fieldInfo['defaultImage']);
 						} else {
-							$this->error('Trying to automatically set an unsupported foreign key.', 500);
+							if($fieldInfo['defaultValue']) {
+								$fkType = $model->fields[$fieldName]->class;
+								$value = new $fkType($fieldInfo['defaultValue']);
+							} else {
+								$this->error('Trying to automatically set an unsupported foreign key.', 500);
+							}
 						}
 						break;
 					case 'FelixOnline\Core\Type\DateTimeField':
 						$value = strtotime($now);
 						break;
 					default:
-						$value = '';
+						if($fieldInfo['defaultValue']) {
+							$value = $fieldInfo['defaultValue'];
+						} else {
+							$value = '';
+						}
 						break;
 				}
 			} elseif($fieldType == 'FelixOnline\Core\Type\ForeignKey') {

@@ -49,7 +49,7 @@ The format of the page file is as follows:
 			"label": // What label to show
 			"readOnly": // Field cannot be edited
 			"required": // Field must be present to create or save (if its read only, creation may be prevented unless autofield is set)
-			"autoField": // If this is set, on record creation, datetime fields will be set to the current datetime, foreign keys pointing to core User objects will be set to the current user, foreign keys pointing to core Image objects will be set to the default image if one is set, else it errors out.
+			"autoField": // If this is set, on record creation, datetime fields will be set to the current datetime, foreign keys pointing to core User objects will be set to the current user, foreign keys pointing to core Image objects will be set to the default image if one is set, and all other autoFields will be blank or have the defaultValue set (if there is one).
 			"validation": // If this is set to "email" the value will be checked to ensure it is an email address
 			"help": // Help text shown on the interface
 			"foreignKeyField": // If this is a foreign key field, what value from the foreign key to show in the UX
