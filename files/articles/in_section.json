@@ -110,11 +110,6 @@
 			"readOnly": true,
 			"required": true
 		},
-		"hidden": {
-			"label": "Draft",
-			"readOnly": true,
-			"required": false
-		},
 		"reviewedby": {
 			"label": "Reviewed by",
 			"readOnly": true,

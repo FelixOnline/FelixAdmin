@@ -2,7 +2,7 @@
 
 namespace FelixOnline\Admin\Actions;
 
-class manual_approve_article extends BaseAction {
+class publish_manual extends BaseAction {
 	public function __construct($permissions) {
 		parent::__construct($permissions);
 	}

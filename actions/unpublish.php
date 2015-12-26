@@ -2,7 +2,7 @@
 
 namespace FelixOnline\Admin\Actions;
 
-class approve_unpublish extends BaseAction {
+class unpublished extends BaseAction {
 	public function __construct($permissions) {
 		parent::__construct($permissions);
 	}

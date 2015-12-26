@@ -2,7 +2,7 @@
 
 namespace FelixOnline\Admin\Actions;
 
-class approve_draft extends BaseAction {
+class create_article extends BaseAction {
 	public function __construct($permissions) {
 		parent::__construct($permissions);
 	}

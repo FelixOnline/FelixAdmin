@@ -34,11 +34,11 @@
 		}
 	],
 	"actions": {
-		"approve_reject": {
+		"reject_author": {
 			"label": "Reject (author)",
 			"icon": "remove-circle"
 		},
-		"approve_accept": {
+		"approve_webteam": {
 			"label": "Accept for publication",
 			"icon": "ok-circle"
 		}

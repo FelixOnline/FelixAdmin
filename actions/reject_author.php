@@ -2,7 +2,7 @@
 
 namespace FelixOnline\Admin\Actions;
 
-class approve_reject extends BaseAction {
+class reject_author extends BaseAction {
 	public function __construct($permissions) {
 		parent::__construct($permissions);
 	}
