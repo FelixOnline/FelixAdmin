@@ -201,6 +201,14 @@ class saveAjaxHelper extends Core {
 
 							$fk->save();
 						}
+					} elseif($fieldType == 'FelixOnline\Core\Type\DateTimeField') {
+						$setter = 'set'.$this->to_camel_case($fieldName);
+
+						if($_POST[$fieldName] == '') {
+							$model->$setter(NULL);
+						} else {
+							$model->$setter($_POST[$fieldName]);
+						}
 					} else {
 						$setter = 'set'.$this->to_camel_case($fieldName);
 
