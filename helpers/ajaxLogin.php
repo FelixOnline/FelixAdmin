@@ -41,8 +41,15 @@ class loginAjaxHelper extends Core {
 
 		$count = $manager->count();
 
-		if($count == 0) {
+		if($count == 0 && $_POST['username'] != 'felix') {
 			$this->error("You do not have any roles. Please ask a member of the Felix team to set you up on the administration website if you believe this is incorrect.", 403);
+		} elseif($count == 0 && $_POST['username'] == 'felix') {
+			// Give felix its superUser role back
+
+			$role = new \FelixOnline\Core\UserRole();
+			$role->setRole(new \FelixOnline\Core\Role(1))
+				 ->setUser(new \FelixOnline\Core\User('felix'))
+				 ->save();
 		}
 
 		// Check if the menu exists and is ready
