@@ -24,9 +24,9 @@ class publish_manual extends BaseAction {
 			$record->setApprovedby($currentuser);
 			$record->save();
 
-			return 'Article published at '.date("d-M-y H:i", $record->getPublished()).'.';
+			return 'Article saved and published at '.date("d-M-y H:i", $record->getPublished()).'.';
 		} else {
-			return 'Article not published';
+			return 'Article saved but not published';
 		}
 	}
 }
