@@ -36,7 +36,7 @@
 				"foreignKey": "author",
 				"foreignKeyField": "name"
 			},
-			"help": "If you leave this blank, it will be automatically set to you. If you do not add yourself as an author, you may not be able to edit the article after creation"
+			"help": "If you only have an Author role, you will be automatically added as an author. If you do not specify any authors, you will be automatically added in all cases."
 		},
 		"img1": {
 			"label": "Picture",
