@@ -29,17 +29,15 @@
 			"readOnly": false,
 			"required": true
 		},
-		"ended": {
-			"label": "Closed"
-		},
-		"location": {
-			"label": "Show in",
-			"readOnly": false,
+		"options": {
+			"label": "Options",
+			"choiceMap": {
+				"model": "FelixOnline\\Core\\PollOption",
+				"this": "poll",
+				"field": "text"
+			},
 			"required": true,
-			"foreignKeyField": "description"
-		},
-		"hide_results": {
-			"label": "Show results only after voting"
+			"help": "Type and press enter to create options"
 		},
 		"articles": {
 			"label": "Show on articles",
@@ -48,16 +46,20 @@
 				"this": "poll",
 				"foreignKey": "article",
 				"foreignKeyField": "title"
-			}
-		},
-		"options": {
-			"label": "Options",
-			"choiceMap": {
-				"model": "FelixOnline\\Core\\PollOption",
-				"this": "poll",
-				"field": "text"
 			},
-			"help": "Type and press enter to create options"
+			"help": "The poll must be assigned to at least one article for people to vote on it. However, this field is optional in case you haven't created the article yet."
+		},
+		"location": {
+			"label": "Location on article page",
+			"readOnly": false,
+			"required": true,
+			"foreignKeyField": "description"
+		},
+		"ended": {
+			"label": "Closed"
+		},
+		"hide_results": {
+			"label": "Show results only after voting"
 		}
 	},
 	"order": [
