@@ -131,7 +131,7 @@
 				"category",
 				"author"
 			],
-			"canDelete": false
+			"canDelete": true
 		},
 		"search": {
 			"enabled": true,
