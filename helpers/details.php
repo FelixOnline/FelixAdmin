@@ -53,15 +53,7 @@ class detailsHelper {
 				try {
 					$modelFieldValue = $modelField->getValue();
 				} catch(\Exception $e) {
-					$widgets[] = new \FelixOnline\Admin\Widgets\ErrorWidget(
-						$field,
-						$data['label'],
-						'Could not load this field as the associated foreign key could not be found.',
-						$data['readOnly'],
-						$data['required'],
-						$data['help'],
-						$otherData);
-					continue;
+					$modelFieldValue = null;
 				}
 
 				$otherData = array();

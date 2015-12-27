@@ -54,6 +54,10 @@ class ForeignKeyChoiceMapWidget implements Widget {
 		echo ' name="'.$this->fieldName.'[]" id="'.$this->fieldName.'" aria-describedby="'.$this->fieldName.'-help" style="width: 100%">';
 			if(!($this->currentValue == '')) {
 				foreach($this->currentValue as $value) {
+					if($value->fields[$this->fkField]->getValue() == null) {
+						continue;
+					}
+
 					echo '<option selected="selected" value="'.$value->fields[$this->fkField]->getValue().'">'.\htmlentities($value->fields[$this->fkField]->getValue()).'</option>';
 				}
 			}

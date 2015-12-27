@@ -57,6 +57,10 @@ class ForeignKeyMultiMapWidget implements Widget {
 
 			if(!($this->currentValue == '')) {
 				foreach($this->currentValue as $value) {
+					if($value->fields[$this->fk]->getValue() == null) {
+						continue;
+					}
+					
 					echo '<option selected="selected" value="'.$value->fields[$this->fk]->getRawValue().'">'.\htmlentities($value->fields[$this->fk]->getValue()->fields[$this->fkField]->getValue()).' ('.$value->fields[$this->fk]->getRawValue().')</option>';
 				}
 			}

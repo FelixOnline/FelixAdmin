@@ -141,10 +141,19 @@ class saveAjaxHelper extends Core {
 						$fkType = $model->fields[$fieldName]->class;
 
 						if($fkType == 'FelixOnline\Core\Text') {
-							$id = $model->fields[$fieldName]->getValue()->getId();
+							if($model->fields[$fieldName]->getValue() != null) {
+								$id = $model->fields[$fieldName]->getValue()->getId();
 
-							// Update text field
-							$text = new \FelixOnline\Core\Text($id);
+								// Update text field
+								$text = new \FelixOnline\Core\Text($id);
+							} else {
+								// We need a new ID
+
+								$text = new \FelixOnline\Core\Text();
+								$id = $text->setConverted(1)->save();
+
+								$model->fields[$fieldName]->setValue($text);
+							}
 
 							// We may need to update image details
 							$jsonDecoded = json_decode($_POST[$fieldName], true);
