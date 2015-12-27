@@ -24,6 +24,6 @@ class bulk_delete extends BaseAction {
 			$record->delete();
 		}
 
-		return 'Records permanently deleted.';
+		return 'Records deleted.';
 	}
 }

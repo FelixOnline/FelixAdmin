@@ -55,6 +55,6 @@ class deleteAjaxHelper extends Core {
 			$this->error("Failed to delete this record. There may be other data which depends on this record.", 500);
 		}
 
-		$this->success("Deleted");
+		$this->success("Record deleted.");
 	}
 }

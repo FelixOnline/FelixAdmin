@@ -358,6 +358,9 @@ function del(page_name, key) {
 				alert(message);
 			},
 			success: function(data) {
+				$('.form-status').html('<span class="glyphicon glyphicon-ok"></span> '+data);
+				$('.form-status').fadeIn('fast').delay(5000).fadeOut('slow');
+
 				// Get paginator page
 				paginator_page = $('#list-table').attr('data-currentpage');
 
