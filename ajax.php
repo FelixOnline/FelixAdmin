@@ -68,7 +68,7 @@
 		header("Content-Type: text/json", false);
 
 		if(LOCAL) {
-			$extra = "\n\n".$e->getMessage().' at '.$e->getFile().':'.$e->getLine();
+			$extra = "\n\n(".get_class($e).") ".$e->getMessage().' at '.$e->getFile().':'.$e->getLine()."\n\n".$e->getTraceAsString();
 		} else {
 			$extra = '';
 		}
