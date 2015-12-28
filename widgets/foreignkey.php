@@ -109,12 +109,6 @@ class ForeignKeyWidget implements Widget {
 	echo '</div>
 </div>';
 
-	if($this->class == 'FelixOnline\Core\Image') {
-		$endpoint = 'imageLookup';
-	} else {
-		$endpoint = 'lookup';
-	}
-
 	echo '<script>
 		$(document).ready( function() {
 			$("#'.$this->fieldName.'.select2").select2({
@@ -138,12 +132,8 @@ class ForeignKeyWidget implements Widget {
 			      };
 			    },
 			    cache: false
-			  },';
-	if($this->class == 'FelixOnline\Core\Image') {
-		echo 'templateResult: formatImagePicker,';
-	}
-	
-	echo 'minimumInputLength: 0
+			  },
+			  minimumInputLength: 0
 			});
 		});
 		</script>';
