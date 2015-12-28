@@ -146,12 +146,6 @@ class ForeignKeyWidget implements Widget {
 	echo 'minimumInputLength: 0
 			});
 		});
-
-		function formatImagePicker(img) {
-			if (img.loading) return img.text;
-			var image = $(\'<span><img src="'.\FelixOnline\Core\Settings::get('image_url').'../\' + (img.text.split(" "))[0] + \'" class="lookup-img" /> \' + img.text + \'</span>\');
-			return image;
-		};
 		</script>';
 	}
 }
