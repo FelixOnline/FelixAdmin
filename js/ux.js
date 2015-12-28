@@ -280,7 +280,7 @@ function imageForm(location, image, hasEditor, inTrevor) {
 		error: function(data) {
 			message = data.responseJSON.message;
 
-			alert(message);
+			$('#tabs-'+location+'-content #'+location+'-current').html('<i>'+message+'</i>');
 		},
 		success: function(data) {
 			$('#tabs-'+location+'-content #'+location+'-current').html(data.form);

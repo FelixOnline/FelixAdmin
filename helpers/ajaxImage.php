@@ -22,9 +22,9 @@ class imageAjaxHelper extends Core {
 
 		try {
 			$image = new \FelixOnline\Core\Image($image);
-		} catch(\FelixOnline\Core\Exceptions\ModelNotfoundException $e) {
+		} catch(\FelixOnline\Exceptions\ModelNotfoundException $e) {
 			// no such image
-			$this->error("Could not find image.", 404);
+			$this->error("Could not find image - has it been deleted?", 404);
 		}
 
 		$return = \FelixOnline\Admin\UXHelper::imageForm($name, $image, $hasEditor);
