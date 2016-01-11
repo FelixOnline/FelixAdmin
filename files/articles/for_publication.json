@@ -97,6 +97,12 @@
 			"required": false,
 			"help": "This will only be shown if an image is supplied."
 		},
+		"video_url": {
+			"label": "Video",
+			"readOnly": false,
+			"required": false,
+			"help": "If you would like a video to show on this article, paste the URL to the YouTube or Vimeo page here. Articles with videos will show the video instead of the picture when viewing the article, but will still show the picture on article lists."
+		},
 		"text1": {
 			"label": "Article text",
 			"foreignKeyField": "content",
