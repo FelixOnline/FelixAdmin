@@ -120,7 +120,7 @@ class ForeignKeyWidget implements Widget {
 			    method: "POST",
 			    data: function (params) {
 			      return {
-			      	q: "'.$endpoint.'",
+			      	q: "lookup",
 			        query: params.term, // search term
 			        page: "'.$this->page.'",
 			        widget: "'.$this->fieldName.'"
