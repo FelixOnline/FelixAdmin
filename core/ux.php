@@ -789,8 +789,6 @@ class UXHelper {
 
 		$string = '<form class="form-horizontal">';
 
-		$string .= '<div class="form-group">
-<div class="col-sm-12">';
 
 		if(!$readOnly) {
 			$mode = 'Editing';
@@ -802,7 +800,7 @@ class UXHelper {
 			$mode = '<button class="btn btn-default btn-xs" onClick="toggleAudit(); return false;" id="auditButton"><span class="glyphicon glyphicon-time"></span> Audit log</button>&nbsp;&nbsp;'.$mode;
 		}
 
-		$string .= '</div></div><div id="widgetForm">';
+		$string .= '<div id="widgetForm">';
 
 		if(!$readOnly) {
 			$string .= '<b class="text text-success form-status" style="display: none"></b>';
