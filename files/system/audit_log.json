@@ -1,0 +1,63 @@
+{
+	"name": "Audit Log",
+	"model": "FelixOnline\\Core\\AuditLog",
+	"baseRole": ["superUser"],
+	"constraints": [
+	],
+	"fields": {
+		"id": {
+			"label": "ID"
+		},
+		"timestamp": {
+			"label": "Timestamp"
+		},
+		"table": {
+			"label": "Record type"
+		},
+		"key": {
+			"label": "Key",
+			"help": "Usually the record ID number."
+		},
+		"user": {
+			"label": "User"
+		},
+		"action": {
+			"label": "Action"
+		},
+		"fields": {
+			"label": "Changed data",
+			"help": "Only exists for 'update' actions."
+		}
+	},
+	"order": [
+		{
+			"column": "timestamp",
+			"direction": "desc"
+		}
+	],
+	"modes": {
+		"new": {
+			"enabled": false
+		},
+		"list": {
+			"enabled": true,
+			"columns": [
+				"id",
+				"timestamp",
+				"user",
+				"action",
+				"table",
+				"key"
+			],
+			"canDelete": false
+		},
+		"details": {
+			"enabled": true,
+			"headerHint": "id",
+			"readOnly": true
+		},
+		"search": {
+			"enabled": true
+		}
+	}
+}
