@@ -584,6 +584,12 @@ function addCalendar() {
 	});
 }
 
+function toggleAudit() {
+	$('#auditButton').toggleClass('active');
+	$('#widgetForm').toggle();
+	$('#auditForm').toggle();
+}
+
 addCalendar();
 
 // http://codepen.io/DawsonMediaD/pen/byDqv/

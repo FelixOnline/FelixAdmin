@@ -100,7 +100,7 @@ class UXHelper {
 		return $string;
 	}
 
-	function renderMenu($menu, $levelToShow, $selectedItem, $root) {
+	public static function renderMenu($menu, $levelToShow, $selectedItem, $root) {
 		$items = 0;
 
 		if(!isset($menu)) {
@@ -780,7 +780,8 @@ class UXHelper {
 		$currentRecord,
 		$widgets,
 		$pk,
-		$readOnly = false) {
+		$readOnly = false,
+		$showTrail = true) {
 
 		$hint = $pageData['modes']['details']['headerHint'];
 
@@ -792,19 +793,32 @@ class UXHelper {
 <div class="col-sm-12">';
 
 		if(!$readOnly) {
-			$string .= '<button onClick="save(\''.$pageSlug.'\', \''.$currentRecord->fields[$pk]->getValue().'\'); return false;" class="btn btn-primary save-button"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save</button>';
-			$string .= '<b class="text text-success form-status" style="display: none"></b>';
 			$mode = 'Editing';
 		} else {
 			$mode = 'Viewing';
 		}
 
-		$string .= '</div></div>';
+		if($showTrail) {
+			$mode = '<button class="btn btn-default btn-xs" onClick="toggleAudit(); return false;" id="auditButton"><span class="glyphicon glyphicon-time"></span> Audit log</button>&nbsp;&nbsp;'.$mode;
+		}
+
+		$string .= '</div></div><div id="widgetForm">';
+
+		if(!$readOnly) {
+			$string .= '<b class="text text-success form-status" style="display: none"></b>';
+			$string .= '<button onClick="save(\''.$pageSlug.'\', \''.$currentRecord->fields[$pk]->getValue().'\'); return false;" class="btn btn-primary save-button"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save</button>';
+		}
 
 		$string .= self::widgetForm($widgets);
 
 		if(!$readOnly) {
 			$string .= '<button onClick="save(\''.$pageSlug.'\', \''.$currentRecord->fields[$pk]->getValue().'\'); return false;" class="btn btn-primary save-button"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save</button>';
+		}
+
+		$string .= '</div>';
+
+		if($showTrail) {
+			$string .= '<div id="auditForm" style="display: none">'.self::auditForm($currentRecord, $pk).'</div>';
 		}
 
 		return array('string' => $string,
@@ -858,7 +872,6 @@ class UXHelper {
 		return $string;
 	}
 
-
 	public static function widgetForm($widgets) {
 		$string = '';
 
@@ -870,6 +883,48 @@ class UXHelper {
 		}
 
 		$string .= '</form>';
+		return $string;
+	}
+
+	public static function auditForm($record, $pk) {
+		$string = '';
+		$string .= '<h4>Audit trail for this entry</h4>';
+
+		try {
+			$manager = \FelixOnline\Core\BaseManager::build('FelixOnline\Core\AuditLog', 'audit_log');
+			$items = $manager->filter('table = "'.$record->dbtable.'"')
+					->filter('key = "'.$record->fields[$pk]->getRawValue().'"')
+					->order('timestamp', 'DESC')
+					->values();
+
+			if(count($items) == 0) {
+				$string .= '<div class="alert alert-danger">No entries</div>';
+			} else {
+				$string .= '<table class="table table-bordered table-hover sortable" id="list-table">';
+				$string .= '<thead><tr>';
+
+				$columns = array("timestamp" => "Timestamp", "user" => "By", "action" => "Action", "fields" => "Changed data");
+
+				foreach($columns as $column) {
+					$string .= '<th>'.$column.'</th>';
+				}
+
+				$string .= '</tr></thead><tbody>';
+
+				foreach($items as $item) {
+					$string .= '<tr>';
+					foreach($columns as $key => $column) {
+						$string .= '<td>'.$item->fields[$key]->getRawValue().'</td>';
+					}
+					$string .= '</tr>';
+				}
+
+				$string .= '</tbody></table>';
+			}
+		} catch(\Exception $e) {
+			$string .= '<div class="alert alert-danger">Could not load audit trail</div>';
+		}
+
 		return $string;
 	}
 
