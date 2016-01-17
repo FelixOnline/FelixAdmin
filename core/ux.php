@@ -781,7 +781,7 @@ class UXHelper {
 		$widgets,
 		$pk,
 		$readOnly = false,
-		$showTrail = true) {
+		$showTrail = false) {
 
 		$hint = $pageData['modes']['details']['headerHint'];
 

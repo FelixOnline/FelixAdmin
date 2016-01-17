@@ -164,16 +164,33 @@ class detailsHelper {
 	}
 
 	public function modalRender() {
+		// Show audit log for "sysAdmin", "webMaster" roles only
+		$showLog = false;
+		$app = \FelixOnline\Core\App::getInstance();
+
+		if(array_intersect(array('sysAdmin', 'webMaster'), $app['env']['session']->session['roles']) != 0) {
+			$showLog = true;
+		}
+
 		return \FelixOnline\Admin\UXHelper::details(
 					$this->pageName,
 					$this->pageData,
 					$this->record,
 					$this->widgets,
 					$this->pk,
-					$this->readOnly);
+					$this->readOnly,
+					$showLog);
 	}
 
 	public function render() {
+		// Show audit log for "sysAdmin", "webMaster" roles only
+		$showLog = false;
+		$app = \FelixOnline\Core\App::getInstance();
+
+		if(array_intersect(array('sysAdmin', 'webMaster'), $app['env']['session']->session['roles']) != 0) {
+			$showLog = true;
+		}
+
 		$access = \FelixOnline\Admin\UXHelper::getAccess($this->pageData);
 
 		$formData = \FelixOnline\Admin\UXHelper::details(
@@ -182,7 +199,8 @@ class detailsHelper {
 					$this->record,
 					$this->widgets,
 					$this->pk,
-					$this->readOnly);
+					$this->readOnly,
+					$showLog);
 
 		\FelixOnline\Admin\UXHelper::page(
 			$this->pageData['name'],
