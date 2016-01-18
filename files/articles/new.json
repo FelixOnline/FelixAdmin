@@ -1,7 +1,7 @@
 {
 	"name": "New Article",
 	"model": "FelixOnline\\Core\\Article",
-	"baseRole": ["author"],
+	"baseRole": ["sectionEditor"],
 	"constraints": [
 	],
 	"fields": {
