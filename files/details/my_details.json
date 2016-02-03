@@ -71,7 +71,7 @@
 			"imageDetailsEditor": false,
 			"canUpload": true,
 			"canPick": true,
-			"defaultImage": 696
+			"defaultImage": 676
 		},
 		"roles": {
 			"label": "Roles",

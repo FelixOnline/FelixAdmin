@@ -15,7 +15,7 @@
 			"readOnly": true,
 			"required": true,
 			"autoField": true,
-			"defaultImage": 696,
+			"defaultImage": 676,
 			"help": "You can adjust this later."
 		}
 	},
