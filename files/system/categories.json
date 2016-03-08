@@ -92,6 +92,7 @@
 				"email",
 				"editors",
 				"order",
+				"parent",
 				"active",
 				"hidden"
 			],
