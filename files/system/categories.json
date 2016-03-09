@@ -56,7 +56,7 @@
 		"secret": {
 			"label": "Secret",
 			"readOnly": false,
-			"help": "You must be logged in to see a secret category, or access any articles within one. This does NOT affect child categories."
+			"help": "You must either be logged in or browsing from the IC network to see a secret category, or access any articles within one. This does NOT affect child categories."
 		},
 		"editors": {
 			"label": "Section editors",
