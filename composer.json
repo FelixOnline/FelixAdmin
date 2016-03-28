@@ -20,6 +20,7 @@
 	],
 	"require": {
 		"felixonline/core": "0.7.*",
+		"felixonline/sprinkler": "0.2.*",
 		"dominicsayers/isemail": "dev-master",
 		"raven/raven": "0.13.*",
 		"abhishekbhardwaj/twitter-api-php": "dev-master",

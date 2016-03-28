@@ -44,6 +44,9 @@ class force_author extends BaseAction {
 			$rec2->save();
 		}
 
-		return 'Saved';
+		$blogAction = new liveblog_update($this->rawPage);
+		$status = $blogAction->run(array($record->getId()));
+
+		return 'Saved. '.$status;
 	}
 }

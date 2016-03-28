@@ -132,6 +132,12 @@
 			"required": true,
 			"help": "This will be set when the article is published",
 			"foreignKeyField": "name"
+		},
+		"is_live": {
+			"label": "Live updates",
+			"readOnly": false,
+			"required": false,
+			"help": "If checked, the article will be marked as having live updates. A live blog will be created if it does not already exist. If you uncheck this box at a later date, the live markers will be removed and the blog switched off, but the blog posts will remain and will still be shown."
 		}
 	},
 	"order": [
@@ -165,7 +171,8 @@
 		},
 		"details": {
 			"enabled": true,
-			"headerHint": "title"
+			"headerHint": "title",
+			"callback": "liveblog_update"
 		}
 	},
 	"auxHtml": ""

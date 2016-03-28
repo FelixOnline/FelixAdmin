@@ -17,6 +17,9 @@ class publish_manual extends BaseAction {
 		$records = $this->getRecords($records);
 		$record = $records[0];
 
+		$blogAction = new liveblog_update($this->rawPage);
+		$status = $blogAction->run(array($record->getId()));
+
 		if($record->getPublished()) {
 			$app = \FelixOnline\Core\App::getInstance();
 			$currentuser = $app['currentuser'];
@@ -24,9 +27,9 @@ class publish_manual extends BaseAction {
 			$record->setApprovedby($currentuser);
 			$record->save();
 
-			return 'Article saved and published at '.date("d-M-y H:i", $record->getPublished()).'.';
+			return 'Article saved and published at '.date("d-M-y H:i", $record->getPublished()).'. '.$status;
 		} else {
-			return 'Article saved but not published';
+			return 'Article saved but not published. '.$status;
 		}
 	}
 }

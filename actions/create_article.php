@@ -21,6 +21,29 @@ class create_article extends BaseAction {
 		$records = $this->getRecords($records);
 		$record = $records[0];
 
+		$status = '';
+
+		// Live Blogs
+		if($record->getIsLive() && !$record->getBlog()) {
+			$blogName = 'article'.$record->getId();
+
+			$blog = new \FelixOnline\Core\Blog();
+			$blog->setSprinklerPrefix($blogName);
+			$blog->save();
+
+			// Create blog
+			try {
+				$sprinkler = new \FelixOnline\Sprinkler('http://'.\FelixOnline\Core\Settings::get('sprinkler_host').':'.\FelixOnline\Core\Settings::get('sprinkler_port'), \FelixOnline\Core\Settings::get('sprinkler_admin'));
+				$channel = $sprinkler->newChannel($blogName);
+
+				$status .= ' The live blog has been set up for you.';
+			} catch(\Exception $e) {
+				$status .= ' There was an issue creating the live blog: '.$e->getMessage();
+			}
+
+			$record->setBlog($blog);
+		}
+
 		// Add author if needed
 		try {
 			$forceAuthor = new force_author($this->rawPage);
@@ -38,12 +61,12 @@ class create_article extends BaseAction {
 			$record->setHidden(0);
 			$record->save();
 
-			return 'Article created and is ready for publication. To edit and publish it, <a href="'.STANDARD_URL.'articles/for_publication:details/'.$record->getId().'">click here</a>.';
+			return 'Article created and is ready for publication. To edit and publish it, <a href="'.STANDARD_URL.'articles/for_publication:details/'.$record->getId().'">click here</a>.'.$status;
 		} else {
 			$record->setHidden(1);
 			$record->save();
 
-			return 'Article created as draft. To edit it, <a href="'.STANDARD_URL.'articles/drafts:details/'.$record->getId().'">click here</a>. When you are ready, go to your draft article and submit it for publication.';
+			return 'Article created as draft. To edit it, <a href="'.STANDARD_URL.'articles/drafts:details/'.$record->getId().'">click here</a>. When you are ready, go to your draft article and submit it for publication.'.$status;
 		}
 	}
 }
