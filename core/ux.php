@@ -424,9 +424,9 @@ class UXHelper {
 
 		$string = '
 			<br>
-			<b class="text text-success form-status form-status-no-indent" style="display: none"></b>
-			<div class="alert alert-info load-msg"><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> Refreshing list...</div>
-			<div id="list-area"></div>
+			<b class="text text-success form-status-'.str_replace('/', '-', $page).' form-status-no-indent" style="display: none"></b>
+			<div class="alert alert-info load-msg-'.str_replace('/', '-', $page).'"><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> Refreshing list...</div>
+			<div class="dataarea-'.str_replace('/', '-', $page).'"></div>
 			<script>
 			document.addEventListener("DOMContentLoaded", function(event) {
 				refreshList("'.$page.'", "'.$currentPage.'");
@@ -455,10 +455,8 @@ class UXHelper {
 			return '<h3>No data found</h3>';
 		}
 
-		$string = '<div class="alert alert-info action-msg" style="display: none;"><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> Working on it...</div>
-<div class="list-area">';
-
-		$string .= '<b class="text text-success form-status" style="display: none"></b>';
+		$string = '<div class="alert alert-info action-msg-'.str_replace('/', '-', $page).'" style="display: none;"><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> Working on it...</div>
+<div class="dataarea-'.str_replace('/', '-', $pageSlug).'">';
 
 		// What are our headings
 		$columns = array();
@@ -494,7 +492,7 @@ class UXHelper {
 		}
 
 		$string .= '<div class="table-responsive">';
-		$string .= '<table class="table table-bordered table-hover sortable" id="list-table" data-currentpage="'.$currentPage.'">';
+		$string .= '<table class="table table-bordered table-hover sortable datatable-'.str_replace('/', '-', $pageSlug).'" data-currentpage="'.$currentPage.'">';
 		$string .= '<thead><tr>';
 
 		if(count($actions) > 0) {
@@ -803,7 +801,7 @@ class UXHelper {
 		$string .= '<div id="widgetForm">';
 
 		if(!$readOnly) {
-			$string .= '<b class="text text-success form-status" style="display: none"></b>';
+			$string .= '<p><b class="text text-success form-status-'.str_replace('/', '-', $pageSlug).'" style="display: none"></b></p>';
 			$string .= '<button onClick="save(\''.$pageSlug.'\', \''.$currentRecord->fields[$pk]->getValue().'\'); return false;" class="btn btn-primary save-button"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save</button>';
 		}
 
@@ -835,7 +833,7 @@ class UXHelper {
 		$string .= '<div class="form-group">
 <div class="col-sm-12">';
 		$string .= '<button onClick="create(\''.$pageSlug.'\'); return false;" class="btn btn-primary new-button"><span class="glyphicon glyphicon-saved" aria-hidden="true"></span> Create</button>';
-		$string .= '<b class="text text-success form-status" style="display: none"></b>';
+		$string .= '<b class="text text-success form-status-'.str_replace('/', '-', $pageSlug).'" style="display: none"></b>';
 		$string .= '</div></div>';
 
 		$string .= self::widgetForm($widgets);
@@ -856,14 +854,14 @@ class UXHelper {
 		$string .= '<div class="form-group">
 <div class="col-sm-12">';
 		$string .= '<button onClick="runSearch(\''.$pageSlug.'\', 1); return false;" class="btn btn-primary search-button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search</button>';
-		$string .= '<b class="text text-success form-status form-status-no-indent" style="display: none"></b>';
+		$string .= '<b class="text text-success form-status-'.str_replace('/', '-', $pageSlug).' form-status-no-indent" style="display: none"></b>';
 		$string .= '</div></div>';
 
 		$string .= self::widgetForm($widgets);
 
 		$string .= '<button onClick="runSearch(\''.$pageSlug.'\', 1); return false;" class="btn btn-primary search-button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search</button><br><br>';
 
-		$string .= '<div id="search-results"></div>';
+		$string .= '<div class="searchtable-'.str_replace('/', '-', $pageSlug).'"></div>';
 
 		$string .= self::modalStub();
 
@@ -898,7 +896,7 @@ class UXHelper {
 			if(count($items) == 0) {
 				$string .= '<div class="alert alert-danger">No entries</div>';
 			} else {
-				$string .= '<table class="table table-bordered table-hover sortable" id="list-table">';
+				$string .= '<table class="table table-bordered table-hover sortable" id="audit-list-table">';
 				$string .= '<thead><tr>';
 
 				$columns = array("timestamp" => "Timestamp", "user" => "By", "action" => "Action", "fields" => "Changed data");

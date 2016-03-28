@@ -1,4 +1,6 @@
 function save(page_name, key) {
+	clean_page_name = page_name.replace('/', '-');
+
 	if(SirTrevor.onBeforeSubmit() == 0) {
 		$('.st-outer').each(function() {
 			editorId = $(this).attr('id');
@@ -24,7 +26,7 @@ function save(page_name, key) {
 			type: "POST",
 			data: formData,
 			beforeSend: function(data) {
-				$('.form-status').hide();
+				$('.form-status-'+clean_page_name).hide();
 				$('.save-button').html('<span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> Saving...');
 				$('.save-button').attr('disabled', 'disabled');
 				$('.form-group').removeClass('has-error');
@@ -52,15 +54,18 @@ function save(page_name, key) {
 					$('#detailsview').modal('hide');
 				}
 
-				$('.form-status').html('<span class="glyphicon glyphicon-ok"></span> '+data);
-				$('.form-status').fadeIn('fast').delay(5000).fadeOut('slow');
-				// Get paginator page
-				paginator_page = $('#list-table').attr('data-currentpage');
+				$('.form-status-'+clean_page_name).html('<span class="glyphicon glyphicon-ok"></span> '+data);
+				$('.form-status-'+clean_page_name).fadeIn('fast').delay(5000).fadeOut('slow');
 
-				if ($('#search-results').length) {
-					runSearch(page_name, paginator_page); // Reload results
-				} else if($('#list-table').length) {
-					refreshList(page_name, paginator_page); // Reload results
+				if($('.datatable-'+clean_page_name).length > 0) {
+					// Get paginator page
+					paginator_page = $('.datatable-'+clean_page_name).attr('data-currentpage');
+
+					if ($('.searchtable-'+clean_page_name).length) {
+						runSearch(page_name, paginator_page); // Reload results
+					} else if($('.datatable-'+clean_page_name).length) {
+						refreshList(page_name, paginator_page); // Reload results
+					}
 				}
 			},
 			cache: false
@@ -88,7 +93,7 @@ function create(page_name) {
 			processData: false,
 			contentType: false,
 			beforeSend: function(data) {
-				$('.form-status').hide();
+				$('.form-status-'+clean_page_name).hide();
 				$('.new-button').html('<span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> Creating...');
 				$('.new-button').attr('disabled', 'disabled');
 				$('.form-group').removeClass('has-error');
@@ -112,8 +117,8 @@ function create(page_name) {
 				alert(message);
 			},
 			success: function(data) {
-				$('.form-status').html('<span class="glyphicon glyphicon-ok"></span> Succesfully created! ' + data.key);
-				$('.form-status').fadeIn('fast').delay(5000).fadeOut('slow');
+				$('.form-status-'+clean_page_name).html('<span class="glyphicon glyphicon-ok"></span> Succesfully created! ' + data.key);
+				$('.form-status-'+clean_page_name).fadeIn('fast').delay(5000).fadeOut('slow');
 				$('.datetimefield').each(function() {
 					$(this).data('DateTimePicker').date(null);
 				});
@@ -172,6 +177,8 @@ function create(page_name) {
 }
 
 function runSearch(page_name, paginator_page) {
+	clean_page_name = page_name.replace('/', '-');
+
 	var formData = $('#search-form').serializeArray();
 	formData.push({
 		name: "q",
@@ -192,7 +199,7 @@ function runSearch(page_name, paginator_page) {
 		beforeSend: function(data) {
 			$('.search-button').html('<span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> Searching...');
 			$('.search-button').attr('disabled', 'disabled');
-			$('#search-results').html('');
+			$('.searchtable-'.page_name).html('');
 		},
 		complete: function(data) {
 			$('.search-button').html('<span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search');
@@ -204,7 +211,7 @@ function runSearch(page_name, paginator_page) {
 			alert(message);
 		},
 		success: function(data) {
-			$('#search-results').html(data.form);
+			$('.searchtable-'+clean_page_name).html(data.form);
 
 			$(".sortable").tablesorter({
 				theme: "bootstrap",
@@ -216,7 +223,7 @@ function runSearch(page_name, paginator_page) {
 			});
 
 			$('html, body').animate({
-				scrollTop: $("#search-results").offset().top
+				scrollTop: $('.searchtable-'+clean_page_name).offset().top
 			}, 500);
 		},
 		cache: false
@@ -224,6 +231,8 @@ function runSearch(page_name, paginator_page) {
 }
 
 function refreshList(page_name, paginator_page) {
+	clean_page_name = page_name.replace('/', '-');
+
 	$.ajax(getAjaxEndpoint(), {
 		type: "POST",
 		data: {
@@ -232,11 +241,11 @@ function refreshList(page_name, paginator_page) {
 			page2: paginator_page
 		},
 		beforeSend: function(data) {
-			$('.load-msg').show();
-			$('#list-area').html('');
+			$('.load-msg-'+clean_page_name).show();
+			$('.dataarea-'+clean_page_name).html('');
 		},
 		complete: function(data) {
-			$('.load-msg').hide();
+			$('.load-msg-'+clean_page_name).hide();
 		},
 		error: function(data) {
 			message = data.responseJSON.message;
@@ -244,7 +253,7 @@ function refreshList(page_name, paginator_page) {
 			alert(message);
 		},
 		success: function(data) {
-			$('#list-area').html(data.form);
+			$('.dataarea-'+clean_page_name).html(data.form);
 
 			$(".sortable").tablesorter({
 				theme: "bootstrap",
@@ -337,6 +346,8 @@ function imageForm(location, image, hasEditor, inTrevor) {
 }
 
 function del(page_name, key) {
+	clean_page_name = page_name.replace('/', '-');
+
 	if(confirm("Are you sure you want to delete this?")) {
 		$.ajax(getAjaxEndpoint(), {
 			type: "POST",
@@ -358,13 +369,13 @@ function del(page_name, key) {
 				alert(message);
 			},
 			success: function(data) {
-				$('.form-status').html('<span class="glyphicon glyphicon-ok"></span> '+data);
-				$('.form-status').fadeIn('fast').delay(5000).fadeOut('slow');
+				$('.form-status-'+clean_page_name).html('<span class="glyphicon glyphicon-ok"></span> '+data);
+				$('.form-status-'+clean_page_name).fadeIn('fast').delay(5000).fadeOut('slow');
 
 				// Get paginator page
-				paginator_page = $('#list-table').attr('data-currentpage');
+				paginator_page = $('.datatable-'+clean_page_name).attr('data-currentpage');
 
-				if ($('#search-results').length) {
+				if ($('.searchtable-'+clean_page_name).length) {
 					runSearch(page_name, paginator_page); // Reload results
 				} else {
 					refreshList(page_name, paginator_page); // Reload results
@@ -427,6 +438,8 @@ function runAction(action, page_name) {
 		records.push($(this).data('record'));
 	});
 
+	clean_page_name = page_name.replace('/', '-');
+
 	$.ajax(getAjaxEndpoint(), {
 			type: "POST",
 			data: {
@@ -436,18 +449,18 @@ function runAction(action, page_name) {
 				records: records
 			},
 			beforeSend: function(data) {
-				$('.action-msg').show();
-				$('.list-area').hide();
+				$('.action-msg-'+clean_page_name).show();
+				$('.dataarea-'+clean_page_name).hide();
 			},
 			error: function(data) {
-				$('.action-msg').hide();
-				$('.list-area').show();
+				$('.action-msg-'+clean_page_name).hide();
+				$('.dataarea-'+clean_page_name).show();
 				// Get paginator page
-				paginator_page = $('#list-table').attr('data-currentpage');
+				paginator_page = $('.datatable-'.page_name.replace("/", "-")).attr('data-currentpage');
 
-				if ($('#search-results').length) {
+				if ($('.searchtable-'+clean_page_name).length) {
 					runSearch(page_name, paginator_page); // Reload results
-				} else if($('#list-table').length) {
+				} else if($('.datatable-'+clean_page_name).length) {
 					refreshList(page_name, paginator_page); // Reload results
 				}
 
@@ -455,19 +468,20 @@ function runAction(action, page_name) {
 				alert(message);
 			},
 			success: function(data) {
-				$('.action-msg').hide();
-				$('.list-area').show();
-				// Get paginator page
-				paginator_page = $('#list-table').attr('data-currentpage');
+				$('.action-msg-'+clean_page_name).hide();
+				$('.dataarea-'+clean_page_name).show();
 
-				if ($('#search-results').length) {
+				// Get paginator page
+				paginator_page = $('.datatable-'+clean_page_name).attr('data-currentpage');
+
+				if ($('.searchtable-'+clean_page_name).length) {
 					runSearch(page_name, paginator_page); // Reload results
-				} else if($('#list-table').length) {
+				} else if($('.datatable-'+clean_page_name).length) {
 					refreshList(page_name, paginator_page); // Reload results
 				}
 
-				$('.form-status').html('<span class="glyphicon glyphicon-ok"></span> '+data.message);
-				$('.form-status').fadeIn('fast').delay(5000).fadeOut('slow');
+				$('.form-status-'+clean_page_name).html('<span class="glyphicon glyphicon-ok"></span> '+data.message);
+				$('.form-status-'+clean_page_name).fadeIn('fast').delay(5000).fadeOut('slow');
 			},
 			cache: false
 	});
