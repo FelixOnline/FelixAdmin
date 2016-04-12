@@ -4,10 +4,16 @@ namespace FelixOnline\Admin;
 
 class UXHelper {
 	public static function header(
-		$pageName,
 		$endpoint = '') {
 		$app = \FelixOnline\Core\App::getInstance();
 		$currentuser = $app['currentuser'];
+
+		// Generate CSRF token
+		if(!isset($_COOKIE['felixonline_csrf_admin'])) {
+			$csrf = \FelixOnline\Core\Utility::generateCSRFToken('admin');
+		} else {
+			$csrf = $_COOKIE['felixonline_csrf_admin'];
+		}
 
 		$string = '<!doctype html>
 
@@ -15,9 +21,10 @@ class UXHelper {
 <head>
 	<meta charset="utf-8">
 
-	<title>'.$pageName.' - '.SERVICE_NAME.'</title>
+	<title>'.SERVICE_NAME.'</title>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<base href="'.STANDARD_URL.'">
 
 	<link rel="stylesheet" href="'.STANDARD_URL.'css/bootstrap.min.css">
 	<link rel="stylesheet" href="'.STANDARD_URL.'css/bootstrap-theme.min.css">
@@ -35,6 +42,7 @@ class UXHelper {
 </head>
 
 <body>
+<div id="csrf-key" data-csrf="'.$csrf.'"></div>
 <div class="container-header">
 	<div class="container">
 		<div class="row">
@@ -55,53 +63,17 @@ class UXHelper {
 		$currentuser = $app['currentuser'];
 
 		if($currentuser->isLoggedIn()) {
-			$string .= self::menu($app['env']['session']->session['menu'], $endpoint);
+			$string .= self::renderMenu($app['env']['session']->session['menu'], '', $endpoint, true);
 		}
 
-		$string .= '<div class="container">
-	<h2>'.$pageName.'</h2>';
+		$string .= '<div class="container">';
 		return $string;
 	}
 
-	public static function menu($menu, $endpoint) {
-		if($endpoint == '') { // If no selected item
-			return self::renderMenu($menu, '', $endpoint, true); // Render all root items in main style
-		}
-
-		// Build list of menus to render
-		$active_item = $menu[$endpoint];
-
-		$menus = array();
-
-		$last_item = $endpoint; // The last selected item (for highlighting)
-		$current_menu = $active_item['parent']; // Set the current menu to the one which contains the selected item
-
-		while($current_menu != null) {
-			$menus[] = array($current_menu, $last_item); // Set this menu to be rendered
-			$last_item = $current_menu; // The next 'selected' item is the parent of the previous selected item
-
-			$current_menu = $menu[$current_menu]['parent']; // Now find what menu contains this item
-		}
-
-		$menus[] = array($current_menu, $last_item); // Finally put the root menu in
-		$menus = array_reverse($menus); // Reverse it so the root menu is top
-
-		$root_menu = true;
-		$string = '';
-
-		foreach($menus as $menuToShow) {
-			$string .= self::renderMenu($menu, $menuToShow[0], $menuToShow[1], $root_menu); // Render all root items in main style
-
-			$root_menu = false;
-		}
-
-		$string .= self::renderMenu($menu, $menuToShow[1], '', $root_menu); // Then show any child items of the selected level
-
-		return $string;
-	}
-
-	public static function renderMenu($menu, $levelToShow, $selectedItem, $root) {
+	public static function renderMenu($menu, $levelToShow, $selectedItem, $root, $recordId = "null") {
 		$items = 0;
+
+		$menuId = rand();
 
 		if(!isset($menu)) {
 			return;
@@ -125,13 +97,13 @@ class UXHelper {
 				$selected = '';
 			}
 
+			$menuId = 'root';
+
 			$string .= '<nav class="navbar navbar-default">
 			<div class="container">
-			<ul class="nav navbar-nav">
-			<li'.$selected.'><a href="'.STANDARD_URL.'">Home</a></li>';
+			<ul class="nav navbar-nav" id="menu-'.$menuId.'">';
 		} else {
-			$string .= '<div class="container">
-			<ul class="nav nav-tabs">';
+			$string .= '<ul class="nav nav-tabs" id="menu-'.$menuId.'">';
 		}
 
 		foreach($menu as $key => $item) {
@@ -145,7 +117,9 @@ class UXHelper {
 				$selected = '';
 			}
 
-			$string .= '<li'.$selected.'><a href="'.STANDARD_URL.$key.'">'.$item['label'].'</a></li>';
+			$menuItemId = rand();
+
+			$string .= '<li'.$selected.' id="menu-'.$menuId.'-item-'.$menuItemId.'"><a href="'.STANDARD_URL.$key.'" onClick="if(window.pageIsLoading) { return false; } loadPage(\''.$key.'\', \'#render-'.$menuId.'\', null, \''.$recordId.'\'); $(\'#menu-'.$menuId.' li\').each(function() { $(this).removeClass(\'active\'); }); $(\'#menu-'.$menuId.'-item-'.$menuItemId.'\').addClass(\'active\'); return false;">'.$item['label'].'</a></li>';
 		}
 
 		if($root) {
@@ -153,8 +127,7 @@ class UXHelper {
 			</div>
 			</nav>';
 		} else {
-			$string .= '</ul>
-			</div>';
+			$string .= '</ul><div id="render-'.$menuId.'" data-parentrecord="'.$recordId.'"></div>';
 		}
 
 		return $string;
@@ -200,7 +173,6 @@ class UXHelper {
 			</div>
 		</div>
 	</div>
-	<div id="csrf-key" data-csrf=""></div>
 	<script src="'.STANDARD_URL.'js/bootstrap.min.js"></script>
 	<script src="'.STANDARD_URL.'js/moments-2.10.3.js"></script>
 	<script src="'.STANDARD_URL.'js/bootstrap-datetimepicker-4.14.30.min.js"></script>
@@ -217,10 +189,10 @@ class UXHelper {
 
 	<script>
 		function getAjaxEndpoint() {
-			return "'.STANDARD_URL.'ajax.php";
+			return "ajax.php";
 		}
 		function getImageUploadEndpoint() {
-			return "'.STANDARD_URL.'uploadImage.php";
+			return "uploadImage.php";
 		}
 	</script>
 	</body>
@@ -239,6 +211,7 @@ class UXHelper {
 	}
 
 	public static function login() {
+		$string = '<h2>Login</h2>';
 		$string .= '<p>Welcome to '.SERVICE_NAME.'. Please log in with your IC credentials.</p>';
 		$string .= '<p>You can only log in to this website if you have been granted access, for example because you have written an article or you edit a section.</p>';
 
@@ -282,15 +255,13 @@ class UXHelper {
 	public static function page(
 		$name,
 		$content,
-		$endpoint = '') {
-
-		echo self::header($name, $endpoint);
+		$endpoint) {
 
 		foreach($content as $item) {
-			echo $item;
+			$output .= $item;
 		}
 
-		echo self::footer();
+		return $output;
 	}
 
 	public static function tabs(
@@ -299,7 +270,9 @@ class UXHelper {
 		$currentView,
 		$currentKey = null) {
 
-		$string = '<ul class="nav nav-pills">';
+		$tabsId = rand();
+
+		$string = '<ul class="nav nav-pills" id="modetabs-'.$tabsId.'">';
 
 		if($access['list']) {
 			if($currentView == 'list') {
@@ -308,7 +281,7 @@ class UXHelper {
 				$current = '';
 			}
 
-			$string .= '<li role="presentation" '.$current.'><a href="'.STANDARD_URL.$pageSlug.':list" '.$current.'><span class="glyphicon glyphicon-list" aria-hidden="true"></span> List</a></li>';
+			$string .= '<li role="presentation" '.$current.' id="modetabs-'.$tabsId.'-list"><a href="'.STANDARD_URL.$pageSlug.':list" onClick="if(window.pageIsLoading) { return false; } loadPage(\''.$pageSlug.':list\', \'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\'), false, $(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\')); return false;" '.$current.'><span class="glyphicon glyphicon-list" aria-hidden="true"></span> List</a></li>';
 		}
 
 		if($access['search']) {
@@ -318,7 +291,7 @@ class UXHelper {
 				$current = '';
 			}
 
-			$string .= '<li role="presentation" '.$current.'><a href="'.STANDARD_URL.$pageSlug.':search" '.$current.'><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search</a></li>';
+			$string .= '<li role="presentation" '.$current.' id="modetabs-'.$tabsId.'-search"><a href="'.STANDARD_URL.$pageSlug.':search" onClick="if(window.pageIsLoading) { return false; } loadPage(\''.$pageSlug.':search\', \'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\'), false, $(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\')); return false;"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search</a></li>';
 		}
 
 		if($access['details'] && $currentView == 'details') {
@@ -328,7 +301,7 @@ class UXHelper {
 				$current = '';
 			}
 
-			$string .= '<li role="presentation" '.$current.'><a href="'.STANDARD_URL.$pageSlug.':details/'.$currentKey.'" '.$current.'><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit</a></li>';
+			$string .= '<li role="presentation" '.$current.' id="modetabs-'.$tabsId.'-details"><a href="'.STANDARD_URL.$pageSlug.':details/'.$currentKey.'" onClick="if(window.pageIsLoading) { return false; } loadPage(\''.$pageSlug.':details/'.$currentKey.'\', \'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\'), false, $(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\')); return false;" '.$current.'><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit</a></li>';
 		}
 
 		if($access['new']) {
@@ -338,7 +311,7 @@ class UXHelper {
 				$current = '';
 			}
 
-			$string .= '<li role="presentation" '.$current.'><a href="'.STANDARD_URL.$pageSlug.':new" '.$current.'><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> New</a></li>';
+			$string .= '<li role="presentation" '.$current.' id="modetabs-'.$tabsId.'-new"><a href="'.STANDARD_URL.$pageSlug.':new" onClick="if(window.pageIsLoading) { return false; } loadPage(\''.$pageSlug.':new\', \'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\'), false, $(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\')); return false;" '.$current.'><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> New</a></li>';
 		}
 
 		$string .= '</ul>';
@@ -419,21 +392,35 @@ class UXHelper {
 	}
 
 	public static function listStub(
-		$page,
-		$currentPage) {
+		$pageSlug,
+		$pageData,
+		$records,
+		$actions,
+		$numRecords,
+		$primaryKey,
+		$currentPage,
+		$canDetails,
+		$canDelete,
+		$surpressPaginator,
+		$searchView = false) {
 
 		$string = '
 			<br>
-			<b class="text text-success form-status-'.str_replace('/', '-', $page).' form-status-no-indent" style="display: none"></b>
-			<div class="alert alert-info load-msg-'.str_replace('/', '-', $page).'"><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> Refreshing list...</div>
-			<div class="dataarea-'.str_replace('/', '-', $page).'"></div>
-			<script>
-			document.addEventListener("DOMContentLoaded", function(event) {
-				refreshList("'.$page.'", "'.$currentPage.'");
-			});
-			</script>';
-
-		$string .= self::modalStub();
+			<b class="text text-success form-status" style="display: none"></b>
+			<div class="alert alert-info load-msg" style="display: none;"><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> Refreshing list...</div>
+			<div class="dataarea">';
+		$string .= self::recordList($pageSlug,
+			$pageData,
+			$records,
+			$actions,
+			$numRecords,
+			$primaryKey,
+			$currentPage,
+			$canDetails,
+			$canDelete,
+			$surpressPaginator,
+			$searchView);
+		$string .= '</div>';
 
 		return $string;
 	}
@@ -451,12 +438,17 @@ class UXHelper {
 		$surpressPaginator,
 		$searchView = false) {
 
-		if(count($records) == 0) {
-			return '<h3>No data found</h3>';
+		if($searchView) {
+			$string = '<div class="searchResults">';
+		} else {
+			$string = '';
 		}
 
-		$string = '<div class="alert alert-info action-msg-'.str_replace('/', '-', $page).'" style="display: none;"><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> Working on it...</div>
-<div class="dataarea-'.str_replace('/', '-', $pageSlug).'">';
+		if(count($records) == 0) {
+			return $string.'<h3>No data found</h3></div>';
+		}
+
+		$string .= '<div class="alert alert-info action-msg" style="display: none;"><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> Working on it...</div>';
 
 		// What are our headings
 		$columns = array();
@@ -480,7 +472,7 @@ class UXHelper {
 		if(count($actions) > 0) {
 			$string .= '<p><div class="btn-group" role="group">';
 
-			$string .= '<button class="btn btn-default toggler" onClick="toggleSelect();">Select all</button>';
+			$string .= '<button class="btn btn-default toggler" onClick="toggleSelect(\''.str_replace('/', '-', $pageSlug).'\');">Select all</button>';
 
 			$string .= '<button class="btn btn-default" disabled onClick="return: false;">With selected items:</button>';
 
@@ -492,7 +484,7 @@ class UXHelper {
 		}
 
 		$string .= '<div class="table-responsive">';
-		$string .= '<table class="table table-bordered table-hover sortable datatable-'.str_replace('/', '-', $pageSlug).'" data-currentpage="'.$currentPage.'">';
+		$string .= '<table class="table table-bordered table-hover sortable datatable" data-currentpage="'.$currentPage.'">';
 		$string .= '<thead><tr>';
 
 		if(count($actions) > 0) {
@@ -510,7 +502,7 @@ class UXHelper {
 		$string .= '</tr></thead><tbody>';
 
 		foreach($records as $record) {
-			$string .= '<tr id="row-'.$record->fields[$primaryKey]->getValue().'">';
+			$string .= '<tr id="row-'.$currentpage.'-'.$record->fields[$primaryKey]->getValue().'">';
 
 			if(count($actions) > 0) {
 				$string .= '<td><input type="checkbox" class="recordBox" name="record[]" data-record="'.$record->fields[$primaryKey]->getValue().'"></td>'; // Checkbox for actions
@@ -649,24 +641,29 @@ class UXHelper {
 
 				if($colid == $primaryKey && $canDetails) {
 					$editable = 'pencil';
+					$searchViewModifier = 'false';
 
 					if($pageData['modes']['details']['readOnly']) {
 						$editable = 'info-sign';
 					}
 
-					$value = '<center><a href="'.STANDARD_URL.$pageSlug.':details/'.$value.'" onClick="show_details(\''.$pageSlug.'\', \''.$value.'\'); return false;"><span class="glyphicon glyphicon-'.$editable.'" aria-hidden="true"></span> '.$value.'</a></center>';
+					if($searchView) {
+						$searchViewModifier = 'true';
+					}
+
+					$value = '<center><a href="'.STANDARD_URL.$pageSlug.':details/'.$value.'" onClick="if(window.pageIsLoading) { return false; } loadPage(\''.$pageSlug.':details/'.$value.'\', \'#\'+$(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'id\'), '.$searchViewModifier.', $(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'data-parentrecord\')); return false;"><span class="glyphicon glyphicon-'.$editable.'" aria-hidden="true"></span> '.$value.'</a></center>';
 				}
 
 				$string .= '<td>'.$value.'</td>';
 			}
 
 			if($canDelete) {
-				$string .= '<td><span class="glyphicon glyphicon-trash delete-icon text-danger" id="del-'.$record->fields[$primaryKey]->getValue().'" onClick="del(\''.$pageSlug.'\', \''.$record->fields[$primaryKey]->getValue().'\');"></span></td>';
+				$string .= '<td><span class="glyphicon glyphicon-trash delete-icon text-danger del-'.$record->fields[$primaryKey]->getValue().'" onClick="del(\''.$pageSlug.'\', \''.$record->fields[$primaryKey]->getValue().'\');"></span></td>';
 			}
 
 			$string .= '</tr>';
 		}
-		$string .= '</tbody></table></div></div>';
+		$string .= '</tbody></table></div>';
 
 		$plural = '';
 
@@ -674,26 +671,7 @@ class UXHelper {
 			$plural = 's';
 		}
 
-		$string .= '<p><span class="label label-default">'.$numRecords.' record'.$plural.' found</span></p>';
-
-		return $string;
-	}
-
-	public static function modalStub() {
-		// Modal for popup details forms
-		$string = '<div class="modal fade modal-wide" id="detailsview">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title">Loading</h4>
-				</div>
-				<div class="modal-body">
-					Please wait...
-				</div>
-			</div>
-		</div>
-	</div>';
+		$string .= '<p><span class="label label-default">'.$numRecords.' record'.$plural.' found</span></p></div>';
 
 		return $string;
 	}
@@ -785,7 +763,7 @@ class UXHelper {
 
 		$currentRecord = $currentRecord[0];
 
-		$string = '<form class="form-horizontal">';
+		$string = '<div id="page-render-'.str_replace('/', '-', $pageSlug).'"><form class="form-horizontal">';
 
 
 		if(!$readOnly) {
@@ -795,13 +773,13 @@ class UXHelper {
 		}
 
 		if($showTrail) {
-			$mode = '<button class="btn btn-default btn-xs" onClick="toggleAudit(); return false;" id="auditButton"><span class="glyphicon glyphicon-time"></span> Audit log</button>&nbsp;&nbsp;'.$mode;
+			$mode = '<button class="btn btn-default btn-xs auditButton" onClick="toggleAudit(\''.$pageSlug.'\'); return false;"><span class="glyphicon glyphicon-time"></span> Audit log</button>&nbsp;&nbsp;'.$mode;
 		}
 
-		$string .= '<div id="widgetForm">';
+		$string .= '<div class="widgetForm">';
 
 		if(!$readOnly) {
-			$string .= '<p><b class="text text-success form-status-'.str_replace('/', '-', $pageSlug).'" style="display: none"></b></p>';
+			$string .= '<p><b class="text text-success form-status" style="display: none"></b></p>';
 			$string .= '<button onClick="save(\''.$pageSlug.'\', \''.$currentRecord->fields[$pk]->getValue().'\'); return false;" class="btn btn-primary save-button"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save</button>';
 		}
 
@@ -811,11 +789,13 @@ class UXHelper {
 			$string .= '<button onClick="save(\''.$pageSlug.'\', \''.$currentRecord->fields[$pk]->getValue().'\'); return false;" class="btn btn-primary save-button"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save</button>';
 		}
 
-		$string .= '</div>';
+		$string .= '</div></form>';
 
 		if($showTrail) {
-			$string .= '<div id="auditForm" style="display: none">'.self::auditForm($currentRecord, $pk).'</div>';
+			$string .= '<div class="auditForm" style="display: none">'.self::auditForm($currentRecord, $pk).'</div>';
 		}
+
+		$string .= '</div>';
 
 		return array('string' => $string,
 			'heading' => $mode.': '.$currentRecord->fields[$hint]->getValue().' ('.$currentRecord->fields[$pk]->getValue().')');
@@ -828,12 +808,12 @@ class UXHelper {
 		$pk) {
 
 		$string = '<h3>New Entry</h3>';
-		$string .= '<form class="form-horizontal" id="new-form">';
+		$string .= '<form class="form-horizontal">';
 
 		$string .= '<div class="form-group">
 <div class="col-sm-12">';
 		$string .= '<button onClick="create(\''.$pageSlug.'\'); return false;" class="btn btn-primary new-button"><span class="glyphicon glyphicon-saved" aria-hidden="true"></span> Create</button>';
-		$string .= '<b class="text text-success form-status-'.str_replace('/', '-', $pageSlug).'" style="display: none"></b>';
+		$string .= '<b class="text text-success form-status" style="display: none"></b>';
 		$string .= '</div></div>';
 
 		$string .= self::widgetForm($widgets);
@@ -850,20 +830,18 @@ class UXHelper {
 		$pk) {
 
 		$string = '<h3>Search for something</h3>';
-		$string .= '<form class="form-horizontal" id="search-form">';
+		$string .= '<form class="form-horizontal search-form">';
 		$string .= '<div class="form-group">
 <div class="col-sm-12">';
 		$string .= '<button onClick="runSearch(\''.$pageSlug.'\', 1); return false;" class="btn btn-primary search-button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search</button>';
-		$string .= '<b class="text text-success form-status-'.str_replace('/', '-', $pageSlug).' form-status-no-indent" style="display: none"></b>';
+		$string .= '<b class="text text-success form-status" style="display: none"></b>';
 		$string .= '</div></div>';
 
 		$string .= self::widgetForm($widgets);
 
 		$string .= '<button onClick="runSearch(\''.$pageSlug.'\', 1); return false;" class="btn btn-primary search-button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search</button><br><br>';
 
-		$string .= '<div class="searchtable-'.str_replace('/', '-', $pageSlug).'"></div>';
-
-		$string .= self::modalStub();
+		$string .= '<div class="searcharea"></div>';
 
 		return $string;
 	}
@@ -878,7 +856,6 @@ class UXHelper {
 			ob_end_clean();
 		}
 
-		$string .= '</form>';
 		return $string;
 	}
 

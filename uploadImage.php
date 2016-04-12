@@ -1,5 +1,6 @@
 <?php
 	// Image upload script
+	// NOT CSRF PROTECTED - as not modifying Sir Trevor (and the risk of abuse of this script is low)
 
 	require('core/setup.php');
 

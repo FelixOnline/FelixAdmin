@@ -10,8 +10,14 @@ class newAjaxHelper extends Core {
 
 		$page = $_POST['00page'];
 
+		if(isset($_POST['00pull'])) {
+			$pullThrough = $_POST['00pull'];
+		} else {
+			$pullThrough = null;
+		}
+
 		try {
-			$page = new \FelixOnline\Admin\Page($page);
+			$page = new \FelixOnline\Admin\Page($page, false, $pullThrough);
 		} catch(Exceptions\PageNotFoundException $e) {
 			// no such page
 			$this->error("Could not find page.", 404);

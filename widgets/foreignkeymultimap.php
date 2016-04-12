@@ -94,9 +94,17 @@ class ForeignKeyMultiMapWidget implements Widget {
 			      	q: "lookup",
 			        query: params.term, // search term
 			        page: "'.$this->page.'",
-			        widget: "'.$this->fieldName.'"
+			        widget: "'.$this->fieldName.'",
+			        "00csrf": $("#csrf-key").attr("data-csrf")
 			      };
 			    },
+				error: function(data) {
+					if(data.responseJSON) {
+						alert(data.responseJSON.message);
+					} else {
+						alert(data.responseText);
+					}
+				},
 			    processResults: function (data, page) {
 			      return {
 			        results: data

@@ -25,7 +25,7 @@ class detailsHelper {
 		$this->currentPk = $this->pageInfo[1];
 
 		if($this->pageInfo[1] == '') {
-			throw new Exceptions\RecordNotFoundException('');
+			throw new \Exception('No record specified');
 		} else {
 			$this->manager->filter($this->pk." = \"%s\"", array($this->pageInfo[1]));
 			$this->manager->limit(0, 1);
@@ -163,26 +163,7 @@ class detailsHelper {
 		}
 	}
 
-	public function modalRender() {
-		// Show audit log for "sysAdmin", "webMaster" roles only
-		$showLog = false;
-		$app = \FelixOnline\Core\App::getInstance();
-
-		if(array_intersect(array('sysAdmin', 'webMaster'), $app['env']['session']->session['roles']) != 0) {
-			$showLog = true;
-		}
-
-		return \FelixOnline\Admin\UXHelper::details(
-					$this->pageName,
-					$this->pageData,
-					$this->record,
-					$this->widgets,
-					$this->pk,
-					$this->readOnly,
-					$showLog);
-	}
-
-	public function render() {
+	public function render($hideTabs = false, $showTitle = false) {
 		// Show audit log for "sysAdmin", "webMaster" roles only
 		$showLog = false;
 		$app = \FelixOnline\Core\App::getInstance();
@@ -193,6 +174,25 @@ class detailsHelper {
 
 		$access = \FelixOnline\Admin\UXHelper::getAccess($this->pageData);
 
+		$tabs = \FelixOnline\Admin\UXHelper::tabs(
+					$this->pageName,
+					$access,
+					'details',
+					$this->currentPk)
+				.\FelixOnline\Admin\UXHelper::text(
+					$this->pageData['auxHtml']);
+
+		$pageName = $this->pageData['name'];
+
+		if($hideTabs) {
+			$tabs = '';
+			$pageName = '';
+		}
+
+		if($showTitle) {
+			$showTitle = '<h2>'.$pageName.'</h2>';
+		}
+
 		$formData = \FelixOnline\Admin\UXHelper::details(
 					$this->pageName,
 					$this->pageData,
@@ -202,20 +202,18 @@ class detailsHelper {
 					$this->readOnly,
 					$showLog);
 
-		\FelixOnline\Admin\UXHelper::page(
-			$this->pageData['name'],
+		return \FelixOnline\Admin\UXHelper::page(
+			$pageName,
 			array(
-				\FelixOnline\Admin\UXHelper::tabs(
-					$this->pageName,
-					$access,
-					'details',
-					$this->currentPk),
-				\FelixOnline\Admin\UXHelper::text(
-					$this->pageData['auxHtml']),
+				'<div id="page-'.str_replace('/', '-', $this->pageName).'">',
+				$showTitle,
+				$tabs,
 				\FelixOnline\Admin\UXHelper::text(
 					'<h3>'.$formData['heading'].'</h3>'),
 				\FelixOnline\Admin\UXHelper::text(
-					$formData['string'])
+					$formData['string']),
+				'</div>',
+				\FelixOnline\Admin\UXHelper::renderMenu($app['env']['session']->session['menu'], $this->pageName, '', false, $this->pageInfo[1])
 			),
 			$this->pageName);
 	}

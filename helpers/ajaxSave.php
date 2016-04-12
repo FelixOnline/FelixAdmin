@@ -15,8 +15,14 @@ class saveAjaxHelper extends Core {
 		$page = $_POST['00page'];
 		$key = $_POST['00key'];
 
+		if(isset($_POST['00pull'])) {
+			$pullThrough = $_POST['00pull'];
+		} else {
+			$pullThrough = null;
+		}
+
 		try {
-			$page = new \FelixOnline\Admin\Page($page);
+			$page = new \FelixOnline\Admin\Page($page, false, $pullThrough);
 
 			$page->isRecordAccessible($key);
 		} catch(Exceptions\InvalidPageException $e) {

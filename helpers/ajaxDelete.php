@@ -16,8 +16,14 @@ class deleteAjaxHelper extends Core {
 		$page = $_POST['page'];
 		$key = $_POST['key'];
 
+		if(isset($_POST['pull'])) {
+			$pullThrough = $_POST['pull'];
+		} else {
+			$pullThrough = null;
+		}
+
 		try {
-			$page = new \FelixOnline\Admin\Page($page);
+			$page = new \FelixOnline\Admin\Page($page, false, $pullThrough);
 
 			$page->isRecordAccessible($key);
 		} catch(Exceptions\PageNotFoundException $e) {

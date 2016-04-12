@@ -16,8 +16,12 @@ class Page {
 	private $pageHelper;
 	private $defaultPageType;
 
-	public function __construct($page, $skip = false) {
+	public function __construct($page, $skip = false, $pullThrough = false) {
 		if($skip) { return; }
+
+		if($page == 'home') {
+			return new HomePage();
+		}
 
 		$page = explode(':', $page);
 
@@ -32,7 +36,7 @@ class Page {
 
 		$this->checkPermissions();
 
-		$this->applyConstraints();
+		$this->applyConstraints($pullThrough);
 	}
 
 	// For checking access
@@ -117,7 +121,7 @@ class Page {
 	}
 
 	// Set up the manager and apply page constraints
-	private function applyConstraints() {
+	private function applyConstraints($pullThrough) {
 		$app = \FelixOnline\Core\App::getInstance();
 		$currentuser = $app['currentuser'];
 
@@ -241,6 +245,70 @@ class Page {
 			}
 		}
 
+		// If we are pulling through data, add a constraint
+		if(isset($this->pageData['pullThrough'])) {
+			if($pullThrough === FALSE && (!isset($this->pageData['pullThrough']['optional']) || $this->pageData['pullThrough']['optional'] == false)) {
+				throw new \FelixOnline\Exceptions\InternalException('This page may only load as a child of another page.');
+			}
+
+			switch($this->pageData['pullThrough']['mode']) {
+				case 'single':
+					$class = $this->pageData['pullThrough']['class'];
+
+					$pulledThrough = new $class($pullThrough);
+
+					// Are we getting a child record
+					if(isset($this->pageData['pullThrough']['childField'])) {
+						if(!isset($pulledThrough->fields[$this->pageData['pullThrough']['childField']])) {
+							throw new \FelixOnline\Exceptions\InternalException('The child field does not exist on the pulled through record.');
+						}
+
+						$pulledThrough = $pulledThrough->fields[$this->pageData['pullThrough']['childField']]->getValue();
+					}
+
+					if(!isset($this->fields[$this->pageData['pullThrough']['keyField']])) {
+						throw new \FelixOnline\Exceptions\InternalException('The key field does not exist on this record.');
+					}
+
+					$this->manager->filter($this->pk.' = "%s"', array($pulledThrough->fields[$this->pageData['pullThrough']['keyField']]->getRawValue()));
+					break;
+				case 'multi':
+					$class = $this->pageData['pullThrough']['class'];
+					$thisObj = $this->pageData['model'];
+					$thisObj = new $thisObj();
+
+					$pulledThrough = new $class($pullThrough);
+
+					// Are we getting a child record
+					if(isset($this->pageData['pullThrough']['childField'])) {
+						if(!isset($pulledThrough->fields[$this->pageData['pullThrough']['childField']])) {
+							throw new \FelixOnline\Exceptions\InternalException('The child field does not exist on the pulled through record.');
+						}
+
+						$pulledThrough = $pulledThrough->fields[$this->pageData['pullThrough']['childField']]->getValue();
+					}
+
+					if(!isset($thisObj->fields[$this->pageData['pullThrough']['pullField']])) {
+						throw new \FelixOnline\Exceptions\InternalException('The pull field does not exist on this record.');
+					}
+
+					$this->manager->filter($this->pageData['pullThrough']['pullField'].' = "%s"', array($pulledThrough->fields[$pulledThrough->pk]->getRawValue()));
+					break;
+				case 'map':
+					$class = $this->pageData['pullThrough']['class'];
+					$classObj = new $class();
+					$table = $classObj->dbtable;
+
+					$manager2 = \FelixOnline\Core\BaseManager::build($class, $table);
+					$manager2->filter($this->pageData['pullThrough']['keyField'].' = "%s"', array($pullThrough));
+
+					// Error checking
+
+					$this->manager->join($manager2, null, $this->pk, $this->pageData['pullThrough']['pullField']);
+					break;
+			}
+		}
+
 		// Sort the records
 		$orderBy = array();
 		foreach($this->pageData['order'] as $order) {
@@ -276,11 +344,11 @@ class Page {
 		}
 	}
 
-	public function render() {
+	public function render($hideTabs = false, $showTitle = false) {
 		$this->setupPageHelper();
 
 		// Render the form
-		$this->pageHelper->render();
+		return $this->pageHelper->render($hideTabs, $showTitle);
 	}
 
 	public function getSpecificPageHelper($info) {
@@ -344,5 +412,37 @@ class Page {
 		}
 
 		$this->pageHelper = new $this->pageHelper($this->page, $this->pageData, $this->manager, $this->pk, $finalInfo);
+	}
+
+	public static function loadResults($manager, $pageData, $page) {
+		// Get the records for this page
+		$numRecords = $manager->count();
+		$manager->limit((-LISTVIEW_PAGINATION_LIMIT + $page*LISTVIEW_PAGINATION_LIMIT), LISTVIEW_PAGINATION_LIMIT);
+		$records = $manager->values();
+
+		// Get the actions available to us
+		$actions = array();
+		$app = \FelixOnline\Core\App::getInstance();
+
+		if(array_key_exists('actions', $pageData)) {
+			foreach($pageData['actions'] as $key => $action) {
+				if(isset($action['roles'])) {
+					if(count(array_intersect($action['roles'], $app['env']['session']->session['roles'])) == 0) {
+						continue; // Cannot access action
+					}
+				}
+
+				$actions[$key] = $action;
+			}
+		}
+
+		// If we can delete records, add an action to bulk delete
+		if($pageData['modes']['list']['canDelete']) {
+			$actions['bulk_delete'] = array(
+				"label" => "Delete",
+				"icon" => "trash");
+		}
+
+		return array('records' => $records, 'numRecords' => $numRecords, 'actions' => $actions);
 	}
 }

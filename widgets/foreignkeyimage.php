@@ -154,13 +154,16 @@ class ForeignKeyImageWidget implements Widget {
 							    data: function (params) {
 							      return {
 							      	q: "imageLookup",
-							        query: params.term // search term
+							        query: params.term, // search term
+			        				"00csrf": $("#csrf-key").attr("data-csrf")
 							      };
 							    },
 								error: function(data) {
-									message = data.responseJSON.message;
-
-									alert(message);
+									if(data.responseJSON) {
+										alert(data.responseJSON.message);
+									} else {
+										alert(data.responseText);
+									}
 								},
 							    processResults: function (data, page) {
 							      return {

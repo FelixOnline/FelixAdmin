@@ -19,6 +19,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#A56612', end
   border-radius: 0;
 }
 
+.nav-tabs {
+  margin-bottom: 20px;
+}
+
 .logout-button {
   margin-top: 15px;
   margin-bottom: 15px;
@@ -48,10 +52,6 @@ footer {
 }
 
 .form-status {
-	margin-left: 20px;
-}
-
-.form-status-no-indent {
   margin-left: 0px;
   margin-bottom: 20px;
   display: block;

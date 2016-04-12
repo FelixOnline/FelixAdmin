@@ -2,6 +2,7 @@
 	namespace FelixOnline\Admin;
 
 	// Felix Admin App - get_twitter for Sir Trevor
+	// NOT CSRF PROTECTED - as not modifying Sir Trevor (and the risk of abuse of this script is low)
 	// by Philip Kent
 
 	// Released under the MIT license

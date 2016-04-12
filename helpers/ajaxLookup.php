@@ -21,8 +21,14 @@ class lookupAjaxHelper extends Core {
 		$page = $_POST['page'];
 		$widget = $_POST['widget'];
 
+		if(isset($_POST['pull'])) {
+			$pullThrough = $_POST['pull'];
+		} else {
+			$pullThrough = null;
+		}
+
 		try {
-			$page = new \FelixOnline\Admin\Page($page);
+			$page = new \FelixOnline\Admin\Page($page, false, $pullThrough);
 		} catch(Exceptions\PageNotFoundException $e) {
 			// no such page
 			$this->error("Could not find page.", 404);

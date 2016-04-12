@@ -28,15 +28,8 @@
 	}
 
 	try {
-		if($page != 'home') {
-			$page = new Page($page);
-
-			$page->render();
-		} else {
-			$page = new HomePage();
-
-			$page->render();
-		}
+		$page = new StubPage($page);
+		$page->render();
 	} catch(Exceptions\PageNotFoundException $e) {
 		echo UXHelper::header('Not found');
 		echo UXHelper::notfound();

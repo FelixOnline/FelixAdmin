@@ -11,6 +11,8 @@ class logoutAjaxHelper extends Core {
 		$currentuser->resetSession();
 		$currentuser->removeCookie();
 
+		\FelixOnline\Core\Utility::generateCSRFToken('admin'); // reset
+
 		$this->success(array("url" => STANDARD_URL));
 	}
 }

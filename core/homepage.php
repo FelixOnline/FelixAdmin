@@ -15,9 +15,10 @@ class HomePage {
 	}
 
 	public function render() {
-		\FelixOnline\Admin\UXHelper::page(
+		return \FelixOnline\Admin\UXHelper::page(
 			'Welcome to '.SERVICE_NAME,
 			array(
+				'<h2>'.'Welcome to '.SERVICE_NAME.'</h2>',
 				\FelixOnline\Admin\UXHelper::home(
 					$this->userName,
 					$this->userRoles)

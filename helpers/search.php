@@ -102,23 +102,38 @@ class searchHelper {
 		}
 	}
 
-	public function render() {
+	public function render($hideTabs = false, $showTitle = false) {
 		$access = \FelixOnline\Admin\UXHelper::getAccess($this->pageData);
 
-		\FelixOnline\Admin\UXHelper::page(
-			$this->pageData['name'],
-			array(
-				\FelixOnline\Admin\UXHelper::tabs(
+		$tabs = \FelixOnline\Admin\UXHelper::tabs(
 					$this->pageName,
 					$access,
-					'search'),
-				\FelixOnline\Admin\UXHelper::text(
-					$this->pageData['auxHtml']),
+					'search')
+				.\FelixOnline\Admin\UXHelper::text(
+					$this->pageData['auxHtml']);
+		$pageName = $this->pageData['name'];
+
+		if($hideTabs) {
+			$tabs = '';
+			$pageName = '';
+		}
+
+		if($showTitle) {
+			$showTitle = '<h2>'.$pageName.'</h2>';
+		}
+
+		return \FelixOnline\Admin\UXHelper::page(
+			$pageName,
+			array(
+				'<div id="page-'.str_replace('/', '-', $this->pageName).'">',
+				$showTitle,
+				$tabs,
 				\FelixOnline\Admin\UXHelper::search(
 					$this->pageName,
 					$this->pageData,
 					$this->widgets,
-					$this->pk)
+					$this->pk),
+				'</div>'
 			),
 			$this->pageName);
 	}

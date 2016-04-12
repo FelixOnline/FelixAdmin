@@ -12,6 +12,8 @@ class loginAjaxHelper extends Core {
 			$this->error("Password not specified.", 400);
 		}
 
+		\FelixOnline\Core\Utility::generateCSRFToken('admin'); // reset
+
 		if(!LOCAL) {
 			if(!\pam_auth($_POST['username'], $_POST['password'])) {
 				if(!SSH_LOGIN) {
@@ -107,12 +109,17 @@ class loginAjaxHelper extends Core {
 	private function checkMenuAccess($key, $node, $parent = null) {
 		$page = new \FelixOnline\Admin\Page($key, true); // Do not run constructor - we do this to avoid constraining data and wasting lots of time
 
-		if($page->lightLoad($key)) {
+		if($key == 'home' || $page->lightLoad($key)) {
 
 			// We have access to this page
+			if($key == 'home') {
+				$name = 'Home';
+			} else {
+				$name = $page->getName();
+			}
 
 			$return = array();
-			$return[$key] = array("label" => $page->getName(), "parent" => $parent);
+			$return[$key] = array("label" => $name, "parent" => $parent);
 
 			if(isset($node['children'])) {
 				foreach($node['children'] as $chKey => $chNode) {

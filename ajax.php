@@ -42,6 +42,18 @@
 		exit;
 	}
 
+	if($_POST['00csrf'] != $_COOKIE['felixonline_csrf_admin']) {
+		header('HTTP/1.1 403 Forbidden');
+		header("Cache-Control: no-cache, must-revalidate", false);
+		header("Expires: Sat, 26 Jul 1997 05:00:00 GMT", false);
+		header("Content-Type: text/json", false);
+
+		echo json_encode(array("message" => 'Security error.', "widgets" => array()));
+
+		session_write_close();
+		exit;
+	}
+
 	try {
 		$className = '\FelixOnline\Admin\Ajax\\'.$_POST['q'].'AjaxHelper';
 

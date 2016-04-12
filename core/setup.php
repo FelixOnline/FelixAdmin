@@ -27,6 +27,7 @@ require BASE_DIRECTORY.'/core/exceptions.php';
 require BASE_DIRECTORY.'/core/page.php';
 require BASE_DIRECTORY.'/core/ux.php';
 require BASE_DIRECTORY.'/core/homepage.php';
+require BASE_DIRECTORY.'/core/stubpage.php';
 
 require BASE_DIRECTORY.'/widgets/interface.php';
 require BASE_DIRECTORY.'/helpers/ajaxCore.php';

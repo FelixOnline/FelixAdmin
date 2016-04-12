@@ -15,6 +15,12 @@ class actionAjaxHelper extends Core {
 		$action = $_POST['action'];
 		$page = $_POST['page'];
 
+		if(isset($_POST['pull'])) {
+			$pullThrough = $_POST['pull'];
+		} else {
+			$pullThrough = null;
+		}
+
 		if(!array_key_exists('records', $_POST)) {
 			$records = array();
 		} else {
@@ -28,7 +34,7 @@ class actionAjaxHelper extends Core {
 				throw new \Exception('Could not find action');
 			}
 
-			$pageObj = new \FelixOnline\Admin\Page($page, true);
+			$pageObj = new \FelixOnline\Admin\Page($page, true, $pullThrough);
 			if(!$pageObj->lightLoad($page)) {
 				throw new \Exception('You do not have permission to do this');
 			}
