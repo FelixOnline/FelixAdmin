@@ -69,23 +69,9 @@ class ForeignKeyTextWidget implements Widget {
 
 			echo '<label for="'.$this->fieldName.'" class="col-sm-2 control-label">'.$this->label.$required.'</label>
 			<div class="col-sm-10">
-				<textarea rows="25" class="form-control sir-trevor sir-trevor-'.$this->fieldName.'" name="'.$this->fieldName.'" id="'.$this->fieldName.'" '.$readOnly.' aria-describedby="'.$this->fieldName.'-help">'.$this->currentValueText.'</textarea>
+				<textarea rows="25" class="form-control sir-trevor sir-trevor-'.$this->fieldName.'" name="'.$this->fieldName.'" id="'.$this->fieldName.'" '.$readOnly.' aria-describedby="'.$this->fieldName.'-help" data-trevor-default="text" data-trevor-widgets=\'["Text", "Heading", "Feliximage", "Quote", "Factoid", "List", "OrderedList", "Video", "Tweet"]\'>'.$this->currentValueText.'</textarea>
 				<span id="'.$this->fieldName.'-help" class="help-block">'.$this->help.'</span>
 			</div>
-			<script>
-				$(document).ready( function() {
-					trevor = new SirTrevor.Editor({
-						el: $(\'.sir-trevor-'.$this->fieldName.'\'),
-						defaultType: "Text",
-						blockTypes: ["Text", "Heading", "Feliximage", "Quote", "Factoid", "List", "OrderedList", "Video", "Tweet"]
-					});
-					SirTrevor.setBlockOptions("Tweet", {
-						fetchUrl: function(tweetID) {
-							return "'.STANDARD_URL.'ajaxTweet.php?tweet_id=" + tweetID;
-						}
-					});
-				});
-			</script>
 		</div>';
 		endif;
 	}

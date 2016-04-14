@@ -68,7 +68,7 @@ class ForeignKeyImageWidget implements Widget {
 
 			echo '</div>';
 		} else {
-			echo '<ul id="tabs-'.$this->fieldName.'" class="nav nav-tabs" role="tablist">
+			echo '<ul id="tabs-'.$this->fieldName.'" class="nav nav-tabs imagetabs" role="tablist">
 				<li role="presentation" class="active"><a href="#'.$this->fieldName.'-current" id="'.$this->fieldName.'-current-tab" role="tab" data-toggle="tab" aria-controls="'.$this->fieldName.'-current" aria-expanded="true">Current Image</a></li>';
 
 			if($this->canUpload):
@@ -106,26 +106,7 @@ class ForeignKeyImageWidget implements Widget {
 
 			if($this->canUpload):
 				echo '<div role="tabpanel" class="tab-pane fade in" id="'.$this->fieldName.'-new" aria-labelledby="'.$this->fieldName.'-new-tab">
-						<div id="dropzone-'.$this->fieldName.'" class="dropzone"></div>
-						<script>
-							$(document).ready( function() {
-								Dropzone.autoDiscover = false;
-								
-								$("#dropzone-'.$this->fieldName.'").dropzone({
-									url: getImageUploadEndpoint(),
-									uploadMultiple: false,
-									maxFiles: 1,
-									addRemoveLinks: true,
-									init: function() {
-										this.on("maxfilesexceeded", function(file) { this.removeFile(file); });
-										this.on("success", function(file, responseText) {
-											imageForm("'.$this->fieldName.'", responseText, "'.(int) $this->editor.'");
-											this.removeFile(file);
-										});
-									}
-								});
-							});
-						</script>
+						<div id="dropzone-'.$this->fieldName.'" class="dropzone" data-field="'.$this->fieldName.'" data-editor="'.(int) $this->editor.'"></div>
 					</div>';
 			endif;
 
@@ -133,50 +114,14 @@ class ForeignKeyImageWidget implements Widget {
 				echo '<div role="tabpanel" class="tab-pane fade in" id="'.$this->fieldName.'-pick" aria-labelledby="'.$this->fieldName.'-pick-tab">
 						<label for="'.$this->fieldName.'-picker">Search for a picture by filename or description</label>
 						<div class="input-group select2-bootstrap-append">
-							<select class="form-control select2" id="'.$this->fieldName.'-picker" name="'.$this->fieldName.'-picker" style="width: 100%"></select>
+							<select class="form-control select2 select2-picturepicker" id="'.$this->fieldName.'-picker" name="'.$this->fieldName.'-picker" style="width: 100%"></select>
 							<span class="input-group-btn">
 								<button class="btn btn-primary" onClick="pickLookupPic(\''.$this->fieldName.'\', false); return false;">
 									<span class="glyphicon glyphicon-ok"></span> Select this image
 								</button>
 							</span>
 						</div>
-					</div>
-
-					<script>
-						$(document).ready( function() {
-							$("#'.$this->fieldName.'-picker").select2({
-							  theme: "bootstrap",
-							  ajax: {
-							    url: getAjaxEndpoint(),
-							    dataType: "json",
-							    delay: 250,
-							    method: "POST",
-							    data: function (params) {
-							      return {
-							      	q: "imageLookup",
-							        query: params.term, // search term
-			        				"00csrf": $("#csrf-key").attr("data-csrf")
-							      };
-							    },
-								error: function(data) {
-									if(data.responseJSON) {
-										alert(data.responseJSON.message);
-									} else {
-										alert(data.responseText);
-									}
-								},
-							    processResults: function (data, page) {
-							      return {
-							        results: data
-							      };
-							    },
-							    cache: false
-							  },
-							  templateResult: formatImagePicker,
-							  minimumInputLength: 0
-							});
-						});
-					</script>';
+					</div>';
 			endif;
 
 			if($this->defaultImage):

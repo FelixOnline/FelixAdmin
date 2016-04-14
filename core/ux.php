@@ -43,6 +43,7 @@ class UXHelper {
 
 <body>
 <div id="csrf-key" data-csrf="'.$csrf.'"></div>
+<div id="full-wrap">
 <div class="container-header">
 	<div class="container">
 		<div class="row">
@@ -119,7 +120,19 @@ class UXHelper {
 
 			$menuItemId = rand();
 
-			$string .= '<li'.$selected.' id="menu-'.$menuId.'-item-'.$menuItemId.'"><a href="'.STANDARD_URL.$key.'" onClick="if(window.pageIsLoading) { return false; } loadPage(\''.$key.'\', \'#render-'.$menuId.'\', null, \''.$recordId.'\'); $(\'#menu-'.$menuId.' li\').each(function() { $(this).removeClass(\'active\'); }); $(\'#menu-'.$menuId.'-item-'.$menuItemId.'\').addClass(\'active\'); return false;">'.$item['label'].'</a></li>';
+			if(!$recordId || $recordId == 'null') {
+				$updateNav = 'true';
+			} else {
+				$updateNav = 'false';
+			}
+
+			if($root) {
+				$showTitle = 'true';
+			} else {
+				$showTitle = 'false';
+			}
+
+			$string .= '<li'.$selected.' id="menu-'.$menuId.'-item-'.$menuItemId.'"><a href="'.STANDARD_URL.$key.'" onClick="if(window.pageIsLoading) { return false; } loadPage(\''.$key.'\', \'#render-'.$menuId.'\', '.$updateNav.', null, \''.$recordId.'\', '.$showTitle.'); $(\'#menu-'.$menuId.' li\').each(function() { $(this).removeClass(\'active\'); }); $(\'#menu-'.$menuId.'-item-'.$menuItemId.'\').addClass(\'active\'); return false;">'.$item['label'].'</a></li>';
 		}
 
 		if($root) {
@@ -172,6 +185,7 @@ class UXHelper {
 				</div>
 			</div>
 		</div>
+	</div>
 	</div>
 	<script src="'.STANDARD_URL.'js/bootstrap.min.js"></script>
 	<script src="'.STANDARD_URL.'js/moments-2.10.3.js"></script>
@@ -281,7 +295,7 @@ class UXHelper {
 				$current = '';
 			}
 
-			$string .= '<li role="presentation" '.$current.' id="modetabs-'.$tabsId.'-list"><a href="'.STANDARD_URL.$pageSlug.':list" onClick="if(window.pageIsLoading) { return false; } loadPage(\''.$pageSlug.':list\', \'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\'), false, $(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\')); return false;" '.$current.'><span class="glyphicon glyphicon-list" aria-hidden="true"></span> List</a></li>';
+			$string .= '<li role="presentation" '.$current.' id="modetabs-'.$tabsId.'-list"><a href="'.STANDARD_URL.$pageSlug.':list" onClick="if(window.pageIsLoading) { return false; } loadPage(\''.$pageSlug.':list\', \'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\'), (\'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\') == \'null\'), false, $(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\'), ($(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\') == \'render-root\')); return false;" '.$current.'><span class="glyphicon glyphicon-list" aria-hidden="true"></span> List</a></li>';
 		}
 
 		if($access['search']) {
@@ -291,7 +305,7 @@ class UXHelper {
 				$current = '';
 			}
 
-			$string .= '<li role="presentation" '.$current.' id="modetabs-'.$tabsId.'-search"><a href="'.STANDARD_URL.$pageSlug.':search" onClick="if(window.pageIsLoading) { return false; } loadPage(\''.$pageSlug.':search\', \'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\'), false, $(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\')); return false;"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search</a></li>';
+			$string .= '<li role="presentation" '.$current.' id="modetabs-'.$tabsId.'-search"><a href="'.STANDARD_URL.$pageSlug.':search" onClick="if(window.pageIsLoading) { return false; } loadPage(\''.$pageSlug.':search\', \'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\'), (\'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\') == \'null\'), false, $(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\'), ($(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\') == \'render-root\')); return false;"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search</a></li>';
 		}
 
 		if($access['details'] && $currentView == 'details') {
@@ -301,7 +315,7 @@ class UXHelper {
 				$current = '';
 			}
 
-			$string .= '<li role="presentation" '.$current.' id="modetabs-'.$tabsId.'-details"><a href="'.STANDARD_URL.$pageSlug.':details/'.$currentKey.'" onClick="if(window.pageIsLoading) { return false; } loadPage(\''.$pageSlug.':details/'.$currentKey.'\', \'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\'), false, $(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\')); return false;" '.$current.'><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit</a></li>';
+			$string .= '<li role="presentation" '.$current.' id="modetabs-'.$tabsId.'-details"><a href="'.STANDARD_URL.$pageSlug.':details/'.$currentKey.'" onClick="if(window.pageIsLoading) { return false; } loadPage(\''.$pageSlug.':details/'.$currentKey.'\', \'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\'), (\'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\') == \'null\'), false, $(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\'), ($(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\') == \'render-root\')); return false;" '.$current.'><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit</a></li>';
 		}
 
 		if($access['new']) {
@@ -311,7 +325,7 @@ class UXHelper {
 				$current = '';
 			}
 
-			$string .= '<li role="presentation" '.$current.' id="modetabs-'.$tabsId.'-new"><a href="'.STANDARD_URL.$pageSlug.':new" onClick="if(window.pageIsLoading) { return false; } loadPage(\''.$pageSlug.':new\', \'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\'), false, $(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\')); return false;" '.$current.'><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> New</a></li>';
+			$string .= '<li role="presentation" '.$current.' id="modetabs-'.$tabsId.'-new"><a href="'.STANDARD_URL.$pageSlug.':new" onClick="if(window.pageIsLoading) { return false; } loadPage(\''.$pageSlug.':new\', \'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\'), (\'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\') == \'null\'), false, $(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\'), ($(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\') == \'render-root\')); return false;" '.$current.'><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> New</a></li>';
 		}
 
 		$string .= '</ul>';
@@ -651,7 +665,7 @@ class UXHelper {
 						$searchViewModifier = 'true';
 					}
 
-					$value = '<center><a href="'.STANDARD_URL.$pageSlug.':details/'.$value.'" onClick="if(window.pageIsLoading) { return false; } loadPage(\''.$pageSlug.':details/'.$value.'\', \'#\'+$(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'id\'), '.$searchViewModifier.', $(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'data-parentrecord\')); return false;"><span class="glyphicon glyphicon-'.$editable.'" aria-hidden="true"></span> '.$value.'</a></center>';
+					$value = '<center><a href="'.STANDARD_URL.$pageSlug.':details/'.$value.'" onClick="if(window.pageIsLoading) { return false; } loadPage(\''.$pageSlug.':details/'.$value.'\', \'#\'+$(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'id\'), ($(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'data-parentrecord\') == \'null\'), '.$searchViewModifier.', $(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'data-parentrecord\'), ($(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'id\') == \'render-root\')); return false;"><span class="glyphicon glyphicon-'.$editable.'" aria-hidden="true"></span> '.$value.'</a></center>';
 				}
 
 				$string .= '<td>'.$value.'</td>';

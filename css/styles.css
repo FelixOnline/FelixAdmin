@@ -23,6 +23,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#A56612', end
   margin-bottom: 20px;
 }
 
+.imagetabs {
+  margin-bottom: 0;
+}
+
 .logout-button {
   margin-top: 15px;
   margin-bottom: 15px;
@@ -59,6 +63,10 @@ footer {
 
 .pagination {
   margin-top: 0;
+}
+
+.widgetForm {
+  margin-bottom: 20px;
 }
 
 .tt-query {
@@ -133,6 +141,11 @@ thead {
   max-height: 300px;
   overflow-x: auto;
   padding: 10px;
+}
+
+#render-root div h2 {
+  margin-top: 0;
+  padding-bottom: 15px;
 }
 
 /** source: http://www.startutorial.com/articles/view/how-to-build-a-file-upload-form-using-dropzonejs-and-php **/

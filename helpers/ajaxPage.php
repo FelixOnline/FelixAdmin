@@ -25,7 +25,7 @@ class getPageAjaxHelper extends Core {
 
 			$output = $page->render(filter_var($_POST['hideTabs'], FILTER_VALIDATE_BOOLEAN), filter_var($_POST['showTitle'], FILTER_VALIDATE_BOOLEAN));
 
-			$this->success(array("screen" => $output));
+			$this->success(array("screen" => $output, "title" => $page->getName().' - '.SERVICE_NAME, "url" => STANDARD_URL.$_POST['page']));
 		} catch(Exceptions\PageNotFoundException $e) {
 			// no such page
 			$this->error("Could not find page.", 404);

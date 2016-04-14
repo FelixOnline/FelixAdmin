@@ -45,7 +45,7 @@ class ForeignKeyChoiceMapWidget implements Widget {
 			echo '<div class="input-group select2-bootstrap-append">';
 		}
 
-		echo '<select multiple="multiple" class="form-control select2"';
+		echo '<select multiple="multiple" class="form-control select2 select2-tagger"';
 
 		if($this->readOnly):
 			echo ' readonly disabled';
@@ -76,15 +76,5 @@ class ForeignKeyChoiceMapWidget implements Widget {
 
 	echo '</div>
 </div>';
-
-	echo '<script>
-		$(document).ready( function() {
-			$("#'.$this->fieldName.'.select2").select2({
-			  theme: "bootstrap",
-			  tags: true,
-			  minimumInputLength: 0
-			});
-		});
-		</script>';
 	}
 }

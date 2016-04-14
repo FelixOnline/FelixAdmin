@@ -1,7 +1,15 @@
 function save(page_name, key) {
 	var clean_page_name = page_name.replace('/', '-');
 
-	if(SirTrevor.onBeforeSubmit() == 0) {
+	var stErrors = 0;
+
+	$('#page-'+clean_page_name+' .st-outer').each(function() {
+		editorId = $(this).attr('id');
+		trevor = SirTrevor.getInstance(editorId);
+		stErrors = stErrors + trevor.onFormSubmit();
+	});
+
+	if(stErrors == 0) {
 		$('#page-'+clean_page_name+' .st-outer').each(function() {
 			editorId = $(this).attr('id');
 			trevor = SirTrevor.getInstance(editorId);
@@ -27,7 +35,7 @@ function save(page_name, key) {
 		});
 		formData.push({
 			name: "00csrf",
-			value: $('#csrf-key').parent().attr('data-csrf')
+			value: $('#csrf-key').attr('data-csrf')
 		});
 
 		$.ajax(getAjaxEndpoint(), {
@@ -76,7 +84,15 @@ function save(page_name, key) {
 function create(page_name) {
 	var clean_page_name = page_name.replace('/', '-');
 
-	if(SirTrevor.onBeforeSubmit() == 0) {
+	var stErrors = 0;
+
+	$('#page-'+clean_page_name+' .st-outer').each(function() {
+		editorId = $(this).attr('id');
+		trevor = SirTrevor.getInstance(editorId);
+		stErrors = stErrors + trevor.onFormSubmit();
+	});
+
+	if(stErrors == 0) {
 		$('#page-'+clean_page_name+' .st-outer').each(function() {
 			editorId = $(this).attr('id');
 			trevor = SirTrevor.getInstance(editorId);
@@ -87,7 +103,7 @@ function create(page_name) {
 		formData.append('q', 'new');
 		formData.append('00page', page_name);
 		formData.append('00pull', $('#page-'+clean_page_name).parent().attr('data-parentrecord'));		
-		formData.append('"00csrf"', $('#csrf-key').attr('data-csrf'));
+		formData.append('00csrf', $('#csrf-key').attr('data-csrf'));
 
 		$.ajax(getAjaxEndpoint(), {
 			type: "POST",
@@ -200,7 +216,7 @@ function runSearch(page_name, paginator_page) {
 	});
 	formData.push({
 		name: "00csrf",
-		value: $('#csrf-key').parent().attr('data-csrf')
+		value: $('#csrf-key').attr('data-csrf')
 	});
 
 	$.ajax(getAjaxEndpoint(), {
@@ -401,10 +417,20 @@ function del(page_name, key) {
 	}
 }
 
-function loadPage(page_name, renderInto, hideTabs, pullThrough, showTitle) {
+window.onpopstate = function(e){
+    if(e.state){
+        $('#full-wrap').html(e.state.html);
+        document.title = e.state.pageTitle;
+		setupElem();
+    }
+};
+
+function loadPage(page_name, renderInto, updateChrome, hideTabs, pullThrough, showTitle) {
 	pullThrough = pullThrough || null;
 	hideTabs = hideTabs || false;
 	showTitle = showTitle || false;
+
+	destroyElem();
 
 	$.ajax(getAjaxEndpoint(), {
 			type: "POST",
@@ -435,7 +461,11 @@ function loadPage(page_name, renderInto, hideTabs, pullThrough, showTitle) {
 				window.pageIsLoading = false;
 				$(renderInto).html(data.screen);
 
-				addCalendar();
+				if(updateChrome) {
+					window.document.title = data.title;
+				}
+
+				window.history.pushState({"html":$('#full-wrap').html(),"pageTitle":window.document.title},window.document.title, window.location.href);
 
 				$(renderInto + " .sortable").tablesorter({
 					theme: "bootstrap",
@@ -445,8 +475,185 @@ function loadPage(page_name, renderInto, hideTabs, pullThrough, showTitle) {
 						zebra: ["even", "odd"]
 					}
 				});
+
+				// Reload trevor
+				setupElem();
 			},
 			cache: false
+	});
+}
+
+function setupElem() {
+	$('.sir-trevor').each(function() {
+		trevor = new SirTrevor.Editor({
+			el: $('.sir-trevor-'+$(this).attr('name')),
+			defaultType: $(this).attr('data-trevor-default'),
+			blockTypes: JSON.parse($(this).attr('data-trevor-widgets'))
+		});
+		SirTrevor.setBlockOptions("Tweet", {
+			fetchUrl: function(tweetID) {
+				return "'.STANDARD_URL.'ajaxTweet.php?tweet_id=" + tweetID;
+			}
+		});
+	});
+
+	addCalendar();
+
+	$('.select2-default').each(function() {
+		var pageName = $(this).attr('data-page');
+		var widgetName = $(this).attr('id');
+
+		$(this).select2({
+			theme: "bootstrap",
+			ajax: {
+				url: getAjaxEndpoint(),
+				dataType: "json",
+				delay: 250,
+				method: "POST",
+				data: function (params) {
+					return {
+						q: "lookup",
+						query: params.term, // search term
+						page: pageName,
+						widget: widgetName,
+						"00csrf": $("#csrf-key").attr("data-csrf")
+					};
+				},
+				error: function(data) {
+					if(data.responseJSON) {
+						alert(data.responseJSON.message);
+					} else {
+						alert(data.responseText);
+					}
+				},
+				processResults: function (data, page) {
+					return {
+						results: data
+					};
+				},
+				cache: false
+			},
+			minimumInputLength: 0
+		});
+	});
+
+	$('.select2-tagger').each(function() {
+		$(this).select2({
+			theme: "bootstrap",
+			tags: true,
+			minimumInputLength: 0
+		});
+	});
+
+	$('.select2-picturepicker').each(function() {
+		$(this).select2({
+			theme: "bootstrap",
+			ajax: {
+				url: getAjaxEndpoint(),
+				dataType: "json",
+				delay: 250,
+				method: "POST",
+				data: function (params) {
+					return {
+						q: "imageLookup",
+						query: params.term, // search term
+						"00csrf": $("#csrf-key").attr("data-csrf")
+					};
+				},
+				error: function(data) {
+					if(data.responseJSON) {
+						alert(data.responseJSON.message);
+					} else {
+						alert(data.responseText);
+					}
+				},
+				processResults: function (data, page) {
+					return {
+						results: data
+					};
+				},
+				cache: false
+			},
+			templateResult: formatImagePicker,
+			minimumInputLength: 0
+		});
+	});
+
+	$('.select2-multimap').each(function() {
+		var pageName = $(this).attr('data-page');
+		var widgetName = $(this).attr('id');
+
+		$(this).select2({
+			theme: "bootstrap",
+			ajax: {
+				url: getAjaxEndpoint(),
+				dataType: "json",
+				delay: 250,
+				method: "POST",
+				data: function (params) {
+					return {
+						q: "lookup",
+						query: params.term, // search term
+						page: pageName,
+						widget: widgetName,
+						"00csrf": $("#csrf-key").attr("data-csrf")
+					};
+				},
+				error: function(data) {
+					if(data.responseJSON) {
+						alert(data.responseJSON.message);
+					} else {
+						alert(data.responseText);
+					}
+				},
+				processResults: function (data, page) {
+					return {
+						results: data
+					};
+				},
+				cache: false
+			},
+			minimumInputLength: 0
+		});
+	});
+
+	Dropzone.autoDiscover = false;
+	
+	$('.dropzone').each(function() {
+		var fieldName = $(this).attr('data-field');
+		var editor = $(this).attr('data-editor');
+
+		$(this).dropzone({
+			url: getImageUploadEndpoint(),
+			uploadMultiple: false,
+			maxFiles: 1,
+			addRemoveLinks: true,
+			init: function() {
+				this.on("maxfilesexceeded", function(file) { this.removeFile(file); });
+				this.on("success", function(file, responseText) {
+					imageForm(fieldName, responseText, editor);
+					this.removeFile(file);
+				});
+			}
+		});
+	});
+}
+
+function destroyElem() {
+	// Destroy old Sir T instances
+	$('.st-outer').each(function() {
+		editorId = $(this).attr('id');
+		trevor = SirTrevor.getInstance(editorId);
+		trevor.onFormSubmit();
+		$('#'+editorId+' textarea.form-control').val(trevor.$el.val());
+		trevor.destroy();
+	});
+
+	// Destroy old select2
+	$('.select2').each(function() {
+		if($(this).data("select2")) {
+			$(this).select2("destroy");
+		}
 	});
 }
 
@@ -631,8 +838,6 @@ function toggleAudit(page_name) {
 	$('#page-'+clean_page_name+' .widgetForm').toggle();
 	$('#page-'+clean_page_name+' .auditForm').toggle();
 }
-
-addCalendar();
 
 function pickLookupPic(blockId, isTrevor) {
 	if(!$("#"+blockId+"-picker").val()) {

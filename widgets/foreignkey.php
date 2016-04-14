@@ -72,7 +72,7 @@ class ForeignKeyWidget implements Widget {
 			echo '<div class="input-group select2-bootstrap-append">';
 		}
 
-		echo '<select class="form-control select2"';
+		echo '<select class="form-control select2 select2-default" data-page="'.$this->page.'"';
 
 		if($this->readOnly):
 			echo ' readonly disabled';
@@ -108,42 +108,5 @@ class ForeignKeyWidget implements Widget {
 
 	echo '</div>
 </div>';
-
-	echo '<script>
-		$(document).ready( function() {
-			$("#'.$this->fieldName.'.select2").select2({
-			  theme: "bootstrap",
-			  ajax: {
-			    url: getAjaxEndpoint(),
-			    dataType: "json",
-			    delay: 250,
-			    method: "POST",
-			    data: function (params) {
-			      return {
-			      	q: "lookup",
-			        query: params.term, // search term
-			        page: "'.$this->page.'",
-			        widget: "'.$this->fieldName.'",
-			        "00csrf": $("#csrf-key").attr("data-csrf")
-			      };
-			    },
-				error: function(data) {
-					if(data.responseJSON) {
-						alert(data.responseJSON.message);
-					} else {
-						alert(data.responseText);
-					}
-				},
-			    processResults: function (data, page) {
-			      return {
-			        results: data
-			      };
-			    },
-			    cache: false
-			  },
-			  minimumInputLength: 0
-			});
-		});
-		</script>';
 	}
 }

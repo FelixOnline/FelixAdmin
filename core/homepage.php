@@ -14,6 +14,10 @@ class HomePage {
 		$this->userRoles = $currentuser->getRoles();
 	}
 
+	public function getName() {
+		return 'Welcome to '.SERVICE_NAME;
+	}
+
 	public function render() {
 		return \FelixOnline\Admin\UXHelper::page(
 			'Welcome to '.SERVICE_NAME,

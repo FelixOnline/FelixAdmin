@@ -16,7 +16,7 @@ class StubPage {
 		echo '<div id="render-root"></div>';
 		echo '<script>
 			document.addEventListener("DOMContentLoaded", function(event) {
-				loadPage("'.$this->pageInfo.'", "#render-root", false, null, true);
+				loadPage("'.$this->pageInfo.'", "#render-root", true, false, null, true);
 			});
 			</script>';
 		echo UXHelper::footer();
