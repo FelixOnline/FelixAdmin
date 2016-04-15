@@ -847,13 +847,27 @@ class UXHelper {
 		$string .= '<form class="form-horizontal search-form">';
 		$string .= '<div class="form-group">
 <div class="col-sm-12">';
-		$string .= '<button onClick="runSearch(\''.$pageSlug.'\', 1); return false;" class="btn btn-primary search-button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search</button>';
 		$string .= '<b class="text text-success form-status" style="display: none"></b>';
 		$string .= '</div></div>';
 
+		$string .= '<div class="panel-group" id="criteriabox-'.str_replace('/', '-', $pageSlug).'" role="tablist" aria-multiselectable="true">';
+		$string .= '<div class="panel panel-primary">';
+		$string .= '<div class="panel-heading" role="tab" id="criteriahead-'.str_replace('/', '-', $pageSlug).'">';
+		$string .= '<h4 class="panel-title">';
+		$string .= '<a role="button" data-toggle="collapse" data-parent="#criteriabox-'.str_replace('/', '-', $pageSlug).'" href="#criteria-'.str_replace('/', '-', $pageSlug).'" aria-expanded="true" aria-controls="criteria-'.str_replace('/', '-', $pageSlug).'">Search Criteria</a>';
+		$string .= '</h4>';
+		$string .= '</div>';
+		$string .= '<div id="criteria-'.str_replace('/', '-', $pageSlug).'" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="criteriahead-'.str_replace('/', '-', $pageSlug).'">';
+		$string .= '<div class="panel-body">';
+
 		$string .= self::widgetForm($widgets);
 
-		$string .= '<button onClick="runSearch(\''.$pageSlug.'\', 1); return false;" class="btn btn-primary search-button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search</button><br><br>';
+		$string .= '<button onClick="runSearch(\''.$pageSlug.'\', 1); return false;" class="btn btn-primary search-button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search</button>';
+
+		$string .= '</div>';
+		$string .= '</div>';
+		$string .= '</div>';
+		$string .= '</div>';
 
 		$string .= '<div class="searcharea"></div>';
 

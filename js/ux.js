@@ -195,6 +195,8 @@ function runSearch(page_name, paginator_page) {
 			alert(message);
 		},
 		success: function(data) {
+			$('#criteria-'+clean_page_name).collapse('hide');
+
 			$('#page-'+clean_page_name+' .searcharea').html(data.form);
 
 			$('#page-'+clean_page_name+' .sortable').tablesorter({
