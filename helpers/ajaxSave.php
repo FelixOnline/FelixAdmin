@@ -237,6 +237,25 @@ class saveAjaxHelper extends Core {
 			$this->error("Failed to save: ".$e->getMessage(), 500);
 		}
 
+		if(!isset($page->getPageData()['modes']['details']['after'])) {
+			$goto = 'details/'.$key;
+		} else {
+			switch($page->getPageData()['modes']['details']['after']) {
+				case 'list':
+					if($page->canDo('list')) {
+						$goto = 'list';
+					} else {
+						$goto = 'details/'.$key;
+					}
+					break;
+				default:
+					$goto = 'details/'.$key;
+					break;
+			}
+		}
+
+		$goto = $_POST['00page'].':'.$goto;
+
 		if(isset($page->getPageData()['modes']['details']['callback'])) {
 			try {
 				$action = 'FelixOnline\Admin\Actions\\'.$page->getPageData()['modes']['details']['callback'];
@@ -244,12 +263,12 @@ class saveAjaxHelper extends Core {
 				$action = new $action($page);
 
 				$message = $action->run(array($model->getId()));
-				$this->success($message);
+				$this->success(array("goto" => $goto, "message" => $message));
 			} catch(\Exception $e) {
-				$this->error("Your entry has been saved, however a problem occured in the callback function. Details: ".$e->getMessage(), 500);
+				$this->success(array("goto" => $goto, "message" => "Your entry has been saved, however a problem occured in the callback function. Details: ".$e->getMessage()));
 			}
 		}
 
-		$this->success("Saved");
+		$this->success(array("goto" => $goto, "message" => "Saved"));
 	}
 }

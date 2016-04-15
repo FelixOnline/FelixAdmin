@@ -1,4 +1,4 @@
-function save(page_name, key) {
+function save(page_name, key, load_into, pull_through, show_title) {
 	var clean_page_name = page_name.replace('/', '-');
 
 	var stErrors = 0;
@@ -66,12 +66,10 @@ function save(page_name, key) {
 				alert(message);
 			},
 			success: function(data) {
-				console.log('#page-'+clean_page_name+' .form-status');
-				$('#page-'+clean_page_name+' .form-status').html('<span class="glyphicon glyphicon-ok"></span> '+data);
-				$('#page-'+clean_page_name+' .form-status').fadeIn('fast').delay(5000).fadeOut('slow');
+				loadPage(data.goto, load_into, (pull_through == "null"), false, pull_through, show_title, data.message);
 
 				$('html, body').animate({
-					scrollTop: $("#page-"+clean_page_name).offset().top
+					scrollTop: $("body").offset().top
 				}, 500);
 			},
 			cache: false
@@ -81,7 +79,7 @@ function save(page_name, key) {
 	}
 }
 
-function create(page_name) {
+function create(page_name, load_into, pull_through, show_title) {
 	var clean_page_name = page_name.replace('/', '-');
 
 	var stErrors = 0;
@@ -135,56 +133,16 @@ function create(page_name) {
 				alert(message);
 			},
 			success: function(data) {
-				$('#page-'+clean_page_name+' .form-status').html('<span class="glyphicon glyphicon-ok"></span> Succesfully created! ' + data.key);
-				$('#page-'+clean_page_name+' .form-status').fadeIn('fast').delay(5000).fadeOut('slow');
-				$('#page-'+clean_page_name+'.datetimefield').each(function() {
-					$(this).data('DateTimePicker').date(null);
-				});
+				if(data.key) {
+					var message = 'Succesfully created! ' + data.key;
+				} else {
+					var message = 'Succesfully created!';
+				}
 
-				$('#page-'+clean_page_name+' input').each(function() {
-					$(this).val('');
-					if($(this).attr('type') == 'checkbox') {
-						$(this).prop('checked', false);
-					}
-				});
-
-				$('#page-'+clean_page_name+' form').trigger("reset");
-
-				$('#page-'+clean_page_name+' .st-outer').each(function() {
-					editorId = $(this).attr('id');
-					trevor = SirTrevor.getInstance(editorId);
-					trevor.reinitialize();
-				});
-
-				$('#page-'+clean_page_name+' .select2').val(null).trigger('change');
-
-				$('#page-'+clean_page_name+' select[data-default-pk]').each(function() {
-					$(this).append($("<option></option>")
-						.attr("value", $(this).attr('data-default-pk'))
-						.attr("selected", "selected")
-						.text($(this).attr('data-default-value') + " (" + $(this).attr('data-default-pk') + ")"));
-
-					$(this).val($(this).attr('data-default-pk')).trigger('change');
-				});
-
-				$('#page-'+clean_page_name+' input[data-default]').each(function() {
-					if($(this).attr('type') == 'checkbox') {
-						if($(this).attr('data-default') == 1) {
-							$(this).prop('checked', true);
-						}
-					} else {
-						$(this).val($(this).attr('data-default'));
-						if($(this).hasClass('datetimefield')) {
-							$(this).data('DateTimePicker').date($(this).attr('data-default'));
-						}
-					}
-				});
-
-				$('#page-'+clean_page_name+' .image-group .image-key').val(null);
-				$('#page-'+clean_page_name+' .image-group .current').html('<i>No image selected.</i>');
+				loadPage(data.goto, load_into, (pull_through == "null"), false, pull_through, show_title, message);
 
 				$('html, body').animate({
-					scrollTop: $("#page-"+clean_page_name).offset().top
+					scrollTop: $("body").offset().top
 				}, 500);
 			},
 			cache: false
@@ -425,10 +383,11 @@ window.onpopstate = function(e){
     }
 };
 
-function loadPage(page_name, renderInto, updateChrome, hideTabs, pullThrough, showTitle) {
+function loadPage(page_name, renderInto, updateChrome, hideTabs, pullThrough, showTitle, message) {
 	pullThrough = pullThrough || null;
 	hideTabs = hideTabs || false;
 	showTitle = showTitle || false;
+	message = message || false;
 
 	destroyElem();
 
@@ -476,8 +435,19 @@ function loadPage(page_name, renderInto, updateChrome, hideTabs, pullThrough, sh
 					}
 				});
 
-				// Reload trevor
+				// Reload page elements
 				setupElem();
+
+				if(message) {
+					var clean_page_name = page_name.replace('/', '-');
+
+					if(clean_page_name.indexOf(':')) {
+						clean_page_name = clean_page_name.substring(0, clean_page_name.indexOf(':'));
+					}
+
+					$('#page-'+clean_page_name+' .form-status').html('<span class="glyphicon glyphicon-ok"></span> '+message);
+					$('#page-'+clean_page_name+' .form-status').fadeIn('fast').delay(5000).fadeOut('slow');
+				}
 			},
 			cache: false
 	});

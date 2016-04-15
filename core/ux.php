@@ -295,7 +295,7 @@ class UXHelper {
 				$current = '';
 			}
 
-			$string .= '<li role="presentation" '.$current.' id="modetabs-'.$tabsId.'-list"><a href="'.STANDARD_URL.$pageSlug.':list" onClick="if(window.pageIsLoading) { return false; } loadPage(\''.$pageSlug.':list\', \'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\'), (\'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\') == \'null\'), false, $(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\'), ($(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\') == \'render-root\')); return false;" '.$current.'><span class="glyphicon glyphicon-list" aria-hidden="true"></span> List</a></li>';
+			$string .= '<li role="presentation" '.$current.' id="modetabs-'.$tabsId.'-list"><a href="'.STANDARD_URL.$pageSlug.':list" onClick="if(window.pageIsLoading) { return false; } loadPage(\''.$pageSlug.':list\', \'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\'), (\'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\') == \'null\'), false, $(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\'), ($(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\') == \'render-root\')); return false;" '.$current.'><span class="glyphicon glyphicon-list" aria-hidden="true"></span> List</a></li>';
 		}
 
 		if($access['search']) {
@@ -305,7 +305,7 @@ class UXHelper {
 				$current = '';
 			}
 
-			$string .= '<li role="presentation" '.$current.' id="modetabs-'.$tabsId.'-search"><a href="'.STANDARD_URL.$pageSlug.':search" onClick="if(window.pageIsLoading) { return false; } loadPage(\''.$pageSlug.':search\', \'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\'), (\'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\') == \'null\'), false, $(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\'), ($(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\') == \'render-root\')); return false;"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search</a></li>';
+			$string .= '<li role="presentation" '.$current.' id="modetabs-'.$tabsId.'-search"><a href="'.STANDARD_URL.$pageSlug.':search" onClick="if(window.pageIsLoading) { return false; } loadPage(\''.$pageSlug.':search\', \'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\'), (\'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\') == \'null\'), false, $(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\'), ($(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\') == \'render-root\')); return false;"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search</a></li>';
 		}
 
 		if($access['details'] && $currentView == 'details') {
@@ -315,7 +315,7 @@ class UXHelper {
 				$current = '';
 			}
 
-			$string .= '<li role="presentation" '.$current.' id="modetabs-'.$tabsId.'-details"><a href="'.STANDARD_URL.$pageSlug.':details/'.$currentKey.'" onClick="if(window.pageIsLoading) { return false; } loadPage(\''.$pageSlug.':details/'.$currentKey.'\', \'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\'), (\'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\') == \'null\'), false, $(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\'), ($(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\') == \'render-root\')); return false;" '.$current.'><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit</a></li>';
+			$string .= '<li role="presentation" '.$current.' id="modetabs-'.$tabsId.'-details"><a href="'.STANDARD_URL.$pageSlug.':details/'.$currentKey.'" onClick="if(window.pageIsLoading) { return false; } loadPage(\''.$pageSlug.':details/'.$currentKey.'\', \'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\'), (\'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\') == \'null\'), false, $(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\'), ($(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\') == \'render-root\')); return false;" '.$current.'><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit</a></li>';
 		}
 
 		if($access['new']) {
@@ -325,7 +325,7 @@ class UXHelper {
 				$current = '';
 			}
 
-			$string .= '<li role="presentation" '.$current.' id="modetabs-'.$tabsId.'-new"><a href="'.STANDARD_URL.$pageSlug.':new" onClick="if(window.pageIsLoading) { return false; } loadPage(\''.$pageSlug.':new\', \'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\'), (\'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\') == \'null\'), false, $(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\'), ($(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\') == \'render-root\')); return false;" '.$current.'><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> New</a></li>';
+			$string .= '<li role="presentation" '.$current.' id="modetabs-'.$tabsId.'-new"><a href="'.STANDARD_URL.$pageSlug.':new" onClick="if(window.pageIsLoading) { return false; } loadPage(\''.$pageSlug.':new\', \'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\'), (\'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\') == \'null\'), false, $(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\'), ($(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\') == \'render-root\')); return false;" '.$current.'><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> New</a></li>';
 		}
 
 		$string .= '</ul>';
@@ -794,13 +794,13 @@ class UXHelper {
 
 		if(!$readOnly) {
 			$string .= '<p><b class="text text-success form-status" style="display: none"></b></p>';
-			$string .= '<button onClick="save(\''.$pageSlug.'\', \''.$currentRecord->fields[$pk]->getValue().'\'); return false;" class="btn btn-primary save-button"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save</button>';
+			$string .= '<button onClick="save(\''.$pageSlug.'\', \''.$currentRecord->fields[$pk]->getValue().'\', \'#\'+$(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'id\'), $(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'data-parentrecord\'), ($(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'id\') == \'render-root\')); return false;" class="btn btn-primary save-button"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save</button>';
 		}
 
 		$string .= self::widgetForm($widgets);
 
 		if(!$readOnly) {
-			$string .= '<button onClick="save(\''.$pageSlug.'\', \''.$currentRecord->fields[$pk]->getValue().'\'); return false;" class="btn btn-primary save-button"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save</button>';
+			$string .= '<button onClick="save(\''.$pageSlug.'\', \''.$currentRecord->fields[$pk]->getValue().'\', \'#\'+$(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'id\'), $(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'data-parentrecord\'), ($(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'id\') == \'render-root\')); return false;" class="btn btn-primary save-button"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save</button>';
 		}
 
 		$string .= '</div></form>';
@@ -826,13 +826,13 @@ class UXHelper {
 
 		$string .= '<div class="form-group">
 <div class="col-sm-12">';
-		$string .= '<button onClick="create(\''.$pageSlug.'\'); return false;" class="btn btn-primary new-button"><span class="glyphicon glyphicon-saved" aria-hidden="true"></span> Create</button>';
+		$string .= '<button onClick="create(\''.$pageSlug.'\', \'#\'+$(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'id\'), $(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'data-parentrecord\'), ($(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'id\') == \'render-root\')); return false;" class="btn btn-primary new-button"><span class="glyphicon glyphicon-saved" aria-hidden="true"></span> Create</button>';
 		$string .= '<b class="text text-success form-status" style="display: none"></b>';
 		$string .= '</div></div>';
 
 		$string .= self::widgetForm($widgets);
 
-		$string .= '<button onClick="create(\''.$pageSlug.'\'); return false;" class="btn btn-primary new-button"><span class="glyphicon glyphicon-saved" aria-hidden="true"></span> Create</button>';
+		$string .= '<button onClick="create(\''.$pageSlug.'\', \'#\'+$(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'id\'), $(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'data-parentrecord\'), ($(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'id\') == \'render-root\')); return false;" class="btn btn-primary new-button"><span class="glyphicon glyphicon-saved" aria-hidden="true"></span> Create</button>';
 
 		return $string;
 	}

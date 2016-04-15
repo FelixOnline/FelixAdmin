@@ -209,6 +209,32 @@ class newAjaxHelper extends Core {
 			}
 		}
 
+		if(!isset($page->getPageData()['modes']['new']['after'])) {
+			$goto = 'new';
+		} else {
+			switch($page->getPageData()['modes']['new']['after']) {
+				case 'list':
+					if($page->canDo('list')) {
+						$goto = 'list';
+					} else {
+						$goto = 'new';
+					}
+					break;
+				case 'details':
+					if($page->canDo('details')) {
+						$goto = 'details/'.$key;
+					} else {
+						$goto = 'new';
+					}
+					break;
+				default:
+					$goto = 'new';
+					break;
+			}
+		}
+
+		$goto = $_POST['00page'].':'.$goto;
+
 		if(isset($page->getPageData()['modes']['new']['callback'])) {
 			try {
 				$action = 'FelixOnline\Admin\Actions\\'.$page->getPageData()['modes']['new']['callback'];
@@ -218,13 +244,13 @@ class newAjaxHelper extends Core {
 				$message = $action->run(array($key));
 				$this->success(array("key" => $message));
 			} catch(\Exception $e) {
-				$this->error("Your entry has been created, however a problem occured in the callback function. Details: ".$e->getMessage(), 500);
+				$this->success(array("goto" => $goto, "key" => "Your entry has been created, however a problem occured in the callback function. Details: ".$e->getMessage()));
 			}
 		} else {
-			if(!$page->canDo('details')) {
-				$this->success();
+			if(!$page->canDo('details') || (isset($page->getPageData()['modes']['new']['after']) && $page->getPageData()['modes']['new']['after'] == 'details')) {
+				$this->success(array("goto" => $goto));
 			} else {
-				$this->success(array("key" => '<a href="'.STANDARD_URL.$_POST['00page'].':details/'.$key.'">Click here to edit your new entry</a>.'));
+				$this->success(array("goto" => $goto, "key" => '<a href="'.STANDARD_URL.$_POST['00page'].':details/'.$key.'">Click here to edit your new entry</a>.'));
 			}
 		}
 	}
