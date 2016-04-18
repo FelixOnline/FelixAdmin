@@ -440,10 +440,12 @@ function loadPage(page_name, renderInto, updateChrome, hideTabs, pullThrough, sh
 				// Reload page elements
 				setupElem();
 
+				// Select first element
+				setTimeout(findElem(page_name), 150);
+
 				if(message) {
 					var clean_page_name = page_name.replace('/', '-');
-
-					if(clean_page_name.indexOf(':')) {
+					if(clean_page_name.indexOf(':') > 0) {
 						clean_page_name = clean_page_name.substring(0, clean_page_name.indexOf(':'));
 					}
 
@@ -453,6 +455,27 @@ function loadPage(page_name, renderInto, updateChrome, hideTabs, pullThrough, sh
 			},
 			cache: false
 	});
+}
+
+function findElem(page_name) {
+	var clean_page_name = page_name.replace('/', '-');
+
+	if(clean_page_name.indexOf(':') > 0) {
+		clean_page_name = clean_page_name.substring(0, clean_page_name.indexOf(':'));
+	}
+
+	var gotOne = false;
+
+	$('#page-'+clean_page_name+' form *').filter(':input').each(function() {
+		if(gotOne == false && $(this).attr('type') != 'hidden' && $(this).is('button') != true && $(this).is(':disabled') != true) {
+			$(this).focus();
+			gotOne = true;
+		}
+	});
+
+	$('html, body').animate({
+		scrollTop: $("#page-"+clean_page_name).offset().top
+	}, 500);
 }
 
 function setupElem() {
