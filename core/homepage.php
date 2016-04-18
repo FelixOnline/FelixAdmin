@@ -22,10 +22,12 @@ class HomePage {
 		return \FelixOnline\Admin\UXHelper::page(
 			'Welcome to '.SERVICE_NAME,
 			array(
+				'<div id="page-home">',
 				'<h2>'.'Welcome to '.SERVICE_NAME.'</h2>',
 				\FelixOnline\Admin\UXHelper::home(
 					$this->userName,
-					$this->userRoles)
+					$this->userRoles),
+				'</div>'
 			),
 			'home');
 	}
