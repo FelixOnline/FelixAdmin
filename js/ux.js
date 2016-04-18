@@ -426,7 +426,7 @@ function loadPage(page_name, renderInto, updateChrome, hideTabs, pullThrough, sh
 					window.document.title = data.title;
 				}
 
-				window.history.pushState({"html":$('#full-wrap').html(),"pageTitle":window.document.title},window.document.title, window.location.href);
+				window.history.pushState({"html":$('#full-wrap').html(),"pageTitle":window.document.title},window.document.title, data.url);
 
 				$(renderInto + " .sortable").tablesorter({
 					theme: "bootstrap",
