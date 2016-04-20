@@ -80,9 +80,9 @@
 		header("Content-Type: text/json", false);
 
 		if(LOCAL) {
-			$extra = "\n\n(".get_class($e).") ".$e->getMessage().' at '.$e->getFile().':'.$e->getLine()."\n\n".$e->getTraceAsString();
+			$extra = "<br><br>(".get_class($e).") ".$e->getMessage().'<br>At '.$e->getFile().':'.$e->getLine()."<br><br><pre>".$e->getTraceAsString()."</pre>";
 		} else {
-			$extra = '';
+			$extra = $e->getMessage();
 		}
 
 		echo json_encode(array("message" => 'A fatal error has occured. This issue has been reported.'.$extra, "widgets" => array()));

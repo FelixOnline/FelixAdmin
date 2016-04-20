@@ -277,7 +277,11 @@ class Page {
 					$thisObj = $this->pageData['model'];
 					$thisObj = new $thisObj();
 
-					$pulledThrough = new $class($pullThrough);
+					try {
+						$pulledThrough = new $class($pullThrough);
+					} catch(\Exception $e) {
+						throw new \FelixOnline\Exceptions\InternalException('Could not find parent record.');
+					}
 
 					// Are we getting a child record
 					if(isset($this->pageData['pullThrough']['childField'])) {
