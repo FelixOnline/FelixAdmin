@@ -479,6 +479,7 @@ function setupElem() {
 		trevor = new SirTrevor.Editor({
 			el: $('.sir-trevor-'+$(this).attr('name')),
 			defaultType: $(this).attr('data-trevor-default'),
+			blockLimit: $(this).attr('data-trevor-maxwidgets'),
 			blockTypes: JSON.parse($(this).attr('data-trevor-widgets'))
 		});
 		SirTrevor.setBlockOptions("Tweet", {
