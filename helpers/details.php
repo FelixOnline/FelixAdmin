@@ -60,6 +60,10 @@ class detailsHelper {
 				switch(get_class($modelField)) {
 					case "FelixOnline\Core\Type\TextField":
 						$widgetClass = 'FelixOnline\Admin\Widgets\TextWidget';
+						$otherData = array('sirTrevor' => $data['sirTrevor'],
+							'sirTrevorFields' => $data['sirTrevorFields'],
+							'sirTrevorMaxFields' => $data['sirTrevorMaxFields'],
+							'sirTrevorDefaultField' => $data['sirTrevorDefaultField']);
 						break;
 					case "FelixOnline\Core\Type\IntegerField":
 						$widgetClass = 'FelixOnline\Admin\Widgets\NumericWidget';
