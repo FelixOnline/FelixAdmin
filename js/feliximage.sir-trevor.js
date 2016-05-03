@@ -13,9 +13,9 @@ SirTrevor.Blocks.Feliximage = (function() {
       var template = _.template([
           '<input name="image" class="st-input-string js-id-input st-required" id="'+blockId+'" type="hidden" />',
           '<ul id="tabs-'+blockId+'" class="nav nav-pills" role="tablist">',
-          '<li role="presentation" class="active"><a href="#'+blockId+'-current" id="'+blockId+'-current-tab" onClick="$(this).tab(\'show\')" role="tab" data-toggle="pill" aria-controls="current" aria-expanded="true">Current Image</a></li>',
-          '<li role="presentation"><a href="#'+blockId+'-new" id="'+blockId+'-new-tab" onClick="$(this).tab(\'show\')" role="tab" data-toggle="pill" aria-controls="new" aria-expanded="true">Upload</a></li>',
-          '<li role="presentation"><a href="#'+blockId+'-pick" id="'+blockId+'-pick-tab" onClick="$(this).tab(\'show\')" role="tab" data-toggle="pill" aria-controls="pick" aria-expanded="true">Pick Previously Uploaded Picture</a></li>',
+          '<li role="presentation" class="active"><a href="#'+blockId+'-current" id="'+blockId+'-current-tab" onClick="$(this).tab(\'show\'); return false" role="tab" data-toggle="pill" aria-controls="'+blockId+'-current" aria-expanded="true">Current Image</a></li>',
+          '<li role="presentation"><a href="#'+blockId+'-new" id="'+blockId+'-new-tab" onClick="$(this).tab(\'show\'); return false" role="tab" data-toggle="pill" aria-controls="'+blockId+'-new" aria-expanded="true">Upload</a></li>',
+          '<li role="presentation"><a href="#'+blockId+'-pick" id="'+blockId+'-pick-tab" onClick="$(this).tab(\'show\'); return false" role="tab" data-toggle="pill" aria-controls="'+blockId+'-pick" aria-expanded="true">Pick Previously Uploaded Picture</a></li>',
           '</ul>',
           '<br><div id="tabs-'+blockId+'-content" class="tab-content">',
           '<div role="tabpanel" class="tab-pane fade in active" id="'+blockId+'-current" aria-labelledby="'+blockId+'-current-tab">',
