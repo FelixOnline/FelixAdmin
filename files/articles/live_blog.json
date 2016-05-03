@@ -1,0 +1,123 @@
+{
+	"name": "Live Blogs",
+	"model": "FelixOnline\\Core\\Article",
+	"baseRole": ["author"],
+	"constraints": [
+		{
+			"field": "published",
+			"operator": "IS NOT NULL",
+			"test": "",
+			"roles": []
+		},
+		{
+			"field": "approvedby",
+			"operator": "IS NOT NULL",
+			"test": "",
+			"roles": []
+		},
+		{
+			"field": "reviewedby",
+			"operator": "IS NOT NULL",
+			"test": "",
+			"roles": []
+		},
+		{
+			"field": "hidden",
+			"operator": "=",
+			"test": "0",
+			"roles": []
+		},
+		{
+			"specialConstraint": "isEditor",
+			"reverse": false,
+			"roles": ["sectionEditor"]
+		},
+		{
+			"specialConstraint": "isAuthor",
+			"reverse": false,
+			"roles": ["author"],
+			"notRoles": ["sectionEditor"]
+		},
+		{
+			"field": "blog",
+			"operator": "IS NOT NULL",
+			"test": "",
+			"roles": []
+		},
+		{
+			"field": "is_live",
+			"operator": "=",
+			"test": "1",
+			"roles": []
+		}
+	],
+	"actions": {
+		"secure_blog": {
+			"label": "Re-secure",
+			"icon": "lock",
+			"roles": ["sysAdmin"]
+		}
+	},
+	"hasId": true,
+	"fields": {
+		"id": {
+			"label": "Article",
+			"readOnly": true,
+			"required": true
+		},
+		"title": {
+			"label": "Title",
+			"readOnly": true,
+			"required": true
+		},
+		"author": {
+			"label": "Authors",
+			"readOnly": true,
+			"required": true,
+			"multiMap": {
+				"model": "FelixOnline\\Core\\ArticleAuthor",
+				"this": "article",
+				"foreignKey": "author",
+				"foreignKeyField": "name"
+			}
+		},
+		"is_live": {
+			"label": "Live Blog Active",
+			"readOnly": false,
+			"help": "If you turn this off, you will not be able to post any more messages on the live blog for this article."
+		}
+	},
+	"order": [
+		{
+			"column": "date",
+			"direction": "DESC"
+		},
+		{
+			"column": "id",
+			"direction": "DESC"
+		}
+	],
+	"modes": {
+		"new": {
+			"enabled": false
+		},
+		"list": {
+			"enabled": true,
+			"columns": [
+				"id",
+				"title",
+				"author"
+			],
+			"canDelete": false
+		},
+		"search": {
+			"enabled": false
+		},
+		"details": {
+			"enabled": true,
+			"headerHint": "title",
+			"after": "list"
+		}
+	},
+	"auxHtml": "<center>Articles with active live blogs are shown here. Select a blog to post an update.</center>"
+}

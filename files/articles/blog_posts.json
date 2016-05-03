@@ -1,0 +1,95 @@
+{
+	"name": "Live Blog Posts",
+	"model": "FelixOnline\\Core\\BlogPost",
+	"baseRole": ["author"],
+	"constraints": [
+	],
+	"pullThrough": {
+		"mode": "multi",
+		"class": "FelixOnline\\Core\\Article",
+		"childField": "blog",
+		"pullField": "blog",
+		"keyField": "id"
+	},
+	"actions": {
+		"pull_blog": {
+			"label": "Take down post",
+			"icon": "remove-circle"
+		}
+	},
+	"hasId": true,
+	"fields": {
+		"id": {
+			"label": "ID",
+			"readOnly": true,
+			"required": true
+		},
+		"title": {
+			"label": "Title",
+			"readOnly": false,
+			"required": true
+		},
+		"author": {
+			"label": "Author",
+			"readOnly": true,
+			"autoField": true,
+			"required": true,
+			"foreignKeyField": "name"
+		},
+		"timestamp": {
+			"label": "Posted",
+			"readOnly": true,
+			"required": true,
+			"autoField": true
+		},
+		"breaking": {
+			"label": "Breaking News",
+			"help": "Breaking News posts are highlighted in a different colour when viewing the live blog."
+		},
+		"content": {
+			"label": "Content",
+			"readOnly": false,
+			"required": true,
+			"sirTrevor": true,
+			"sirTrevorFields": "[\"Text\", \"Feliximage\", \"Quote\", \"Video\", \"Tweet\", \"List\", \"OrderedList\"]",
+			"sirTrevorDefaultField": "Text",
+			"sirTrevorMaxFields": 1,
+			"help": "You can only have one content type per post. If you would like a different type of content to the default option of Text, delete the widget and choose a new one."
+		}
+	},
+	"order": [
+		{
+			"column": "timestamp",
+			"direction": "DESC"
+		},
+		{
+			"column": "id",
+			"direction": "DESC"
+		}
+	],
+	"modes": {
+		"new": {
+			"enabled": true,
+			"callback": "post_blog"
+		},
+		"list": {
+			"enabled": true,
+			"columns": [
+				"id",
+				"title",
+				"author",
+				"timestamp"
+			],
+			"canDelete": false
+		},
+		"search": {
+			"enabled": false
+		},
+		"details": {
+			"enabled": true,
+			"readOnly": true,
+			"headerHint": "title"
+		}
+	},
+	"auxHtml": ""
+}

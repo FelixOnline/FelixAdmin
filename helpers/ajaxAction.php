@@ -28,6 +28,7 @@ class actionAjaxHelper extends Core {
 		}
 
 		$actionObj = 'FelixOnline\Admin\Actions\\'.$action;
+		$app = \FelixOnline\Core\App::getInstance();
 
 		try {
 			if(!class_exists($actionObj)) {
@@ -39,13 +40,22 @@ class actionAjaxHelper extends Core {
 				throw new \Exception('You do not have permission to do this');
 			}
 
+			$data = $pageObj->getPageData();
+			$data = $data['actions'][$action];
+
+			if(isset($action['roles'])) {
+				if(count(array_intersect($action['roles'], $app['env']['session']->session['roles'])) == 0) {
+					throw new \Exception('You do not have permission to do this');
+				}
+			}
+
 			$actionObj = new $actionObj($pageObj);
 		} catch(\Exception $e) {
 			$this->error($e->getMessage(), 500);
 		}
 
 		try {
-			$message = $actionObj->run($records);
+			$message = $actionObj->run($records, $pullThrough);
 
 			$this->success(array("message" => $message));
 		} catch(\Exception $e) {

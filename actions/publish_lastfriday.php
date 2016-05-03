@@ -7,7 +7,7 @@ class publish_lastfriday extends BaseAction {
 		parent::__construct($permissions);
 	}
 
-	public function run($records) {
+	public function run($records, $pullThrough = false) {
 		if(count($records) == 0) {
 			throw new \Exception('No articles selected');
 		}

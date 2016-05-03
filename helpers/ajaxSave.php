@@ -262,7 +262,7 @@ class saveAjaxHelper extends Core {
 
 				$action = new $action($page);
 
-				$message = $action->run(array($model->getId()));
+				$message = $action->run(array($model->getId()), $pullThrough);
 				$this->success(array("goto" => $goto, "message" => $message));
 			} catch(\Exception $e) {
 				$this->success(array("goto" => $goto, "message" => "Your entry has been saved, however a problem occured in the callback function. Details: ".$e->getMessage()));

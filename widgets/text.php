@@ -57,9 +57,6 @@ class TextWidget implements Widget {
 				echo '</div>';
 			else:
 				$current = '';
-				if($this->currentValue) {
-					$current = json_encode(array('data' => array(json_decode($this->currentValue))));
-				}
 
 				echo '<textarea rows="25" class="form-control sir-trevor sir-trevor-'.$this->fieldName.'" name="'.$this->fieldName.'" id="'.$this->fieldName.'" '.$readOnly.' aria-describedby="'.$this->fieldName.'-help" data-trevor-default="'.$this->otherProperties['sirTrevorDefaultField'].'" data-trevor-maxwidgets="'.$this->otherProperties['sirTrevorMaxFields'].'" data-trevor-widgets=\''.$this->otherProperties['sirTrevorFields'].'\'>'.$current.'</textarea>';
 			endif;

@@ -241,8 +241,8 @@ class newAjaxHelper extends Core {
 
 				$action = new $action($page);
 
-				$message = $action->run(array($key));
-				$this->success(array("key" => $message));
+				$message = $action->run(array($key), $pullThrough);
+				$this->success(array("goto" => $goto, "key" => $message));
 			} catch(\Exception $e) {
 				$this->success(array("goto" => $goto, "key" => "Your entry has been created, however a problem occured in the callback function. Details: ".$e->getMessage()));
 			}

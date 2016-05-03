@@ -7,7 +7,7 @@ class bulk_delete extends BaseAction {
 		parent::__construct($permissions);
 	}
 
-	public function run($records) {
+	public function run($records, $pullThrough = false) {
 		if(!$this->page['modes']['list']['canDelete']) {
 			throw new \Exception('You do not have permission to do this.');
 		}

@@ -7,7 +7,7 @@ class archive_upload extends BaseAction {
 		parent::__construct($permissions);
 	}
 
-	public function run($records) {
+	public function run($records, $pullThrough = false) {
 		if(count($records) != 1) {
 			throw new \Exception('Expecting one record');
 		}

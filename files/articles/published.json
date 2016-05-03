@@ -172,7 +172,7 @@
 		"details": {
 			"enabled": true,
 			"headerHint": "title",
-			"callback": "liveblog_update"
+			"callback": "save_article"
 		}
 	},
 	"auxHtml": ""

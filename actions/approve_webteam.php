@@ -7,7 +7,7 @@ class approve_webteam extends BaseAction {
 		parent::__construct($permissions);
 	}
 
-	public function run($records) {
+	public function run($records, $pullThrough = false) {
 		if(count($records) == 0) {
 			throw new \Exception('No articles selected');
 		}

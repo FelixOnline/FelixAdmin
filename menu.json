@@ -13,7 +13,12 @@
 			"articles/for_review": {},
 			"articles/for_publication": {},
 			"articles/published": {},
-			"articles/in_section": {}
+			"articles/in_section": {},
+			"articles/live_blog": {
+				"children": {
+					"articles/blog_posts": {}
+				}
+			}
 		}
 	},
 	"comments": {

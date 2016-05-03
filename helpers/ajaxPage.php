@@ -5,7 +5,7 @@ namespace FelixOnline\Admin\Ajax;
 class getPageAjaxHelper extends Core {
 	public function run() {
 		if(!array_key_exists('page', $_POST) || $_POST['page'] == '') {
-			$this->error("Page specified.", 400);
+			$this->error("No page specified.", 400);
 		}
 
 		$page = $_POST['page'];
