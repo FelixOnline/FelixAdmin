@@ -1,5 +1,5 @@
 {
-	"name": "Issues",
+	"name": "Upload New Issue",
 	"model": "FelixOnline\\Core\\ArchiveIssue",
 	"baseRole": ["archivist"],
 	"constraints": [
@@ -27,9 +27,11 @@
 			"readOnly": false,
 			"required": true
 		},
-		"inactive": {
-			"label": "Inactive",
-			"readOnly": false
+		"pdf": {
+			"label": "Upload PDF",
+			"readOnly": false,
+			"required": true,
+			"uploader": true
 		}
 	},
 	"order": [
@@ -42,11 +44,11 @@
 	},
 	"modes": {
 		"new": {
-			"enabled": false,
+			"enabled": true,
 			"callback": "archive_upload"
 		},
 		"list": {
-			"enabled": true,
+			"enabled": false,
 			"columns": [
 				"id",
 				"issue",
@@ -57,12 +59,12 @@
 			"canDelete": true
 		},
 		"details": {
-			"enabled": true,
+			"enabled": false,
 			"headerHint": "issue"
 		},
 		"search": {
-			"enabled": true
+			"enabled": false
 		}
 	},
-	"auxHtml": "<p><center>You can upload new PDFs when creating a new entry here. To modify PDF data after uploading, use the Files tab</center></p>"
+	"defaultTab": "new"
 }

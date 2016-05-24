@@ -43,7 +43,8 @@
 		"children": {
 			"archive/publications": {},
 			"archive/issues": {},
-			"archive/files": {}
+			"archive/files": {},
+			"archive/upload_new": {}
 		}
 	},
 	"system": {

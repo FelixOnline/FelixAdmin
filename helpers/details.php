@@ -141,6 +141,8 @@ class detailsHelper {
 						$otherData);
 					continue;
 				}
+			} elseif(array_key_exists('uploader', $data)) {
+				$widgetClass = 'FelixOnline\Admin\Widgets\Uploader';
 			} else {
 				continue;
 			}
