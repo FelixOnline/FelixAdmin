@@ -30,7 +30,7 @@
 		},
 		"timestamp": {
 			"label": "Uploaded at",
-			"readOnly": false,
+			"readOnly": true,
 			"required": true
 		},
 		"attribution": {
