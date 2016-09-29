@@ -29,6 +29,9 @@
 					"articles/sub/blog_posts": {}
 				}
 			},
+			"articles/search": {
+				"children": {
+					"articles/published": {}
 				}
 			}
 		}

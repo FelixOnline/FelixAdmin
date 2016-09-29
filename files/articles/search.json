@@ -1,0 +1,69 @@
+{
+	"name": "Search Published Articles",
+	"model": "FelixOnline\\Core\\ArticlePublication",
+	"baseRole": ["webMaster"],
+	"constraints": [
+	],
+	"hasId": true,
+	"fields": {
+		"id": {
+			"label": "ID",
+			"readOnly": true,
+			"required": true
+		},
+		"publication_date": {
+			"label": "Published On",
+			"readOnly": true,
+			"required": true
+		},
+		"published_by": {
+			"label": "By",
+			"readOnly": true,
+			"required": true,
+			"foreignKeyField": "name"
+		},
+		"republished": {
+			"label": "Re-published",
+			"readOnly": true,
+			"required": true
+		},
+		"article": {
+			"label": "Article",
+			"readOnly": true,
+			"required": true,
+			"foreignKeyField": "title"
+		}
+	},
+	"order": [
+		{
+			"column": "publication_date",
+			"direction": "DESC"
+		}
+	],
+	"defaultTab": "search",
+	"modes": {
+		"new": {
+			"enabled": false
+		},
+		"list": {
+			"enabled": false,
+			"columns": [
+				"id",
+				"article",
+				"publication_date",
+				"published_by",
+				"republished"
+			],
+			"canDelete": false
+		},
+		"search": {
+			"enabled": true
+		},
+		"details": {
+			"enabled": true,
+			"headerHint": "publication_date",
+			"readOnly": true
+		}
+	},
+	"auxHtml": ""
+}
