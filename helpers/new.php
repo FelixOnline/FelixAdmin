@@ -81,6 +81,10 @@ class newHelper {
 						break;
 				}
 			} elseif(array_key_exists('multiMap', $data)) {
+				if($data['skip']) {
+					continue;
+				}
+				
 				$widgetClass = 'FelixOnline\Admin\Widgets\ForeignKeyMultiMapWidget';
 
 				try {

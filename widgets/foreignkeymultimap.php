@@ -25,6 +25,14 @@ class ForeignKeyMultiMapWidget implements Widget {
 		$this->fk = $otherProperties['key'];
 		$this->fkField = $otherProperties['field'];
 		$this->page = $otherProperties['page'];
+
+		if(!($this->currentValue == '')) {
+			foreach($this->currentValue as $value) {
+				if(!is_object($value->fields[$this->fk]->getValue()) && $value->fields[$this->fk]->getValue() != null) {
+					$this->readOnly = true; // Cannot edit these fields
+				}
+			}
+		}
 	}
 
 	public function render() {
@@ -61,7 +69,14 @@ class ForeignKeyMultiMapWidget implements Widget {
 						continue;
 					}
 					
-					echo '<option selected="selected" value="'.$value->fields[$this->fk]->getRawValue().'">'.\htmlentities($value->fields[$this->fk]->getValue()->fields[$this->fkField]->getValue()).' ('.$value->fields[$this->fk]->getRawValue().')</option>';
+					$val = $value->fields[$this->fk]->getValue();
+					if(is_object($val)) {
+						$val = \htmlentities($value->fields[$this->fk]->getValue()->fields[$this->fkField]->getValue()).' ('.$value->fields[$this->fk]->getRawValue().')';
+					} else {
+						$val = $value->fields[$this->fk]->getRawValue();
+					}
+
+					echo '<option selected="selected" value="'.$value->fields[$this->fk]->getRawValue().'">'.$val.'</option>';
 				}
 			}
 

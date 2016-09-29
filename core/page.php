@@ -211,6 +211,19 @@ class Page {
 								$this->manager->filter('user '.$op.' "%s"', array($currentuser->getUser()));
 							}
 							continue;
+						case 'isPublished':
+							if($this->pageData['model'] == 'FelixOnline\Core\Article') {
+								$publishedManager = \FelixOnline\Core\BaseManager::build('\FelixOnline\Core\ArticlePublication', 'article_publication');
+
+								if($constraint['reverse']) {
+									$publishedManager = $publishedManager->filter('id IS NULL');
+								} else {
+									$publishedManager = $publishedManager->filter('id IS NOT NULL');
+								}
+
+								$this->manager->join($publishedManager, 'LEFT OUTER', 'id', 'article');
+							}
+							continue;
 						default:
 							throw new \FelixOnline\Core\Exceptions\InternalException("This special constraint is not understood");
 					}
@@ -247,69 +260,71 @@ class Page {
 
 		// If we are pulling through data, add a constraint
 		if(isset($this->pageData['pullThrough'])) {
-			if($pullThrough === FALSE && (!isset($this->pageData['pullThrough']['optional']) || $this->pageData['pullThrough']['optional'] == false)) {
+			if(($pullThrough === FALSE || $pullThrough == null || $pullThrough == "null") && (!isset($this->pageData['pullThrough']['optional']) || $this->pageData['pullThrough']['optional'] == false)) {
 				throw new \FelixOnline\Exceptions\InternalException('This page may only load as a child of another page.');
 			}
 
-			switch($this->pageData['pullThrough']['mode']) {
-				case 'single':
-					$class = $this->pageData['pullThrough']['class'];
+			if($pullThrough !== FALSE && $pullThrough != null && $pullThrough != "null") {
+				switch($this->pageData['pullThrough']['mode']) {
+					case 'single':
+						$class = $this->pageData['pullThrough']['class'];
 
-					$pulledThrough = new $class($pullThrough);
-
-					// Are we getting a child record
-					if(isset($this->pageData['pullThrough']['childField'])) {
-						if(!isset($pulledThrough->fields[$this->pageData['pullThrough']['childField']])) {
-							throw new \FelixOnline\Exceptions\InternalException('The child field does not exist on the pulled through record.');
-						}
-
-						$pulledThrough = $pulledThrough->fields[$this->pageData['pullThrough']['childField']]->getValue();
-					}
-
-					if(!isset($this->fields[$this->pageData['pullThrough']['keyField']])) {
-						throw new \FelixOnline\Exceptions\InternalException('The key field does not exist on this record.');
-					}
-
-					$this->manager->filter($this->pk.' = "%s"', array($pulledThrough->fields[$this->pageData['pullThrough']['keyField']]->getRawValue()));
-					break;
-				case 'multi':
-					$class = $this->pageData['pullThrough']['class'];
-					$thisObj = $this->pageData['model'];
-					$thisObj = new $thisObj();
-
-					try {
 						$pulledThrough = new $class($pullThrough);
-					} catch(\Exception $e) {
-						throw new \FelixOnline\Exceptions\InternalException('Could not find parent record.');
-					}
 
-					// Are we getting a child record
-					if(isset($this->pageData['pullThrough']['childField'])) {
-						if(!isset($pulledThrough->fields[$this->pageData['pullThrough']['childField']])) {
-							throw new \FelixOnline\Exceptions\InternalException('The child field does not exist on the pulled through record.');
+						// Are we getting a child record
+						if(isset($this->pageData['pullThrough']['childField'])) {
+							if(!isset($pulledThrough->fields[$this->pageData['pullThrough']['childField']])) {
+								throw new \FelixOnline\Exceptions\InternalException('The child field does not exist on the pulled through record.');
+							}
+
+							$pulledThrough = $pulledThrough->fields[$this->pageData['pullThrough']['childField']]->getValue();
 						}
 
-						$pulledThrough = $pulledThrough->fields[$this->pageData['pullThrough']['childField']]->getValue();
-					}
+						if(!isset($pulledThrough->fields[$this->pageData['pullThrough']['keyField']])) {
+							throw new \FelixOnline\Exceptions\InternalException('The key field does not exist on the pulled through record');
+						}
 
-					if(!isset($thisObj->fields[$this->pageData['pullThrough']['pullField']])) {
-						throw new \FelixOnline\Exceptions\InternalException('The pull field does not exist on this record.');
-					}
+						$this->manager->filter($this->pk.' = "%s"', array($pulledThrough->fields[$this->pageData['pullThrough']['keyField']]->getRawValue()));
+						break;
+					case 'multi':
+						$class = $this->pageData['pullThrough']['class'];
+						$thisObj = $this->pageData['model'];
+						$thisObj = new $thisObj();
 
-					$this->manager->filter($this->pageData['pullThrough']['pullField'].' = "%s"', array($pulledThrough->fields[$pulledThrough->pk]->getRawValue()));
-					break;
-				case 'map':
-					$class = $this->pageData['pullThrough']['class'];
-					$classObj = new $class();
-					$table = $classObj->dbtable;
+						try {
+							$pulledThrough = new $class($pullThrough);
+						} catch(\Exception $e) {
+							throw new \FelixOnline\Exceptions\InternalException('Could not find parent record.');
+						}
 
-					$manager2 = \FelixOnline\Core\BaseManager::build($class, $table);
-					$manager2->filter($this->pageData['pullThrough']['keyField'].' = "%s"', array($pullThrough));
+						// Are we getting a child record
+						if(isset($this->pageData['pullThrough']['childField'])) {
+							if(!isset($pulledThrough->fields[$this->pageData['pullThrough']['childField']])) {
+								throw new \FelixOnline\Exceptions\InternalException('The child field does not exist on the pulled through record.');
+							}
 
-					// Error checking
+							$pulledThrough = $pulledThrough->fields[$this->pageData['pullThrough']['childField']]->getValue();
+						}
 
-					$this->manager->join($manager2, null, $this->pk, $this->pageData['pullThrough']['pullField']);
-					break;
+						if(!isset($thisObj->fields[$this->pageData['pullThrough']['pullField']])) {
+							throw new \FelixOnline\Exceptions\InternalException('The pull field does not exist on this record.');
+						}
+
+						$this->manager->filter($this->pageData['pullThrough']['pullField'].' = "%s"', array($pulledThrough->fields[$pulledThrough->pk]->getRawValue()));
+						break;
+					case 'map':
+						$class = $this->pageData['pullThrough']['class'];
+						$classObj = new $class();
+						$table = $classObj->dbtable;
+
+						$manager2 = \FelixOnline\Core\BaseManager::build($class, $table);
+						$manager2->filter($this->pageData['pullThrough']['keyField'].' = "%s"', array($pullThrough));
+
+						// Error checking
+
+						$this->manager->join($manager2, null, $this->pk, $this->pageData['pullThrough']['pullField']);
+						break;
+				}
 			}
 		}
 

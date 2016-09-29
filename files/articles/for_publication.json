@@ -1,19 +1,11 @@
 {
-	"name": "Articles Awaiting Publication",
+	"name": "Publish Articles",
 	"model": "FelixOnline\\Core\\Article",
 	"baseRole": ["webMaster"],
 	"constraints": [
 		{
-			"field": "published",
-			"operator": "IS NULL",
-			"test": "",
-			"roles": []
-		},
-		{
-			"field": "approvedby",
-			"operator": "IS NULL",
-			"test": "",
-			"roles": []
+			"specialConstraint": "isPublished",
+			"reverse": true
 		},
 		{
 			"field": "reviewedby",
@@ -136,12 +128,6 @@
 			"required": true,
 			"foreignKeyField": "name"
 		},
-		"published": {
-			"label": "Published at",
-			"readOnly": false,
-			"required": false,
-			"help": "Setting a time here will publish the article at the specified time."
-		},
 		"is_live": {
 			"label": "Live updates",
 			"readOnly": false,
@@ -180,7 +166,8 @@
 		"details": {
 			"enabled": true,
 			"headerHint": "title",
-			"callback": "publish_manual"
+			"callback": "publish_manual",
+			"after": "new"
 		}
 	},
 	"auxHtml": "<p><center>These are articles that are awaiting publication. You can edit them, publish them, or send them back to the section editor for further editing. To publish at a different time to the options available, enter a time in the edit screen for the relevant article.</center></p>"

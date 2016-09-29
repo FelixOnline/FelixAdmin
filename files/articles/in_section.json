@@ -4,16 +4,7 @@
 	"baseRole": ["sectionEditor"],
 	"constraints": [
 		{
-			"field": "published",
-			"operator": "IS NOT NULL",
-			"test": "",
-			"roles": []
-		},
-		{
-			"field": "approvedby",
-			"operator": "IS NOT NULL",
-			"test": "",
-			"roles": []
+			"specialConstraint": "isPublished"
 		},
 		{
 			"field": "reviewedby",
@@ -125,15 +116,14 @@
 		"published": {
 			"label": "Publication date",
 			"readOnly": true,
-			"required": false,
+			"required": true,
+			"multiMap": {
+				"model": "FelixOnline\\Core\\ArticlePublication",
+				"this": "article",
+				"foreignKey": "publication_date",
+				"foreignKeyField": "publication_date"
+			},
 			"help": "This will be set when the article is published"
-		},
-		"approvedby": {
-			"label": "Published by",
-			"readOnly": true,
-			"required": false,
-			"help": "This will be set when the article is published",
-			"foreignKeyField": "name"
 		},
 		"is_live": {
 			"label": "Live updates",
@@ -160,8 +150,7 @@
 				"category",
 				"date",
 				"reviewedby",
-				"published",
-				"approvedby"
+				"published"
 			],
 			"canDelete": false
 		},

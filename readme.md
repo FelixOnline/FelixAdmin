@@ -58,11 +58,12 @@ The format of the page file is as follows:
 			"canPick": // If this is a foreign key pointing to an image object, allow people to select previously uploaded images
 			"defaultImage": // If this is a foreign key pointing to an image object, the ID number for the default image for this field. If set, a button will be provided to set the image to this default image
 			"multiMap": { // If this is set, you can select multiple foreign keys for this field
-				"model": // Class name for the model which must inherit BaseDB in Core and must map foreign keys to the record relevant to this page. For example, one that maps multiple authors to an article
+				"model": // Class name for the model which must inherit BaseDB in Core and must map foreign keys to the record relevant to this page. For example, one that maps multiple authors to an article. Or, alternatively, it can point to a table where records point to the record relevant to this page, in which case set foreignKey to the field to fetch from the foreign key table (in raw format), and you will be unable to edit or search on this field (so must set skip to true).
 				"this": // The column in the model relating to this page
 				"foreignKey": // The column in the model relating to the foreign key
 				"foreignKeyField": // What value from the foreign key to show in the UX
 			}
+			"skip": // If a multiMap, do not show on edit/new screens
 			"choiceMap": { // If this is set, you can enter multiple new text items for this field - do not make something both a multiMap and a choiceMap
 				"model": // Class name for the model which must inherit BaseDB in Core and must map strings to the record relevant to this page. For example, a table of tag name and article ID
 				"this": // The column in the model relating to this page
@@ -102,6 +103,7 @@ The format of the page file is as follows:
 		"details": {
 			"enabled": // Is this tab available
 			"roles": [] // What roles can access this table, if empty/not set applies to all roles - a user with any of the roles in this list (even if inherited) will be allowed to access this tab
+			"readOnly": // Lock all fields as read only (for forms where you can create entries but not edit)
 		},
 	}
 	"defaultTab": // Which of the above tabs to show by default. Showing details by default may not be hugely beneficial

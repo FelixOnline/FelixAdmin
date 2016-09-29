@@ -119,7 +119,7 @@ class loginAjaxHelper extends Core {
 			}
 
 			$return = array();
-			$return[$key] = array("label" => $name, "parent" => $parent);
+			$return[] = array("key" => $key, "label" => $name, "parent" => $parent);
 
 			if(isset($node['children'])) {
 				foreach($node['children'] as $chKey => $chNode) {

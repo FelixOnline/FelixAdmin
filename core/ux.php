@@ -107,7 +107,9 @@ class UXHelper {
 			$string .= '<ul class="nav nav-tabs" id="menu-'.$menuId.'">';
 		}
 
-		foreach($menu as $key => $item) {
+		foreach($menu as $item) {
+			$key = $item['key'];
+
 			if($item['parent'] != $levelToShow) {
 				continue;
 			}
@@ -538,8 +540,14 @@ class UXHelper {
 								if($value != '') {
 									$value .= ', ';
 								}
-								$value .= $fieldVal->fields[$pageData['fields'][$colid]['multiMap']['foreignKey']]->getValue()
-										->fields[$pageData['fields'][$colid]['multiMap']['foreignKeyField']]->getValue();
+								$tValue = $fieldVal->fields[$pageData['fields'][$colid]['multiMap']['foreignKey']];
+
+								if(!($tValue instanceof \FelixOnline\Core\Type\ForeignKey)) {
+									$value .= $fieldVal->fields[$pageData['fields'][$colid]['multiMap']['foreignKey']]->getRawValue();
+								} else {
+									$value .= $fieldVal->fields[$pageData['fields'][$colid]['multiMap']['foreignKey']]->getValue()
+													   ->fields[$pageData['fields'][$colid]['multiMap']['foreignKeyField']]->getValue();
+								}
 							}
 
 							$value = "<td>$value</td>";
@@ -812,7 +820,7 @@ class UXHelper {
 		$string .= '</div>';
 
 		return array('string' => $string,
-			'heading' => $mode.': '.$currentRecord->fields[$hint]->getValue().' ('.$currentRecord->fields[$pk]->getValue().')');
+			'heading' => $mode.': '.$currentRecord->fields[$hint]->getRawValue().' ('.$currentRecord->fields[$pk]->getRawValue().')');
 	}
 
 	public static function creator(

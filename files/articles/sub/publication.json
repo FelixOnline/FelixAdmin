@@ -1,0 +1,75 @@
+{
+	"name": "Publication Events",
+	"model": "FelixOnline\\Core\\ArticlePublication",
+	"baseRole": ["author"],
+	"pullThrough": {
+		"optional": false,
+		"mode": "multi",
+		"class": "FelixOnline\\Core\\Article",
+		"pullField": "article"
+	},
+	"hasId": true,
+	"fields": {
+		"id": {
+			"label": "ID",
+			"readOnly": true,
+			"required": true
+		},
+		"article": {
+			"label": "Article",
+			"readOnly": true,
+			"required": true,
+			"autoField": true,
+			"foreignKey": true,
+			"foreignKeyField": "title"
+		},
+		"publication_date": {
+			"label": "Date",
+			"readOnly": false,
+			"required": true
+		},
+		"published_by": {
+			"label": "By",
+			"readOnly": true,
+			"required": true,
+			"autoField": true,
+			"foreignKeyField": "name"
+		},
+		"republished": {
+			"label": "Republished",
+			"readOnly": true,
+			"required": false
+		}
+	},
+	"order": [
+		{
+			"column": "publication_date",
+			"direction": "DESC"
+		}
+	],
+	"modes": {
+		"new": {
+			"enabled": true,
+			"roles": ["webMaster"]
+		},
+		"list": {
+			"enabled": true,
+			"columns": [
+				"id",
+				"publication_date",
+				"published_by",
+				"republished"
+			],
+			"canDelete": false
+		},
+		"search": {
+			"enabled": false
+		},
+		"details": {
+			"enabled": true,
+			"readOnly": true,
+			"headerHint": "publication_date"
+		}
+	},
+	"auxHtml": "<p><center>If you have permission, use the New tab to (re-)publish this article. Republication posts the article back to the top of article lists, with an 'Updated' flag. This feature is not currently implemented on the main site.</center></p>"
+}

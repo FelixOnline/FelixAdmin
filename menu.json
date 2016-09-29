@@ -3,7 +3,8 @@
 	"details": {
 		"children": {
 			"details/my_details": {},
-			"details/my_articles": {}
+			"details/my_articles": {
+			}
 		}
 	},
 	"articles": {
@@ -11,12 +12,23 @@
 			"articles/new": {},
 			"articles/drafts": {},
 			"articles/for_review": {},
-			"articles/for_publication": {},
-			"articles/published": {},
-			"articles/in_section": {},
+			"articles/for_publication": {
+				"children": {
+					"articles/sub/publication": {}
+				}
+			},
+			"articles/published": {
+				"children": {
+					"articles/sub/publication": {}
+				}
+			},
+			"articles/in_section": {
+			},
 			"articles/live_blog": {
 				"children": {
-					"articles/blog_posts": {}
+					"articles/sub/blog_posts": {}
+				}
+			},
 				}
 			}
 		}

@@ -4,16 +4,7 @@
 	"baseRole": ["author"],
 	"constraints": [
 		{
-			"field": "published",
-			"operator": "IS NOT NULL",
-			"test": "",
-			"roles": []
-		},
-		{
-			"field": "approvedby",
-			"operator": "IS NOT NULL",
-			"test": "",
-			"roles": []
+			"specialConstraint": "isPublished"
 		},
 		{
 			"field": "reviewedby",
