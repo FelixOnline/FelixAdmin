@@ -45,7 +45,7 @@ class UXHelper {
 <div id="csrf-key" data-csrf="'.$csrf.'"></div>
 <div id="full-wrap">
 <div class="container-header">
-	<div class="container">
+	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-10">
 				<h1>'.SERVICE_NAME.'</h1>
@@ -67,7 +67,7 @@ class UXHelper {
 			$string .= self::renderMenu($app['env']['session']->session['menu'], '', $endpoint, true);
 		}
 
-		$string .= '<div class="container">';
+		$string .= '<div class="container-fluid">';
 		return $string;
 	}
 
@@ -101,7 +101,7 @@ class UXHelper {
 			$menuId = 'root';
 
 			$string .= '<nav class="navbar navbar-default">
-			<div class="container">
+			<div class="container-fluid">
 			<ul class="nav navbar-nav" id="menu-'.$menuId.'">';
 		} else {
 			$string .= '<ul class="nav nav-tabs" id="menu-'.$menuId.'">';
@@ -152,7 +152,7 @@ class UXHelper {
 		$string = '</div>
 		<div class="container-footer">
 			<footer>
-				<div class="container">
+				<div class="container-fluid">
 					<p>&copy; Felix Online - <a href="#" data-toggle="modal" data-target="#rap">Report a Problem</a> - <a href="https://github.com/FelixOnline/FelixAdmin">Github</a></p>
 					<p>Icons are kindly provided by <a href="http://glyphicons.com/">Glyphicons</a> via Twitter Bootstrap.</p>
 				</div>

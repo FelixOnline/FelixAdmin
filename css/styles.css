@@ -1,17 +1,13 @@
 body {
-  font-family: -apple-system, -webkit-system-font, "Helvetica Neue", "Arial", sans-serif;
+  font-family: "Helvetica Neue", "Arial", sans-serif;
+}
+
+table {
+  width: auto !important;
 }
 
 .container-header {
-/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#6d0019+0,8f0222+56,a90329+100 */
-background: #E7A64F; /* Old browsers */
-background: -moz-linear-gradient(-45deg,  #A56612 0%, #E7A64F 56%, #A38A69 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#A56612), color-stop(56%,#E7A64F), color-stop(100%,#A38A69)); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(-45deg,  #A56612 0%,#E7A64F 56%,#A38A69 100%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(-45deg,  #A56612 0%,#E7A64F 56%,#A38A69 100%); /* Opera 11.10+ */
-background: -ms-linear-gradient(-45deg,  #A56612 0%,#E7A64F 56%,#A38A69 100%); /* IE10+ */
-background: linear-gradient(135deg,  #A56612 0%,#E7A64F 56%,#A38A69 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#A56612', endColorstr='#A38A69',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+  background: #ca7e1c; /* Old browsers */
   color: white;
 }
 
