@@ -1,5 +1,5 @@
 function save(page_name, key, load_into, pull_through, show_title) {
-	var clean_page_name = page_name.replace('/', '-');
+	var clean_page_name = page_name.replaceAll('/', '-');
 
 	var stErrors = 0;
 
@@ -80,7 +80,7 @@ function save(page_name, key, load_into, pull_through, show_title) {
 }
 
 function create(page_name, load_into, pull_through, show_title) {
-	var clean_page_name = page_name.replace('/', '-');
+	var clean_page_name = page_name.replaceAll('/', '-');
 
 	var stErrors = 0;
 
@@ -153,7 +153,7 @@ function create(page_name, load_into, pull_through, show_title) {
 }
 
 function runSearch(page_name, paginator_page) {
-	var clean_page_name = page_name.replace('/', '-');
+	var clean_page_name = page_name.replaceAll('/', '-');
 
 	var formData = $('#page-'+clean_page_name+' .search-form').serializeArray();
 	formData.push({
@@ -217,7 +217,7 @@ function runSearch(page_name, paginator_page) {
 }
 
 function refreshList(page_name, paginator_page) {
-	var clean_page_name = page_name.replace('/', '-');
+	var clean_page_name = page_name.replaceAll('/', '-');
 
 	$.ajax(getAjaxEndpoint(), {
 		type: "POST",
@@ -335,7 +335,7 @@ function imageForm(location, image, hasEditor, inTrevor) {
 }
 
 function del(page_name, key) {
-	var clean_page_name = page_name.replace('/', '-');
+	var clean_page_name = page_name.replaceAll('/', '-');
 
 	if(confirm("Are you sure you want to delete this?")) {
 		$.ajax(getAjaxEndpoint(), {
@@ -446,7 +446,7 @@ function loadPage(page_name, renderInto, updateChrome, hideTabs, pullThrough, sh
 				setTimeout(findElem(renderInto), 150);
 
 				if(message) {
-					var clean_page_name = page_name.replace('/', '-');
+					var clean_page_name = page_name.replaceAll('/', '-');
 					if(clean_page_name.indexOf(':') > 0) {
 						clean_page_name = clean_page_name.substring(0, clean_page_name.indexOf(':'));
 					}
@@ -465,13 +465,18 @@ function findElem(page_name) {
 	$(page_name+' form *').filter(':input').each(function() {
 		if(gotOne == false && $(this).attr('type') != 'hidden' && $(this).is('button') != true && $(this).is(':disabled') != true) {
 			$(this).focus();
+
+			if($(this).data("DateTimePicker")) {
+				$(this).data("DateTimePicker").hide();
+			}
+
 			gotOne = true;
 		}
 	});
 
 	$('html, body').animate({
 		scrollTop: $(page_name).offset().top
-	}, 500);
+	}, 250);
 }
 
 function setupElem() {
@@ -647,12 +652,17 @@ function destroyElem() {
 			$(this).select2("destroy");
 		}
 	});
+
+	// Destroy old dropzone
+	$('.dropzone').each(function() {
+		Dropzone.forElement('#'+$(this).attr('id')).destroy();
+	});
 }
 
 function runAction(action, page_name) {
 	var records = [];
 
-	var clean_page_name = page_name.replace('/', '-');
+	var clean_page_name = page_name.replaceAll('/', '-');
 
 	$('#page-'+clean_page_name+' table.table input[name^=record]:checked').each(function() {
 		records.push($(this).data('record'));
@@ -795,7 +805,7 @@ function rap() {
 }
 
 function toggleSelect(page_name) {
-	var clean_page_name = page_name.replace('/', '-');
+	var clean_page_name = page_name.replaceAll('/', '-');
 
 	if($('#page-'+clean_page_name+' .toggler').html() == 'Select all') {
 		$('#page-'+clean_page_name+' .recordBox').prop('checked', true);
@@ -824,7 +834,7 @@ function addCalendar() {
 }
 
 function toggleAudit(page_name) {
-	var clean_page_name = page_name.replace('/', '-');
+	var clean_page_name = page_name.replaceAll('/', '-');
 
 	$('#page-'+clean_page_name+' .auditButton').toggleClass('active');
 	$('#page-'+clean_page_name+' .widgetForm').toggle();
@@ -846,4 +856,10 @@ function formatImagePicker(img) {
 	if (img.loading) return img.text;
 	var image = $('<span><img src="' + img.url + '" class="lookup-img" /> ' + img.text + '</span>');
 	return image;
+};
+
+// http://stackoverflow.com/questions/1144783/replacing-all-occurrences-of-a-string-in-javascript
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
 };
