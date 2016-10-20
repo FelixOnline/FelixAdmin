@@ -21,7 +21,8 @@
 			"required": true,
 			"autoField": true,
 			"foreignKey": true,
-			"foreignKeyField": "title"
+			"foreignKeyField": "title",
+			"pullThrough" : true
 		},
 		"publication_date": {
 			"label": "Date",
@@ -50,7 +51,9 @@
 	"modes": {
 		"new": {
 			"enabled": true,
-			"roles": ["webMaster"]
+			"roles": ["webMaster"],
+			"callback": "republish_check",
+			"after": "list"
 		},
 		"list": {
 			"enabled": true,

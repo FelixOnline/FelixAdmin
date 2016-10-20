@@ -21,9 +21,13 @@ class publish_lastfriday extends BaseAction {
 		$currentuser = $app['currentuser'];
 
 		foreach($records as $record) {
-			$record->setPublished($time);
-			$record->setApprovedby($currentuser);
-			$record->save();
+			$rec = new \FelixOnline\Core\ArticlePublication();
+
+			$rec->setArticle($record);
+			$rec->setPublicationDate($time);
+			$rec->setPublishedBy($currentuser);
+			$rec->setRepublished(0);
+			$rec->save();
 		}
 
 		return 'Articles published at '.date("d-M-y H:i", $time).'.';

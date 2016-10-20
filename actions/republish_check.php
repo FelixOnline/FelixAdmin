@@ -2,31 +2,31 @@
 
 namespace FelixOnline\Admin\Actions;
 
-class unpublish extends BaseAction {
+class republish_check extends BaseAction {
 	public function __construct($permissions) {
 		parent::__construct($permissions);
 	}
 
 	public function run($records, $pullThrough = false) {
-		if(count($records) == 0) {
-			throw new \Exception('No articles selected');
-		}
-
 		$this->validateAccess();
 
 		$records = $this->getRecords($records);
+		$string = '';
 
 		foreach($records as $record) {
 			// Check if events exist
 			$mgr = \FelixOnline\Core\BaseManager::build('FelixOnline\Core\ArticlePublication', 'article_publication');
 
-			$count = $mgr->filter('article = %i', array($record->getId()))->values();
+			$count = $mgr->filter('article = %i', array($record->getArticle()->getId()))->count();
 
-			foreach($count as $pub) {
-				$pub->delete();
+			if($count > 1) {
+				$record->setRepublished(true)->save();
+				$string = 'Article republished';
+			} else {
+				$string = 'Article published';
 			}
 		}
 
-		return 'Articles unpublished.';
+		return $string;
 	}
 }

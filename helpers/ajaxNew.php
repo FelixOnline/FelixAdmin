@@ -76,34 +76,40 @@ class newAjaxHelper extends Core {
 			if($fieldInfo['readOnly'] && !$fieldInfo['autoField']) {
 				continue;
 			} elseif($fieldInfo['readOnly'] && $fieldInfo['autoField']) {
-				switch($fieldType) {
-					case 'FelixOnline\Core\Type\ForeignKey':
-						if($model->fields[$fieldName]->class == 'FelixOnline\Core\User') {
-							$app = \FelixOnline\Core\App::getInstance();
-							$currentuser = $app['currentuser'];
-							
-							$value = $currentuser;
-						} elseif($model->fields[$fieldName]->class == 'FelixOnline\Core\Image' && $fieldInfo['defaultImage']) {
-							$value = new \FelixOnline\Core\Image($fieldInfo['defaultImage']);
-						} else {
-							if($fieldInfo['defaultValue']) {
-								$fkType = $model->fields[$fieldName]->class;
-								$value = new $fkType($fieldInfo['defaultValue']);
+				if($fieldInfo['pullThrough'] && $page->getPageData()['pullThrough'] && $pullThrough && $pullThrough != false && $pullThrough != null && $pullThrough != 'null') {
+					$class = $page->getPageData()['pullThrough']['class'];
+
+					$value = new $class($pullThrough);
+				} else {
+					switch($fieldType) {
+						case 'FelixOnline\Core\Type\ForeignKey':
+							if($model->fields[$fieldName]->class == 'FelixOnline\Core\User') {
+								$app = \FelixOnline\Core\App::getInstance();
+								$currentuser = $app['currentuser'];
+								
+								$value = $currentuser;
+							} elseif($model->fields[$fieldName]->class == 'FelixOnline\Core\Image' && $fieldInfo['defaultImage']) {
+								$value = new \FelixOnline\Core\Image($fieldInfo['defaultImage']);
 							} else {
-								$this->error('Trying to automatically set an unsupported foreign key.', 500);
+								if($fieldInfo['defaultValue']) {
+									$fkType = $model->fields[$fieldName]->class;
+									$value = new $fkType($fieldInfo['defaultValue']);
+								} else {
+									$this->error('Trying to automatically set an unsupported foreign key.', 500);
+								}
 							}
-						}
-						break;
-					case 'FelixOnline\Core\Type\DateTimeField':
-						$value = strtotime($now);
-						break;
-					default:
-						if($fieldInfo['defaultValue']) {
-							$value = $fieldInfo['defaultValue'];
-						} else {
-							$value = '';
-						}
-						break;
+							break;
+						case 'FelixOnline\Core\Type\DateTimeField':
+							$value = strtotime($now);
+							break;
+						default:
+							if($fieldInfo['defaultValue']) {
+								$value = $fieldInfo['defaultValue'];
+							} else {
+								$value = '';
+							}
+							break;
+					}
 				}
 			} elseif($fieldType == 'FelixOnline\Core\Type\ForeignKey') {
 				$fkType = $model->fields[$fieldName]->class;

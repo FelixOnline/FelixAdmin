@@ -166,7 +166,6 @@
 		"details": {
 			"enabled": true,
 			"headerHint": "title",
-			"callback": "publish_manual",
 			"after": "new"
 		}
 	},
