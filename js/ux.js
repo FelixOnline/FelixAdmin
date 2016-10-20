@@ -161,17 +161,21 @@ function create(page_name, load_into, pull_through, show_title) {
 				alert(message);
 			},
 			success: function(data) {
-				if(data.key) {
-					var message = 'Succesfully created! ' + data.key;
+				if(data.goto) {
+					if(data.key) {
+						var message = 'Succesfully created! ' + data.key;
+					} else {
+						var message = 'Succesfully created!';
+					}
+
+					loadPage(data.goto, load_into, (pull_through == "null"), false, pull_through, show_title, message);
+
+					$('html, body').animate({
+						scrollTop: $("body").offset().top
+					}, 500);
 				} else {
-					var message = 'Succesfully created!';
+					alert('An error occured when creating record - please report this bug');
 				}
-
-				loadPage(data.goto, load_into, (pull_through == "null"), false, pull_through, show_title, message);
-
-				$('html, body').animate({
-					scrollTop: $("body").offset().top
-				}, 500);
 			},
 			cache: false
 		});
