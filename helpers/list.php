@@ -52,6 +52,12 @@ class listHelper {
 		$resultsArray = \FelixOnline\Admin\Page::loadResults($this->manager, $this->pageData, $this->currentPage);
 		$access = \FelixOnline\Admin\UXHelper::getAccess($this->pageData);
 
+		if(LOCAL) {
+			$sql = '<div><h2>SQL</h2><pre>'.$this->manager->getSQL().'</pre></div>';
+		} else {
+			$sql = '';
+		}
+
 		return \FelixOnline\Admin\UXHelper::page(
 			$pageName,
 			array(
@@ -69,7 +75,7 @@ class listHelper {
 					$access['details'],
 					$this->pageData['modes']['list']['canDelete'],
 					false),
-				'</div>'
+				'</div>'.$sql
 			),
 			$this->pageName);
 	}
