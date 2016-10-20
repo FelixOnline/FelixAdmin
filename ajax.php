@@ -23,6 +23,16 @@
 		exit;
 	}
 
+	if(empty($_POST)) {
+		header("HTTP/1.1 405 Invalid method");
+		header("Cache-Control: no-cache, must-revalidate", false);
+		header("Expires: Sat, 26 Jul 1997 05:00:00 GMT", false);
+		header("Content-Type: text/json", false);
+
+		echo json_encode(array("message" => 'Your request is too large. The maximum size you can upload is '.ini_get('post_max_size').'.', "widgets" => array()));
+		exit;
+	}
+
 	require('core/setup.php');
 
 	$app = \FelixOnline\Core\App::getInstance();
