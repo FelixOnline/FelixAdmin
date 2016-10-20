@@ -488,7 +488,7 @@ class UXHelper {
 		if(count($actions) > 0) {
 			$string .= '<p><div class="btn-group" role="group">';
 
-			$string .= '<button class="btn btn-default toggler" onClick="toggleSelect(\''.str_replace('/', '-', $pageSlug).'\');">Select all</button>';
+			$string .= '<button class="btn btn-default toggler" onClick="toggleSelect(\''.str_replace('/', '-', $pageSlug).'\');">Select all on page</button>';
 
 			$string .= '<button class="btn btn-default" disabled onClick="return: false;">With selected items:</button>';
 
@@ -669,10 +669,6 @@ class UXHelper {
 						$editable = 'info-sign';
 					}
 
-					if($searchView) {
-						$searchViewModifier = 'true';
-					}
-
 					$value = '<center><a href="'.STANDARD_URL.$pageSlug.':details/'.$value.'" onClick="if(window.pageIsLoading) { return false; } loadPage(\''.$pageSlug.':details/'.$value.'\', \'#\'+$(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'id\'), ($(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'data-parentrecord\') == \'null\'), '.$searchViewModifier.', $(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'data-parentrecord\'), ($(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'id\') == \'render-root\')); return false;"><span class="glyphicon glyphicon-'.$editable.'" aria-hidden="true"></span> '.$value.'</a></center>';
 				}
 
@@ -765,7 +761,7 @@ class UXHelper {
 			$string .= '<li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-right" aria-label="Next"></span></a></li>';
 		}
 
-		$string .= '<li class="disabled"><a href="#">Page '.$currentPage.' of '.$finalPage.'</a></li>';
+		$string .= '<li class="disabled"><a>Page '.$currentPage.' of '.$finalPage.'</a></li>';
 
 		$string .= '</ul></nav>';
 
