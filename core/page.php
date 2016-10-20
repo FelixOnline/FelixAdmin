@@ -40,7 +40,7 @@ class Page {
 	}
 
 	// For checking access
-	public function lightLoad($page) {
+	public function lightLoad($page, $checkPerms = true) {
 		try {
 			$page = explode(':', $page);
 
@@ -53,7 +53,9 @@ class Page {
 
 			$this->loadPage();
 
-			$this->checkPermissions();
+			if($checkPerms) {
+				$this->checkPermissions();
+			}
 		} catch(\Exception $e) {
 			return false;
 		}
@@ -216,7 +218,7 @@ class Page {
 								$publishedManager = \FelixOnline\Core\BaseManager::build('\FelixOnline\Core\ArticlePublication', 'article_publication');
 
 								if($constraint['reverse']) {
-									$publishedManager = $publishedManager->filter('id IS NULL');
+									$publishedManager = $publishedManager->filter('id IS NULL', array(), array(array('deleted = %i', array(1))))->allowDeleted();
 								} else {
 									$publishedManager = $publishedManager->filter('id IS NOT NULL');
 								}
@@ -437,7 +439,7 @@ class Page {
 		// Get the records for this page
 		$numRecords = $manager->count();
 		$manager->limit((-LISTVIEW_PAGINATION_LIMIT + $page*LISTVIEW_PAGINATION_LIMIT), LISTVIEW_PAGINATION_LIMIT);
-		$records = $manager->values();
+		$records = $manager->values(true);
 
 		// Get the actions available to us
 		$actions = array();
