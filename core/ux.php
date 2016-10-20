@@ -726,7 +726,7 @@ class UXHelper {
 		if($currentPage != 1) {
 			$string .= '<li><a href="'.$previousPageLink.'" onClick="'.$function.'(\''.$pageSlug.'\', \''.($currentPage - 1).'\'); return false;"><span class="glyphicon glyphicon-chevron-left" aria-label="Next"></span></a></li>';
 		} else {
-			$string .= '<li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left" aria-label="Next"></span></a></li>';
+			$string .= '<li class="disabled"><a><span class="glyphicon glyphicon-chevron-left" aria-label="Next"></span></a></li>';
 		}
 
 		if(1 < $firstPage) {
@@ -758,7 +758,7 @@ class UXHelper {
 		if($currentPage != $finalPage) {
 			$string .= '<li><a href="'.$nextPageLink.'" onClick="'.$function.'(\''.$pageSlug.'\', \''.($currentPage + 1).'\'); return false;"><span class="glyphicon glyphicon-chevron-right" aria-label="Next"></span></a></li>';
 		} else {
-			$string .= '<li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-right" aria-label="Next"></span></a></li>';
+			$string .= '<li class="disabled"><a><span class="glyphicon glyphicon-chevron-right" aria-label="Next"></span></a></li>';
 		}
 
 		$string .= '<li class="disabled"><a>Page '.$currentPage.' of '.$finalPage.'</a></li>';
