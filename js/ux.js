@@ -819,6 +819,7 @@ function login() {
 			}
 
 			alert(message);
+			location.reload(true);
 		},
 		success: function(data) {
 			location.reload(true);
