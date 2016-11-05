@@ -13,6 +13,7 @@ class ForeignKeyMultiMapWidget implements Widget {
 	private $fk;
 	private $fkField;
 	private $page;
+	private $fkHint;
 
 	public function __construct($fieldName, $label, $currentValue, $readOnly, $required, $help, $otherProperties = array()) {
 		$this->fieldName = $fieldName;
@@ -24,6 +25,7 @@ class ForeignKeyMultiMapWidget implements Widget {
 
 		$this->fk = $otherProperties['key'];
 		$this->fkField = $otherProperties['field'];
+		$this->fkHint = $otherProperties['hint'];
 		$this->page = $otherProperties['page'];
 
 		if(!($this->currentValue == '')) {
@@ -68,10 +70,17 @@ class ForeignKeyMultiMapWidget implements Widget {
 					if($value->fields[$this->fk]->getValue() == null) {
 						continue;
 					}
+
+					// In some cases, we actually need to get fields from the table that the multimap points to (e.g. [being edited] -> [map] -> [other table]*FIELD HERE)
+					if(is_object($value->fields[$this->fkHint])) {
+						$hint = $value->fields[$this->fkHint]->getRawValue();
+					} else {
+						$hint = $value->fields[$this->fk]->getValue()->fields[$this->fkHint]->getValue();
+					}
 					
 					$val = $value->fields[$this->fk]->getValue();
 					if(is_object($val)) {
-						$val = \htmlentities($value->fields[$this->fk]->getValue()->fields[$this->fkField]->getValue()).' ('.$value->fields[$this->fk]->getRawValue().')';
+						$val = \htmlentities($value->fields[$this->fk]->getValue()->fields[$this->fkField]->getValue()).' ('.$hint.')';
 					} else {
 						$val = $value->fields[$this->fk]->getRawValue();
 					}

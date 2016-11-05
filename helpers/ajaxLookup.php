@@ -54,6 +54,12 @@ class lookupAjaxHelper extends Core {
 			$fieldTable = $fieldObject->dbtable;
 			$fieldPk = $fieldObject->pk;
 			$fieldVal = $pageData['fields'][$widget]['multiMap']['foreignKeyField'];
+
+			if(!isset($pageData['fields'][$widget]['hint'])) {
+				$fieldHint = $fieldPk;
+			} else {
+				$fieldHint = $pageData['fields'][$widget]['hint'];
+			}
 		} else {
 			// We need to find out what type of foreign key we have
 			$model = new $pageData['model'];
@@ -67,6 +73,12 @@ class lookupAjaxHelper extends Core {
 			$fieldObject = new $fieldType();
 			$fieldTable = $fieldObject->dbtable;
 			$fieldPk = $fieldObject->pk;
+
+			if(!isset($pageData['fields'][$widget]['hint'])) {
+				$fieldHint = $fieldPk;
+			} else {
+				$fieldHint = $pageData['fields'][$widget]['hint'];
+			}
 
 			if($fieldType == 'FelixOnline\Core\Image') {
 				$fieldVal = 'uri';
@@ -89,7 +101,7 @@ class lookupAjaxHelper extends Core {
 		if(is_array($matches)) {
 			foreach($matches as $match) {
 				$return[] = array("id" => $match->fields[$fieldPk]->getValue(),
-					"text" =>  $match->fields[$fieldVal]->getValue().' ('.$match->fields[$fieldPk]->getValue().')');
+					"text" =>  $match->fields[$fieldVal]->getValue().' ('.$match->fields[$fieldHint]->getValue().')');
 			}
 		}
 

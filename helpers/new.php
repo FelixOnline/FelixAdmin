@@ -69,7 +69,14 @@ class newHelper {
 							$otherData = array('page' => $this->pageName);
 						} else {
 							$widgetClass = 'FelixOnline\Admin\Widgets\ForeignKeyWidget';
-							$otherData = array('field' => $data['foreignKeyField'], 'page' => $this->pageName, 'class' => $modelField->class);
+
+							if(isset($data['hint'])) {
+								$hint = $data['hint'];
+							} else {
+								$hint = '';
+							}
+
+							$otherData = array('field' => $data['foreignKeyField'], 'hint' => $hint, 'page' => $this->pageName, 'class' => $modelField->class);
 
 							$class = $modelField->class;
 							$currentValue = new $class();
@@ -92,7 +99,13 @@ class newHelper {
 
 					$currentValue = array();
 
-					$otherData = array('key' => $data['multiMap']['foreignKey'], 'field' => $data['multiMap']['foreignKeyField'], 'page' => $this->pageName);
+					if(isset($data['hint'])) {
+						$hint = $data['hint'];
+					} else {
+						$hint = $data['multiMap']['foreignKey'];
+					}
+
+					$otherData = array('key' => $data['multiMap']['foreignKey'], 'hint' => $hint, 'field' => $data['multiMap']['foreignKeyField'], 'page' => $this->pageName);
 				} catch(\Exception $e) {
 					$widgets[] = new \FelixOnline\Admin\Widgets\ErrorWidget(
 						$field,

@@ -15,6 +15,7 @@ class ForeignKeyWidget implements Widget {
 	private $fkPk;
 	private $page;
 	private $class;
+	private $hint;
 
 	private $currentValuePk;
 	private $currentValueDescr;
@@ -34,21 +35,30 @@ class ForeignKeyWidget implements Widget {
 		$this->page = $otherProperties['page'];
 		$this->class = $otherProperties['class'];
 		$this->defaultValue = $otherProperties['defaultValue'];
+		$this->hint = $otherProperties['hint'];
+
+		if($this->hint == '') {
+			$this->hint = $this->fkPk;
+		}
 
 		if($this->currentValue == '') {
 			$this->currentValuePk = '';
 			$this->currentValueDescr = '';
+			$this->defaultValueHint = '';
 		} else {
 			$this->currentValuePk = $this->currentValue->fields[$this->fkPk]->getValue();
 			$this->currentValueDescr = $this->currentValue->fields[$this->fkField]->getValue();
+			$this->currentValueHint = $this->currentValue->fields[$this->hint]->getValue();
 		}
 
 		if($this->defaultValue == '') {
 			$this->defaultValuePk = '';
 			$this->defaultValueDescr = '';
+			$this->defaultValueHint = '';
 		} else {
 			$this->defaultValuePk = $this->defaultValue->fields[$this->fkPk]->getValue();
 			$this->defaultValueDescr = $this->defaultValue->fields[$this->fkField]->getValue();
+			$this->defaultValueHint = $this->currentValue->fields[$this->hint]->getValue();
 		}
 	}
 
@@ -84,14 +94,14 @@ class ForeignKeyWidget implements Widget {
 			echo ' data-default-pk="'.$this->defaultValuePk.'" data-default-value="'.\htmlentities($this->defaultValueDescr).'">';
 
 			if($this->currentValuePk == '') {
-				echo '<option selected="selected" value="'.$this->defaultValuePk.'">'.\htmlentities($this->defaultValueDescr).' ('.$this->defaultValuePk.')</option>';
+				echo '<option selected="selected" value="'.$this->defaultValuePk.'">'.\htmlentities($this->defaultValueDescr).' ('.$this->defaultValueHint.')</option>';
 			}
 		} else {
 			echo '>';
 		}
 
 		if(!($this->currentValuePk == '')) {
-			echo '<option selected="selected" value="'.$this->currentValuePk.'">'.\htmlentities($this->currentValueDescr).' ('.$this->currentValuePk.')</option>';
+			echo '<option selected="selected" value="'.$this->currentValuePk.'">'.\htmlentities($this->currentValueDescr).' ('.$this->currentValueHint.')</option>';
 		}
 
 		echo '</select>';
