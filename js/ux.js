@@ -304,11 +304,24 @@ function refreshList(page_name, paginator_page) {
 	    		}
 			});
 
-			$('.page-well').each(function() { $(this).affix({offset:{top:$(this).parent().offset().top }})});
+			$('.page-well').each(function() { $(this).affix({offset:{top:($(this).parent().offset().top + 50) }})});
 		},
 		cache: false
 	});
 }
+
+var affixTimer;
+$(window).resize(function() {
+	clearTimeout(affixTimer);
+	affixTimer = setTimeout(function () {
+		$(window).off('.affix');
+		$('.page-well').removeData('bs.affix').removeClass('affix affix-top affix-bottom');
+
+		$('.page-well').each(function() { 
+			$(this).affix({offset:{top:($(this).parent().offset().top + 50) }});
+		});
+	}, 100);
+});
 
 function removeImage(location) {
 	$('#tabs-'+location+'-content #'+location+'-current').html('<i>No image selected.</i>');
@@ -513,7 +526,7 @@ function loadPage(page_name, renderInto, updateChrome, hideTabs, pullThrough, sh
 					// Select first element
 					setTimeout(findElem(renderInto), 150);
 
-					$('.page-well').each(function() { $(this).affix({offset:{top:$(this).parent().offset().top }})});
+					$('.page-well').each(function() { $(this).affix({offset:{top:($(this).parent().offset().top + 50) }})});
 
 					if(message) {
 						var clean_page_name = page_name.replaceAll('/', '-');
