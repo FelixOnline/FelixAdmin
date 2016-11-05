@@ -1,5 +1,16 @@
 body {
   font-family: "Helvetica Neue", "Arial", sans-serif;
+  font-size: 13px;
+}
+
+input, button, .btn {
+  font-size: 13px;
+}
+
+.input-group-btn button {
+  font-size: 14px;
+}
+
 .page-well {
   padding: 10px;
   margin-top: 5px;
@@ -55,6 +66,14 @@ body {
 
 table {
   width: auto !important;
+}
+
+.nav a, .navbar a {
+  padding: 7px 20px 7px 20px !important;
+}
+
+.navbar {
+  min-height: 25px;
 }
 
 .container-header {

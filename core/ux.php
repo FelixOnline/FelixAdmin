@@ -171,19 +171,20 @@ class UXHelper {
 				</div>
 				<div class="modal-body">';
 
-		if($currentuser->isLoggedIn()):
+		/*if($currentuser->isLoggedIn()):
 					$string .= '<p>When you report a problem, details about the page you are accessing and who you are will be sent to Felix Online developers in addition to details about your web browser.</p>
 				<p>Please specify as much information as possible in the box below about <b>exactly</b> what you are trying to do, the steps you have taken, what happened, and what you expected to happen.</p>
 				<p>You may not receive a reply to your problem report however all feedback will be used to improve this service.</p>
 				<textarea class="form-control" name="rap-feedback" rows="15" id="rap-feedback" placeholder="Provide details about the problem you are experiencing here"></textarea>';
 		else:
 			$string .= '<p>You must be logged in to report a problem. If you are unable to log in, please email <a href="felix@imperial.ac.uk">felix@imperial.ac.uk</a>';
-		endif;
+		endif;*/
+				$string .= '<b>This functionality is currently disabled. Please report any problems to the Editor noting, in detail, the exact steps needed to cause the problem you are experiencing, any error messages you obtain, and what you expected to happen.</b>';
 
 				$string .= '</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button onClick="rap(); return false;" class="btn btn-primary rap-button"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</button>
+					<!--<button onClick="rap(); return false;" class="btn btn-primary rap-button"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</button>-->
 				</div>
 			</div>
 		</div>
@@ -287,50 +288,62 @@ class UXHelper {
 		$currentKey = null) {
 
 		$tabsId = rand();
+		$string = '';
+		$validTabs = 0;
 
-		$string = '<ul class="nav nav-pills" id="modetabs-'.$tabsId.'">';
-
-		if($access['list']) {
-			if($currentView == 'list') {
-				$current = 'class="active"';
-			} else {
-				$current = '';
+		foreach($access as $key => $status) {
+			if($status) {
+				if(($key == 'details' && $currentView == 'details') || $key != 'details') {
+					$validTabs++;
+				}
 			}
-
-			$string .= '<li role="presentation" '.$current.' id="modetabs-'.$tabsId.'-list"><a href="'.STANDARD_URL.$pageSlug.':list" onClick="if(window.pageIsLoading) { return false; } loadPage(\''.$pageSlug.':list\', \'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\'), (\'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\') == \'null\'), false, $(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\'), ($(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\') == \'render-root\')); return false;" '.$current.'><span class="glyphicon glyphicon-list" aria-hidden="true"></span> List</a></li>';
 		}
 
-		if($access['search']) {
-			if($currentView == 'search') {
-				$current = 'class="active"';
-			} else {
-				$current = '';
+		if($validTabs > 1) {
+			$string .= '<ul class="nav nav-pills" id="modetabs-'.$tabsId.'">';
+
+			if($access['list']) {
+				if($currentView == 'list') {
+					$current = 'class="active"';
+				} else {
+					$current = '';
+				}
+
+				$string .= '<li role="presentation" '.$current.' id="modetabs-'.$tabsId.'-list"><a href="'.STANDARD_URL.$pageSlug.':list" onClick="if(window.pageIsLoading) { return false; } loadPage(\''.$pageSlug.':list\', \'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\'), (\'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\') == \'null\'), false, $(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\'), ($(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\') == \'render-root\')); return false;" '.$current.'><span class="glyphicon glyphicon-list" aria-hidden="true"></span> List</a></li>';
 			}
 
-			$string .= '<li role="presentation" '.$current.' id="modetabs-'.$tabsId.'-search"><a href="'.STANDARD_URL.$pageSlug.':search" onClick="if(window.pageIsLoading) { return false; } loadPage(\''.$pageSlug.':search\', \'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\'), (\'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\') == \'null\'), false, $(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\'), ($(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\') == \'render-root\')); return false;"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search</a></li>';
-		}
+			if($access['search']) {
+				if($currentView == 'search') {
+					$current = 'class="active"';
+				} else {
+					$current = '';
+				}
 
-		if($access['details'] && $currentView == 'details') {
-			if($currentView == 'details') {
-				$current = 'class="active"';
-			} else {
-				$current = '';
+				$string .= '<li role="presentation" '.$current.' id="modetabs-'.$tabsId.'-search"><a href="'.STANDARD_URL.$pageSlug.':search" onClick="if(window.pageIsLoading) { return false; } loadPage(\''.$pageSlug.':search\', \'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\'), (\'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\') == \'null\'), false, $(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\'), ($(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\') == \'render-root\')); return false;"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search</a></li>';
 			}
 
-			$string .= '<li role="presentation" '.$current.' id="modetabs-'.$tabsId.'-details"><a href="'.STANDARD_URL.$pageSlug.':details/'.$currentKey.'" onClick="if(window.pageIsLoading) { return false; } loadPage(\''.$pageSlug.':details/'.$currentKey.'\', \'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\'), (\'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\') == \'null\'), false, $(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\'), ($(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\') == \'render-root\')); return false;" '.$current.'><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit</a></li>';
-		}
+			if($access['details'] && $currentView == 'details') {
+				if($currentView == 'details') {
+					$current = 'class="active"';
+				} else {
+					$current = '';
+				}
 
-		if($access['new']) {
-			if($currentView == 'new') {
-				$current = 'class="active"';
-			} else {
-				$current = '';
+				$string .= '<li role="presentation" '.$current.' id="modetabs-'.$tabsId.'-details"><a href="'.STANDARD_URL.$pageSlug.':details/'.$currentKey.'" onClick="if(window.pageIsLoading) { return false; } loadPage(\''.$pageSlug.':details/'.$currentKey.'\', \'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\'), (\'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\') == \'null\'), false, $(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\'), ($(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\') == \'render-root\')); return false;" '.$current.'><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit</a></li>';
 			}
 
-			$string .= '<li role="presentation" '.$current.' id="modetabs-'.$tabsId.'-new"><a href="'.STANDARD_URL.$pageSlug.':new" onClick="if(window.pageIsLoading) { return false; } loadPage(\''.$pageSlug.':new\', \'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\'), (\'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\') == \'null\'), false, $(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\'), ($(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\') == \'render-root\')); return false;" '.$current.'><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> New</a></li>';
-		}
+			if($access['new']) {
+				if($currentView == 'new') {
+					$current = 'class="active"';
+				} else {
+					$current = '';
+				}
 
-		$string .= '</ul>';
+				$string .= '<li role="presentation" '.$current.' id="modetabs-'.$tabsId.'-new"><a href="'.STANDARD_URL.$pageSlug.':new" onClick="if(window.pageIsLoading) { return false; } loadPage(\''.$pageSlug.':new\', \'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\'), (\'#\'+$(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\') == \'null\'), false, $(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'data-parentrecord\'), ($(\'#modetabs-'.$tabsId.'\').parent().parent().attr(\'id\') == \'render-root\')); return false;" '.$current.'><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> New</a></li>';
+			}
+
+			$string .= '</ul>';
+		}
 
 		return $string;
 	}
@@ -461,7 +474,7 @@ class UXHelper {
 		}
 
 		if(count($records) == 0) {
-			return $string.'<h3>No data found</h3></div>';
+			return $string.'<h3>Nothing found</h3></div>';
 		}
 
 		$string .= '<div class="alert alert-info action-msg" style="display: none;"><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> Working on it...</div>';
@@ -843,8 +856,7 @@ class UXHelper {
 		$widgets,
 		$pk) {
 
-		$string = '<h3>Search for something</h3>';
-		$string .= '<form class="form-horizontal search-form">';
+		$string = '<form class="form-horizontal search-form">';
 		$string .= '<div class="form-group">
 <div class="col-sm-12">';
 		$string .= '<b class="text text-success form-status" style="display: none"></b>';
@@ -854,7 +866,7 @@ class UXHelper {
 		$string .= '<div class="panel panel-primary">';
 		$string .= '<div class="panel-heading" role="tab" id="criteriahead-'.str_replace('/', '-', $pageSlug).'">';
 		$string .= '<h4 class="panel-title">';
-		$string .= '<a role="button" data-toggle="collapse" data-parent="#criteriabox-'.str_replace('/', '-', $pageSlug).'" href="#criteria-'.str_replace('/', '-', $pageSlug).'" aria-expanded="true" aria-controls="criteria-'.str_replace('/', '-', $pageSlug).'">Search Criteria</a>';
+		$string .= '<a role="button" data-toggle="collapse" data-parent="#criteriabox-'.str_replace('/', '-', $pageSlug).'" href="#criteria-'.str_replace('/', '-', $pageSlug).'" aria-expanded="true" aria-controls="criteria-'.str_replace('/', '-', $pageSlug).'">Search for something</a>';
 		$string .= '</h4>';
 		$string .= '</div>';
 		$string .= '<div id="criteria-'.str_replace('/', '-', $pageSlug).'" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="criteriahead-'.str_replace('/', '-', $pageSlug).'">';
