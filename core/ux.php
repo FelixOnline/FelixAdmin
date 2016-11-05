@@ -477,6 +477,7 @@ class UXHelper {
 			$columns[$column] = $pageData['fields'][$column]['label'];
 		}
 
+		$string .= '<div class="page-well affix2">';
 		if(!$surpressPaginator) {
 			$string .= UXHelper::recordPaginator(
 				$pageSlug,
@@ -486,7 +487,7 @@ class UXHelper {
 		}
 
 		if(count($actions) > 0) {
-			$string .= '<p><div class="btn-group" role="group">';
+			$string .= '<div class="action-area"><div class="btn-group" role="group">';
 
 			$string .= '<button class="btn btn-default toggler" onClick="toggleSelect(\''.str_replace('/', '-', $pageSlug).'\');">Select all on page</button>';
 
@@ -496,10 +497,11 @@ class UXHelper {
 				$string .= '<button class="btn btn-primary" onClick="runAction(\''.$key.'\', \''.$pageSlug.'\'); return false;"><span class="glyphicon glyphicon-'.$action['icon'].'"></span>&nbsp;&nbsp;'.$action['label'].'</button>';
 			}
 
-			$string .= '</div></p>';
+			$string .= '</div></div>';
 		}
+		$string .= '</div>';
 
-		$string .= '<div class="table-responsive">';
+		$string .= '<div class="table-responsive datatable-area">';
 		$string .= '<table class="table table-bordered table-hover sortable datatable" data-currentpage="'.$currentPage.'">';
 		$string .= '<thead><tr>';
 
@@ -791,21 +793,19 @@ class UXHelper {
 		}
 
 		if($showTrail) {
-			$mode = '<button class="btn btn-default btn-xs auditButton" onClick="toggleAudit(\''.$pageSlug.'\'); return false;"><span class="glyphicon glyphicon-time"></span> Audit log</button>&nbsp;&nbsp;'.$mode;
+			$mode = '<button class="btn btn-default auditButton" onClick="toggleAudit(\''.$pageSlug.'\'); return false;"><span class="glyphicon glyphicon-time"></span> Audit log</button>'.$mode;
 		}
+
+		$string .= '<div class="page-well affix1" data-spy="affix"><h3>'.$mode.': '.$currentRecord->fields[$hint]->getRawValue().' ('.$currentRecord->fields[$pk]->getRawValue().')</h3></div>';
 
 		$string .= '<div class="widgetForm">';
 
 		if(!$readOnly) {
 			$string .= '<p><b class="text text-success form-status" style="display: none"></b></p>';
-			$string .= '<button onClick="save(\''.$pageSlug.'\', \''.$currentRecord->fields[$pk]->getValue().'\', \'#\'+$(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'id\'), $(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'data-parentrecord\'), ($(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'id\') == \'render-root\')); return false;" class="btn btn-primary save-button"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save</button>';
+			$mode = '<button onClick="save(\''.$pageSlug.'\', \''.$currentRecord->fields[$pk]->getValue().'\', \'#\'+$(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'id\'), $(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'data-parentrecord\'), ($(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'id\') == \'render-root\')); return false;" class="btn btn-primary save-button"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save</button>'.$mode;
 		}
 
 		$string .= self::widgetForm($widgets);
-
-		if(!$readOnly) {
-			$string .= '<button onClick="save(\''.$pageSlug.'\', \''.$currentRecord->fields[$pk]->getValue().'\', \'#\'+$(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'id\'), $(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'data-parentrecord\'), ($(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'id\') == \'render-root\')); return false;" class="btn btn-primary save-button"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save</button>';
-		}
 
 		$string .= '</div></form>';
 
@@ -815,8 +815,7 @@ class UXHelper {
 
 		$string .= '</div>';
 
-		return array('string' => $string,
-			'heading' => $mode.': '.$currentRecord->fields[$hint]->getRawValue().' ('.$currentRecord->fields[$pk]->getRawValue().')');
+		return array('string' => $string);
 	}
 
 	public static function creator(
@@ -825,18 +824,15 @@ class UXHelper {
 		$widgets,
 		$pk) {
 
-		$string = '<h3>New Entry</h3>';
+		$string = '<div class="page-well affix1" data-spy="affix"><button onClick="create(\''.$pageSlug.'\', \'#\'+$(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'id\'), $(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'data-parentrecord\'), ($(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'id\') == \'render-root\')); return false;" class="btn btn-primary new-button"><span class="glyphicon glyphicon-saved" aria-hidden="true"></span> Create</button><h3>New Entry</h3></div>';
 		$string .= '<form class="form-horizontal">';
 
 		$string .= '<div class="form-group">
 <div class="col-sm-12">';
-		$string .= '<button onClick="create(\''.$pageSlug.'\', \'#\'+$(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'id\'), $(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'data-parentrecord\'), ($(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'id\') == \'render-root\')); return false;" class="btn btn-primary new-button"><span class="glyphicon glyphicon-saved" aria-hidden="true"></span> Create</button>';
 		$string .= '<b class="text text-success form-status" style="display: none"></b>';
 		$string .= '</div></div>';
 
 		$string .= self::widgetForm($widgets);
-
-		$string .= '<button onClick="create(\''.$pageSlug.'\', \'#\'+$(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'id\'), $(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'data-parentrecord\'), ($(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'id\') == \'render-root\')); return false;" class="btn btn-primary new-button"><span class="glyphicon glyphicon-saved" aria-hidden="true"></span> Create</button>';
 
 		return $string;
 	}

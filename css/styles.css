@@ -1,5 +1,56 @@
 body {
   font-family: "Helvetica Neue", "Arial", sans-serif;
+.page-well {
+  padding: 10px;
+  margin-top: 5px;
+  padding-bottom: 15px;
+  padding-left: 0;
+  border-bottom: 1px solid #ddd;
+  width: 100%;
+  background: white;
+  min-height: 25px;
+  z-index: 999;
+}
+
+.page-well nav {
+  float: left;
+  margin-right: 10px;
+}
+
+.affix {
+  left: 0;
+  padding-left: 15px;
+  margin-top: 0;
+  padding-top: 15px;
+  background: #efefef;
+}
+
+.affix.affix2 {
+  border-top: 1px solid #ddd;
+  border-bottom: 0px;
+}
+
+.affix1 {
+  top: 0;
+}
+
+.affix2 {
+  bottom: 0;
+}
+
+.page-well button {
+  float: left;
+  margin-right: 10px;
+}
+
+.page-well .action-area button {
+  float: none;
+  margin-right: 0;
+}
+
+.page-well h3 {
+  padding: 0;
+  margin: 0;
 }
 
 table {
@@ -9,6 +60,16 @@ table {
 .container-header {
   background: #ca7e1c; /* Old browsers */
   color: white;
+}
+
+.container-header h1 {
+  font-size: 20px;
+  margin-top: 10px;
+}
+
+.container-header button {
+  margin-bottom: 5px;
+  margin-top: 5px;
 }
 
 .navbar-default {

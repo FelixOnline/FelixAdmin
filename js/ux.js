@@ -250,7 +250,8 @@ function runSearch(page_name, paginator_page) {
 				widgets: [ "uitheme", "zebra", "stickyHeaders" ],
 				headerTemplate: "{content} {icon}",
 				widgetOptions: {
-					zebra: ["even", "odd"]
+					zebra: ["even", "odd"],
+					stickyHeaders_zIndex : 10000
 				}
 			});
 
@@ -298,9 +299,12 @@ function refreshList(page_name, paginator_page) {
 				widgets: [ "uitheme", "zebra", "stickyHeaders" ],
 				headerTemplate: "{content} {icon}",
 				widgetOptions: {
-					zebra: ["even", "odd"]
+					zebra: ["even", "odd"],
+					stickyHeaders_zIndex : 10000
 	    		}
 			});
+
+			$('.page-well').each(function() { $(this).affix({offset:{top:$(this).parent().offset().top }})});
 		},
 		cache: false
 	});
@@ -498,7 +502,8 @@ function loadPage(page_name, renderInto, updateChrome, hideTabs, pullThrough, sh
 						widgets: [ "uitheme", "zebra", "stickyHeaders" ],
 						headerTemplate: "{content} {icon}",
 						widgetOptions: {
-							zebra: ["even", "odd"]
+							zebra: ["even", "odd"],
+							stickyHeaders_zIndex : 10000
 						}
 					});
 
@@ -507,6 +512,8 @@ function loadPage(page_name, renderInto, updateChrome, hideTabs, pullThrough, sh
 
 					// Select first element
 					setTimeout(findElem(renderInto), 150);
+
+					$('.page-well').each(function() { $(this).affix({offset:{top:$(this).parent().offset().top }})});
 
 					if(message) {
 						var clean_page_name = page_name.replaceAll('/', '-');
@@ -779,8 +786,13 @@ function runAction(action, page_name) {
 					refreshList(page_name, paginator_page); // Reload results
 				}
 
-				$('#page-'+clean_page_name+' .form-status').html('<span class="glyphicon glyphicon-ok"></span> '+data.message);
-				$('#page-'+clean_page_name+' .form-status').fadeIn('fast').delay(5000).fadeOut('slow');
+				if(!data.message) {
+					console.log(data);
+					alert('Error: '+data);
+				} else {
+					$('#page-'+clean_page_name+' .form-status').html('<span class="glyphicon glyphicon-ok"></span> '+data.message);
+					$('#page-'+clean_page_name+' .form-status').fadeIn('fast').delay(5000).fadeOut('slow');
+				}
 			},
 			cache: false
 	});

@@ -232,8 +232,6 @@ class detailsHelper {
 				$showTitle,
 				$tabs,
 				\FelixOnline\Admin\UXHelper::text(
-					'<h3>'.$formData['heading'].'</h3>'),
-				\FelixOnline\Admin\UXHelper::text(
 					$formData['string']),
 				'</div>',
 				\FelixOnline\Admin\UXHelper::renderMenu($app['env']['session']->session['menu'], $this->pageName, '', false, $this->pageInfo[1])
