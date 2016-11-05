@@ -43,7 +43,7 @@ class detailsHelper {
 		$this->widgets = array();
 
 		foreach($this->pageData['fields'] as $field => $data) {
-			if($field == $this->pk) {
+			if($field == $this->pk && $field == 'id') {
 				continue;
 			}
 
