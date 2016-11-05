@@ -42,7 +42,6 @@ function save(page_name, key, load_into, pull_through, show_title) {
 			type: "POST",
 			data: formData,
 			beforeSend: function(data) {
-				$('#page-'+clean_page_name+' .form-status').hide();
 				$('#page-'+clean_page_name+' .save-button').html('<span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> Saving...');
 				$('#page-'+clean_page_name+' .save-button').attr('disabled', 'disabled');
 				$('#page-'+clean_page_name+' .form-group').removeClass('has-error');
@@ -123,7 +122,6 @@ function create(page_name, load_into, pull_through, show_title) {
 			processData: false,
 			contentType: false,
 			beforeSend: function(data) {
-				$('#page-'+clean_page_name+' .form-status').hide();
 				$('#page-'+clean_page_name+' .new-button').html('<span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> Creating...');
 				$('#page-'+clean_page_name+' .new-button').attr('disabled', 'disabled');
 				$('#page-'+clean_page_name+' .form-group').removeClass('has-error');
@@ -436,8 +434,7 @@ function del(page_name, key) {
 				alert(message);
 			},
 			success: function(data) {
-				$('#page-'+clean_page_name+' .form-status').html('<span class="glyphicon glyphicon-ok"></span> '+data);
-				$('#page-'+clean_page_name+' .form-status').fadeIn('fast').delay(5000).fadeOut('slow');
+				successMsg(data);
 
 				// Get paginator page
 				paginator_page = $('#page-'+clean_page_name+' .datatable').attr('data-currentpage');
@@ -534,8 +531,7 @@ function loadPage(page_name, renderInto, updateChrome, hideTabs, pullThrough, sh
 							clean_page_name = clean_page_name.substring(0, clean_page_name.indexOf(':'));
 						}
 
-						$('#page-'+clean_page_name+' .form-status').html('<span class="glyphicon glyphicon-ok"></span> '+message);
-						$('#page-'+clean_page_name+' .form-status').fadeIn('fast').delay(5000).fadeOut('slow');
+						successMsg(message);
 					}
 				}
 			},
@@ -803,8 +799,7 @@ function runAction(action, page_name) {
 					console.log(data);
 					alert('Error: '+data);
 				} else {
-					$('#page-'+clean_page_name+' .form-status').html('<span class="glyphicon glyphicon-ok"></span> '+data.message);
-					$('#page-'+clean_page_name+' .form-status').fadeIn('fast').delay(5000).fadeOut('slow');
+					successMsg(data.message);
 				}
 			},
 			cache: false
@@ -970,3 +965,13 @@ String.prototype.replaceAll = function(search, replacement) {
     var target = this;
     return target.replace(new RegExp(search, 'g'), replacement);
 };
+
+function successMsg(msg) {
+	$.notify({
+		// options
+		message: msg
+	},{
+		// settings
+		type: 'success'
+	});
+}

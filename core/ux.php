@@ -202,6 +202,7 @@ class UXHelper {
 	<script src="'.STANDARD_URL.'js/quote.sir-trevor.js?v=1.0"></script>
 	<script src="'.STANDARD_URL.'js/factoid.sir-trevor.js?v=1.0"></script>
 	<script src="'.STANDARD_URL.'js/feliximage.sir-trevor.js?v=1.0"></script>
+	<script src="'.STANDARD_URL.'js/bootstrap-notify.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.full.min.js"></script>
 
 	<script>
@@ -434,7 +435,6 @@ class UXHelper {
 		$searchView = false) {
 
 		$string = '
-			<b class="text text-success form-status" style="display: none"></b>
 			<div class="alert alert-info load-msg" style="display: none;"><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> Refreshing list...</div>
 			<div class="dataarea">';
 		$string .= self::recordList($pageSlug,
@@ -819,10 +819,6 @@ class UXHelper {
 
 		$string .= '<div class="widgetForm">';
 
-		if(!$readOnly) {
-			$string .= '<p><b class="text text-success form-status" style="display: none"></b></p>';
-		}
-
 		$string .= self::widgetForm($widgets);
 
 		$string .= '</div></form>';
@@ -847,7 +843,6 @@ class UXHelper {
 
 		$string .= '<div class="form-group">
 <div class="col-sm-12">';
-		$string .= '<b class="text text-success form-status" style="display: none"></b>';
 		$string .= '</div></div>';
 
 		$string .= self::widgetForm($widgets);
@@ -864,7 +859,6 @@ class UXHelper {
 		$string = '<form class="form-horizontal search-form">';
 		$string .= '<div class="form-group">
 <div class="col-sm-12">';
-		$string .= '<b class="text text-success form-status" style="display: none"></b>';
 		$string .= '</div></div>';
 
 		$string .= '<div class="panel-group" id="criteriabox-'.str_replace('/', '-', $pageSlug).'" role="tablist" aria-multiselectable="true">';
