@@ -47,12 +47,12 @@ class UXHelper {
 <div class="container-header">
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-md-10">
+			<div class="col-sm-8 hidden-xs">
 				<h1>'.SERVICE_NAME.'</h1>
 			</div>';
 
 		if($currentuser->isLoggedIn()) {
-			$string .= '<div class="col-md-2">
+			$string .= '<div class="col-sm-4">
 				<button onClick="logout(); return false;" class="btn btn-primary logout-button pull-right"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Log out</button>
 			</div>';
 		}
@@ -434,7 +434,6 @@ class UXHelper {
 		$searchView = false) {
 
 		$string = '
-			<br>
 			<b class="text text-success form-status" style="display: none"></b>
 			<div class="alert alert-info load-msg" style="display: none;"><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> Refreshing list...</div>
 			<div class="dataarea">';
@@ -511,7 +510,10 @@ class UXHelper {
 			}
 
 			$string .= '</div></div>';
+		} else {
+			$string .= '<div class="float: left; clear: right;"><br></div>';
 		}
+
 		$string .= '</div>';
 
 		$string .= '<div class="table-responsive datatable-area">';
@@ -669,9 +671,9 @@ class UXHelper {
 						break;
 					case "FelixOnline\Core\Type\BooleanField":
 						if($value) {
-							$value = '<span class="glyphicon glyphicon-check text-success" aria-label="True"> Yes</span>';
+							$value = '<span class="text-success">✔</span>';
 						} else {
-							$value = '<span class="glyphicon glyphicon-unchecked text-danger" aria-label="False"> No</span>';
+							$value = '<span class="text-danger">✘</span>';
 						}
 						break;
 				}
@@ -809,13 +811,16 @@ class UXHelper {
 			$mode = '<button class="btn btn-default auditButton" onClick="toggleAudit(\''.$pageSlug.'\'); return false;"><span class="glyphicon glyphicon-time"></span> Audit log</button>'.$mode;
 		}
 
+		if(!$readOnly) {
+			$mode = '<button onClick="save(\''.$pageSlug.'\', \''.$currentRecord->fields[$pk]->getValue().'\', \'#\'+$(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'id\'), $(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'data-parentrecord\'), ($(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'id\') == \'render-root\')); return false;" class="btn btn-primary save-button"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save</button>'.$mode;
+		}
+
 		$string .= '<div class="page-well affix1" data-spy="affix"><h3>'.$mode.': '.$currentRecord->fields[$hint]->getRawValue().' ('.$currentRecord->fields[$pk]->getRawValue().')</h3></div>';
 
 		$string .= '<div class="widgetForm">';
 
 		if(!$readOnly) {
 			$string .= '<p><b class="text text-success form-status" style="display: none"></b></p>';
-			$mode = '<button onClick="save(\''.$pageSlug.'\', \''.$currentRecord->fields[$pk]->getValue().'\', \'#\'+$(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'id\'), $(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'data-parentrecord\'), ($(\'#page-'.str_replace('/', '-', $pageSlug).'\').parent().attr(\'id\') == \'render-root\')); return false;" class="btn btn-primary save-button"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save</button>'.$mode;
 		}
 
 		$string .= self::widgetForm($widgets);
