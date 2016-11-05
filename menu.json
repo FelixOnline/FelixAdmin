@@ -3,8 +3,8 @@
 	"details": {
 		"children": {
 			"details/my_details": {},
-			"details/my_articles": {
-			}
+			"details/my_articles": {},
+			"details/my_categories": {}
 		}
 	},
 	"articles": {

@@ -1,0 +1,108 @@
+{
+	"name": "My Categories",
+	"model": "FelixOnline\\Core\\Category",
+	"baseRole": ["sectionEditor"],
+	"constraints": [
+		{
+			"specialConstraint": "isEditor",
+			"reverse": false,
+			"roles": []
+		}
+	],
+	"fields": {
+		"id": {
+			"label": "Category",
+			"readOnly": true,
+			"required": true
+		},
+		"label": {
+			"label": "Name",
+			"readOnly": true,
+			"required": true
+		},
+		"cat": {
+			"label": "URL slug",
+			"readOnly": true,
+			"required": true
+		},
+		"active": {
+			"label": "Enabled",
+			"readOnly": true
+		},
+		"hidden": {
+			"label": "Hidden",
+			"readOnly": true,
+			"help": "Categories can be active (articles in them can be viewed) but hidden from the navigation."
+		},
+		"email": {
+			"label": "Email address",
+			"readOnly": true,
+			"validation": "email"
+		},
+		"twitter": {
+			"label": "Twitter",
+			"readOnly": true
+		},
+		"order": {
+			"label": "Sort order",
+			"readOnly": true
+		},
+		"parent": {
+			"label": "Parent category",
+			"readOnly": true,
+			"foreignKeyField": "label",
+			"help": "If the parent category has no articles, it will show a few articles from all categories it is a parent of - including this one"
+		},
+		"secret": {
+			"label": "Secret",
+			"readOnly": true,
+			"help": "You must either be logged in or browsing from the IC network to see a secret category, or access any articles within one. This does NOT affect child categories."
+		},
+		"editors": {
+			"label": "Section editors",
+			"multiMap": {
+				"model": "FelixOnline\\Core\\CategoryAuthor",
+				"this": "category",
+				"foreignKey": "user",
+				"foreignKeyField": "name"
+			},
+			"readOnly": true
+		}
+	},
+	"order": [
+		{
+			"column": "id",
+			"direction": "ASC"
+		}
+	],
+	"modes": {
+		"new": {
+			"enabled": false
+		},
+		"list": {
+			"enabled": true,
+			"columns": [
+				"id",
+				"label",
+				"cat",
+				"email",
+				"editors",
+				"order",
+				"parent",
+				"active",
+				"hidden"
+			],
+			"canDelete": false
+		},
+		"details": {
+			"enabled": true,
+			"headerHint": "label",
+			"readOnly": true
+		},
+		"search": {
+			"enabled": true,
+			"fields": ["active", "label", "email", "editors"]
+		}
+	},
+	"auxHtml": "<p><center>To modify any categories, contact the web team.</center></p>"
+}
