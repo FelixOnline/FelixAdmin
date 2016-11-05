@@ -19,13 +19,13 @@
 		}
 	],
 	"require": {
-		"felixonline/core": "0.8.*",
-		"felixonline/sprinkler": "0.2.*",
+		"felixonline/core": "dev-master",
+		"felixonline/sprinkler": "0.2.1",
 		"dominicsayers/isemail": "dev-master",
-		"raven/raven": "0.13.*",
-		"abhishekbhardwaj/twitter-api-php": "dev-master",
+		"sentry/sentry": "1.5.*",
+		"abhishekbhardwaj/twitter-api-php": "1.1.*",
 		"woutersioen/sir-trevor-php": "dev-master",
-		"smalot/pdfparser": "dev-master"
-	},
-	"minimum-stability": "dev"
+		"smalot/pdfparser": "0.9.*",
+		"jv2222/ezsql": "@dev"
+	}
 }
