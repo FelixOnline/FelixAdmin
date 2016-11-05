@@ -34,8 +34,21 @@ class force_author extends BaseAction {
 			}
 		}
 
+		// Is posted in own section
+		$isOneOfMine = false;
+
+		if(count(array_intersect($userRoles, array('seniorEditor'))) == 0) {
+			foreach($currentuser->getCategories() as $cat) {
+				if($cat->getId() == $record->getCategory()->getId()) {
+					$isOneOfMine = true;
+				}
+			}
+		}
+
+		// If no authors, or not a section editor and didn't specify self, or is a section editor but not a senior editor and not own section and isnt an author
 		if(!$authors ||
-			(count(array_intersect($userRoles, array('sectionEditor'))) == 0 && !$isauthor)) {
+			(count(array_intersect($userRoles, array('sectionEditor'))) == 0 && !$isauthor) ||
+			(count(array_intersect($userRoles, array('sectionEditor'))) != 0 && count(array_intersect($userRoles, array('seniorEditor'))) == 0 && !$isOneOfMine && !$isauthor)) {
 			$app = \FelixOnline\Core\App::getInstance();
 
 			$rec2 = new \FelixOnline\Core\ArticleAuthor();

@@ -52,16 +52,34 @@ class create_article extends BaseAction {
 			return 'Failed to process article authors.';
 		}
 
-		// If the current user has a webMaster role, submit the article straight to the publication stage.
+		// Is posted in own section
+		$isOneOfMine = false;
+
+		if(count(array_intersect($userRoles, array('seniorEditor'))) == 0) {
+			foreach($currentuser->getCategories() as $cat) {
+				if($cat->getId() == $record->getCategory()->getId()) {
+					$isOneOfMine = true;
+				}
+			}
+		}
+
+		// If the current user has a seniorEditor role, submit the article straight to the publication stage.
 		if (count(array_intersect($userRoles, array('seniorEditor'))) != 0 ||
-			(count(array_intersect($userRoles, array('sectionEditor'))) != 0 && count(array_intersect($currentuser->getCategories(), array($record->getCategory()))) != 0 )) {
+			(count(array_intersect($userRoles, array('sectionEditor'))) != 0 &&
+			$isOneOfMine)) {
 			// If user is a senior editor or above, or if the user is the section editor for the category this article is in, auto review and submit for publication.
 
 			$record->setReviewedby($currentuser);
 			$record->setHidden(0);
 			$record->save();
 
-			return 'Article created and is ready for publication. To edit and publish it, <a href="'.STANDARD_URL.'articles/for_publication:details/'.$record->getId().'">click here</a>.'.$status;
+			$pub = 'The web team will publish the article shortly.';
+
+			if(count(array_intersect($userRoles, array('webMaster'))) != 0) {
+				$pub = 'To edit and publish it, <a href="'.STANDARD_URL.'articles/for_publication:details/'.$record->getId().'">click here</a>.';
+			}
+
+			return 'Article created and is ready for publication. '.$pub.$status;
 		} else {
 			$record->setHidden(1);
 			$record->save();
