@@ -14,7 +14,7 @@
 			"roles": []
 		},
 		{
-			"specialConstraint": "isEditor",
+			"specialConstraint": "isEditorOrAuthor",
 			"reverse": false,
 			"roles": ["sectionEditor"]
 		},
@@ -108,10 +108,6 @@
 		}
 	},
 	"order": [
-		{
-			"column": "date",
-			"direction": "DESC"
-		},
 		{
 			"column": "id",
 			"direction": "DESC"

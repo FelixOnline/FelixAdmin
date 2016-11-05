@@ -174,6 +174,32 @@ class Page {
 							}
 
 							continue;
+						case 'isEditorOrAuthor':
+							if($this->pageData['model'] == 'FelixOnline\Core\Article') {
+								if($constraint['reverse']) {
+									$op = '!=';
+								} else {
+									$op = '=';
+								}
+
+								$managerb = clone $this->manager;
+
+								$manager2 = \FelixOnline\Core\BaseManager::build('\FelixOnline\Core\Category', 'category');
+
+								$manager3 = \FelixOnline\Core\BaseManager::build('\FelixOnline\Core\CategoryAuthor', 'category_author', 'id');
+								$manager3->filter('user '.$op.' "%s"', array($currentuser->getUser()));
+
+								$manager2->join($manager3, null, null, "category");
+								$this->manager->join($manager2, null, "category");
+
+								$manager4 = \FelixOnline\Core\BaseManager::build('\FelixOnline\Core\ArticleAuthor', 'article_author', 'article');
+								$manager4->filter('author '.$op.' "%s"', array($currentuser->getUser()));
+
+								$managerb->join($manager4);
+
+								$this->manager->union($managerb);
+							}
+							continue;
 						case 'isEditor':
 							if($this->pageData['model'] == 'FelixOnline\Core\Category') {
 								if($constraint['reverse']) {
