@@ -39,6 +39,10 @@
 		}
 	],
 	"actions": {
+		"archive_delete": {
+			"label": "Delete",
+			"icon": "trash"
+		}
 	},
 	"modes": {
 		"new": {
@@ -54,7 +58,7 @@
 				"date",
 				"inactive"
 			],
-			"canDelete": true
+			"canDelete": false
 		},
 		"details": {
 			"enabled": true,
