@@ -29,7 +29,7 @@ class BaseAction {
 				$obj[] = new $class($record);
 			}
 		} catch(\Exception $e) {
-			throw new Exception('Not everything you requested could be found.');
+			throw new \Exception('Not everything you requested could be found.');
 		}
 
 		return $obj;

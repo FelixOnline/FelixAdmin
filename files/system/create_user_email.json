@@ -1,14 +1,22 @@
 {
-	"name": "Create User via Username",
+	"name": "Create User via Email (Beta)",
 	"model": "FelixOnline\\Core\\User",
 	"baseRole": ["sysAdmin", "webMaster"],
 	"constraints": { },
 	"fields": {
 		"user": {
 			"label": "Username",
+			"readOnly": true,
+			"required": true,
+			"autoField": true,
+			"defaultValue": "00emailtest"
+		},
+		"email": {
+			"label": "Email address",
 			"readOnly": false,
 			"required": true,
-			"help": "Please enter the username for the new user. If the username is a valid addres book username (i.e. one used to log into the network with), the user's name and other details will be automatically obtained from the address book. Otherwise, a user will be created who will not be able to log in. In both cases you can update user details from the main User page."
+			"validation": "email",
+			"help": "Please enter the FULL email address (not username@imperial.ac.uk, and not @ic.ac.uk). Role email addresses will not work. Note that, whilst in beta, this will only work for the IC directory."
 		},
 		"image": {
 			"label": "Avatar",
@@ -28,7 +36,7 @@
 	"modes": {
 		"new": {
 			"enabled": true,
-			"callback": "user_create"
+			"callback": "user_from_email"
 		},
 		"list": {
 			"enabled": false,
@@ -44,5 +52,6 @@
 			"enabled": false
 		}
 	},
-	"defaultTab": "new"
+	"defaultTab": "new",
+	"auxHtml": "<p><center><b>This feature is under test. Please let the Editor know how you get on with it.</b></center></p>"
 }

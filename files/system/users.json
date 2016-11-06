@@ -18,7 +18,8 @@
 		"email": {
 			"label": "Email address",
 			"readOnly": false,
-			"required": false
+			"required": false,
+			"validation": "email"
 		},
 		"description": {
 			"label": "Bio",

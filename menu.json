@@ -67,6 +67,7 @@
 			"system/categories": {},
 			"system/users": {},
 			"system/create_user": {},
+			"system/create_user_email": {},
 			"system/settings": {},
 			"system/frontpage": {},
 			"system/roles": {},
