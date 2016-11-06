@@ -19,7 +19,7 @@
 		}
 	],
 	"require": {
-		"felixonline/core": "dev-master",
+		"felixonline/core": "0.9.*",
 		"felixonline/sprinkler": "0.2.*",
 		"dominicsayers/isemail": "dev-master",
 		"sentry/sentry": "1.5.*",
