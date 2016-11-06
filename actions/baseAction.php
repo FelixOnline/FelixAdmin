@@ -29,7 +29,7 @@ class BaseAction {
 				$obj[] = new $class($record);
 			}
 		} catch(\Exception $e) {
-			throw new \Exception('Not everything you requested could be found.');
+			throw new \Exception('Not everything you requested could be found. This usually occurs when you have entered data larger than the database is expecting. Please report this problem including details of what you entered into each box.');
 		}
 
 		return $obj;
