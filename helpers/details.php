@@ -191,7 +191,7 @@ class detailsHelper {
 		$showLog = false;
 		$app = \FelixOnline\Core\App::getInstance();
 
-		if(array_intersect(array('sysAdmin', 'webMaster'), $app['env']['session']->session['roles']) != 0) {
+		if(count(array_intersect(array('sysAdmin', 'webMaster'), $app['env']['session']->session['roles'])) != 0) {
 			$showLog = true;
 		}
 
