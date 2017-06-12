@@ -73,7 +73,7 @@ class archive_upload extends BaseAction {
 					if(!$imagick->writeImage($folder.$imgDest)) { throw new Exception('failed to save'); }
 				} catch(\Exception $e) {
 					$reason = 'Postprocessing failed, so your entry has been deleted - could not extract PDF thumbnail: '.$e->getMessage();
-					
+
 					$record->purge($reason);
 					return $reason;
 				}
@@ -81,7 +81,7 @@ class archive_upload extends BaseAction {
 				$file = new \FelixOnline\Core\ArchiveFile();
 				$file->setIssueId($record);
 				$file->setPart('A');
-				$file->setFilename($folderDest);
+				$file->setFilename($folderDest.'.pdf');
 
 				// Now extract PDF content
 				try {
@@ -94,13 +94,13 @@ class archive_upload extends BaseAction {
 				$file->save();
 			} else {
 				$reason = 'Postprocessing failed, so your entry has been deleted - could not save PDF.';
-				
+
 				$record->purge($reason);
 				return $reason;
 			}
 		} else {
 			$reason = 'Postprocessing failed, so your entry has been deleted - could not save PDF.';
-			
+
 			$record->purge('Postprocessing failed, so your entry has been deleted - you did not upload a valid PDF.');
 			return $reason;
 		}
